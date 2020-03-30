@@ -8,9 +8,20 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import threading
+import time
+from datetime import datetime
 
 class Ui_MainWindow(object):
+
+    def UpdateTime(self):
+        current_time = datetime.now()
+        # To Debug the current time
+        # print(current_time.strftime("%H:%M:%S"))
+
+        # Update the text label with current time
+        self.TimeNow_Label.setText(current_time.strftime("%b %d %Y %H:%M:%S"))
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
@@ -31,18 +42,19 @@ class Ui_MainWindow(object):
         self.TimeNow_Label.setGeometry(QtCore.QRect(0, 0, 181, 71))
         font = QtGui.QFont()
         font.setPointSize(15)
+
         self.TimeNow_Label.setFont(font)
         self.TimeNow_Label.setMouseTracking(False)
         self.TimeNow_Label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.TimeNow_Label.setAlignment(QtCore.Qt.AlignCenter)
         self.TimeNow_Label.setWordWrap(True)
         self.TimeNow_Label.setObjectName("TimeNow_Label")
-        self.TimeNow_Label.set("Hi Betty")
 
-        self.Test_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Test_Label.setGeometry(QtCore.QRect(430, 220, 60, 16))
-        self.Test_Label.setObjectName("Test_Label")
         MainWindow.setCentralWidget(self.centralwidget)
+
+        self.timer_painter = QtCore.QTimer()
+        self.timer_painter.timeout.connect(self.UpdateTime)
+        self.timer_painter.start(1000)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -61,3 +73,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+

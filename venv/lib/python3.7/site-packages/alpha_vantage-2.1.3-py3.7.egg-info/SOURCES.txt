@@ -1,0 +1,17 @@
+LICENSE.txt
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+alpha_vantage/__init__.py
+alpha_vantage/alphavantage.py
+alpha_vantage/cryptocurrencies.py
+alpha_vantage/foreignexchange.py
+alpha_vantage/sectorperformance.py
+alpha_vantage/techindicators.py
+alpha_vantage/timeseries.py
+alpha_vantage.egg-info/PKG-INFO
+alpha_vantage.egg-info/SOURCES.txt
+alpha_vantage.egg-info/dependency_links.txt
+alpha_vantage.egg-info/requires.txt
+alpha_vantage.egg-info/top_level.txt

@@ -22,6 +22,14 @@ class Ui_MainWindow(object):
         # Update the text label with current time
         self.TimeNow_Label.setText(current_time.strftime("%b %d %Y %H:%M:%S"))
 
+    def UpdateStock(self):
+        current_time = datetime.now()
+        # To Debug the current time
+        # print(current_time.strftime("%H:%M:%S"))
+
+        # Update the text label with current time
+        self.TimeNow_Label.setText(current_time.strftime("%b %d %Y %H:%M:%S"))
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
@@ -55,6 +63,10 @@ class Ui_MainWindow(object):
         self.timer_painter = QtCore.QTimer()
         self.timer_painter.timeout.connect(self.UpdateTime)
         self.timer_painter.start(1000)
+
+        self.stock_update_timer = QtCore.QTimer()
+        self.stock_update_timer.timeout.connect(self.UpdateStock)
+        self.timer_painter.start(3000)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

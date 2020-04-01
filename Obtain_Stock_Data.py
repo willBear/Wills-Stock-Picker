@@ -1,4 +1,5 @@
 import requests,json
+from functools import reduce
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -59,9 +60,18 @@ def Populate_Intraday_Price():
 
 url = "https://financialmodelingprep.com/api/v3/majors-indexes"
 session = requests.session()
-request = session.get(url, timeout=15)
+request = session.get(url, timeout=5)
 stock_data = request.json()
 print(stock_data)
+
 for key in stock_data['majorIndexesList']:
-    print(str(key['ticker']) + ' ' + str(key['changes']) + ' ' +  str(key['price']) + ' ' + str(key['indexName']))
+    print(str(key['ticker']) + ' ' + str(key['changes']) + ' ' +str(key['price']) + ' ' + str(key['indexName']))
+
+banner_indices = ['.INX', '.DJI', 'IXIC', '%5ERUT', '%5EXAX', '%5ENYA']
+banner_indices_dict = {}
+
+for ticker in banner_indices:
+    print(ticker)
+    print()
+    #print(stock_data[['majorIndexesList']][ticker]['price'])
 

@@ -24,10 +24,32 @@ class Ui_MainWindow(object):
         self.TimeNow_Label.setText(current_time.strftime("%H:%M:%S"))
         self.DateNow_Label.setText(current_time.strftime("%b %d %Y"))
 
-    def UpdateIndces(self):
+    def SetupIndices(selfs):
+        # Fetch Real Time Data and Stores Previous Day Price
+        # -------------------------------------------------------------------
+        # Indices Shown on Header:
+        # .INX - S&P 500 Index
+        # .DJI - Down Jones Index
+        # .IXIC - NASDAQ Index
+        # %5ERUT - Russell 2000 Small Cap Index
+        # %5EXAX - Philadelphia Gold and Silver Index
+        # %5ENYA - NYSE Composite Index
+        # -------------------------------------------------------------------
+        banner_indices = ['.INX', '.DJI', 'IXIC', '%5ERUT', '%5EXAX', '%5ENYA']
+
+        # Set up the json URL
         url = "https://financialmodelingprep.com/api/v3/majors-indexes"
         session = requests.session()
-        request = session.get(url, timeout=15)
+        request = session.get(url, timeout=5)
+
+        # Fetch request
+        result = request.json()
+
+
+    def UpdateIndices(self):
+        url = "https://financialmodelingprep.com/api/v3/majors-indexes"
+        session = requests.session()
+        request = session.get(url, timeout=5)
         result = request.json()
 
         # Populate index 0 for symbols
@@ -118,12 +140,12 @@ class Ui_MainWindow(object):
         self.timer_painter.start(1000)
 
         self.stock_update_timer = QtCore.QTimer()
-        self.stock_update_timer.timeout.connect(self.UpdateIndces)
+        self.stock_update_timer.timeout.connect(self.UpdateIndices)
         self.stock_update_timer.start(30000)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.UpdateIndces()
+        self.SetupIndices()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

@@ -1,5 +1,8 @@
 import requests,json
 from functools import reduce
+import pandas as pd
+from datetime import date
+from pandas.tseries.offsets import BDay
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -36,7 +39,7 @@ def Populate_Intraday_Price():
     base_url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE"
 
     # main_url variable that stores complete url with API key
-    main_url = base_url + "&symbol=SPY,SQQQ&apikey=" + alpha_vantage_api_key
+    main_url = base_url + "&symbol=^GSPC&apikey=" + alpha_vantage_api_key
     req_ob = requests.get(main_url)
 
     # json method return json format
@@ -47,6 +50,7 @@ def Populate_Intraday_Price():
 
     print(type(result))
     print(result)
+    """
     print(result["Global Quote"]['10. change percent'])
     changed_percent = result["Global Quote"]['10. change percent']
     changed_percent = changed_percent[:-1]
@@ -56,22 +60,44 @@ def Populate_Intraday_Price():
         print("RED")
     else:
         print("GREEN")
-
-
+    """
+"""
 url = "https://financialmodelingprep.com/api/v3/majors-indexes"
 session = requests.session()
 request = session.get(url, timeout=5)
 stock_data = request.json()
 print(stock_data)
 
+
 for key in stock_data['majorIndexesList']:
     print(str(key['ticker']) + ' ' + str(key['changes']) + ' ' +str(key['price']) + ' ' + str(key['indexName']))
+"""
+banner_indices = ['SPY','QQQ','IWM','DIA','^VIX','GLD']
 
-banner_indices = ['.INX', '.DJI', 'IXIC', '%5ERUT', '%5EXAX', '%5ENYA']
-banner_indices_dict = {}
 
-for ticker in banner_indices:
-    print(ticker)
-    print()
-    #print(stock_data[['majorIndexesList']][ticker]['price'])
+# This def is used for finding the previous day's closing price of multiple selected stock/index
+def find_closing_price_multiple(tickers):
+    # Iterate through the array of tickers and add it to the quote string
+    quote_string = ','.join(tickers)
+
+    url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string
+    session = requests.session()
+    request = session.get(url, timeout=5)
+    closing_price_data = request.json()
+    print(closing_price_data)
+
+# We now iterate through the nested dictionaries and finding information that is relevant in banner indices
+# Above method is not efficient as we have to loop through all key value pairs in the nested dictionary
+# To get the previous business day closing prices, we need to utilize Bday function in Pandas library
+find_closing_price_multiple(banner_indices)
+"""
+print("Last Trading Day: " + str(date.today()-BDay(1)))
+for key in stock_data['majorIndexesList']:
+    if key['ticker'] in banner_indices:
+        print(key['ticker'])
+        print(key['price'])
+"""
+
+
+
 

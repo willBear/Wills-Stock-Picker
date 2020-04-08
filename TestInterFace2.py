@@ -20,30 +20,31 @@ class Ui_MainWindow(object):
         # To Debug the current time
         # print(current_time.strftime("%H:%M:%S"))
 
-        # Update the text label with current time
+        # Update the text label with current time, one for date and another for current time
         self.TimeNow_Label.setText(current_time.strftime("%H:%M:%S"))
         self.DateNow_Label.setText(current_time.strftime("%b %d %Y"))
 
-    def SetupIndices(selfs):
+    def SetupBanner(self):
         # Fetch Real Time Data and Stores Previous Day Price
         # -------------------------------------------------------------------
-        # Indices Shown on Header:
-        # .INX - S&P 500 Index
-        # .DJI - Down Jones Index
-        # .IXIC - NASDAQ Index
-        # %5ERUT - Russell 2000 Small Cap Index
-        # %5EXAX - Philadelphia Gold and Silver Index
-        # %5ENYA - NYSE Composite Index
+        # ETFs Shown on Header:
+        # SPY - SPDR S&P 500 ETF Trust
+        # QQQ - Invesco QQQ Trust
+        # IWM - iShares Russell 2000 ETF
+        # DIA - SPDR Dow Jones Industrial Average ETF Trust
+        # ^VIX - CBOE Volatility Index
+        # GLD - SPDR Gold Shares
         # -------------------------------------------------------------------
-        banner_indices = ['.INX', '.DJI', 'IXIC', '%5ERUT', '%5EXAX', '%5ENYA']
+        banner_indices = ['SPY','QQQ','IWM','DIA','^VIX','GLD']
 
-        # Set up the json URL
-        url = "https://financialmodelingprep.com/api/v3/majors-indexes"
+        # Iterate through the array of tickers and add it to the quote string
+        quote_string = ','.join(banner_indices)
+
+        url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string
         session = requests.session()
         request = session.get(url, timeout=5)
-
-        # Fetch request
-        result = request.json()
+        closing_price_data = request.json()
+        print(closing_price_data)
 
 
     def UpdateIndices(self):
@@ -145,7 +146,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.SetupIndices()
+        self.SetupBanner()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

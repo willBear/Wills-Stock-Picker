@@ -107,7 +107,7 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>40</y>
+      <y>50</y>
       <width>100</width>
       <height>31</height>
      </rect>
@@ -186,7 +186,7 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>40</y>
+      <y>50</y>
       <width>100</width>
       <height>31</height>
      </rect>
@@ -226,7 +226,7 @@
     <property name="geometry">
      <rect>
       <x>430</x>
-      <y>40</y>
+      <y>50</y>
       <width>100</width>
       <height>31</height>
      </rect>
@@ -292,7 +292,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>40</y>
+      <y>50</y>
       <width>100</width>
       <height>31</height>
      </rect>
@@ -358,7 +358,7 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>40</y>
+      <y>50</y>
       <width>100</width>
       <height>31</height>
      </rect>
@@ -424,7 +424,7 @@
     <property name="geometry">
      <rect>
       <x>790</x>
-      <y>40</y>
+      <y>50</y>
       <width>100</width>
       <height>31</height>
      </rect>
@@ -516,7 +516,7 @@
     <property name="geometry">
      <rect>
       <x>910</x>
-      <y>40</y>
+      <y>50</y>
       <width>100</width>
       <height>31</height>
      </rect>
@@ -563,6 +563,97 @@
     </property>
     <property name="text">
      <string>Index_P</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Index_Name_0">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>32</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Index_Name_0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Index_Name_1">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>32</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Index_Name_1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Index_Name_2">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>32</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Index_Name_2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Index_Name_3">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>32</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Index_Name_3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Index_Name_4">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>32</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Index_Name_4</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Index_Name_5">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>32</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Index_Name_5</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Index_Name_6">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>32</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Index_Name_6</string>
     </property>
    </widget>
   </widget>

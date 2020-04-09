@@ -84,7 +84,13 @@ def find_closing_price_multiple(tickers):
     session = requests.session()
     request = session.get(url, timeout=5)
     closing_price_data = request.json()
-    print(closing_price_data)
+
+    for key in closing_price_data:
+        if key['symbol'] == banner_indices[0]:
+
+
+
+
 
 # We now iterate through the nested dictionaries and finding information that is relevant in banner indices
 # Above method is not efficient as we have to loop through all key value pairs in the nested dictionary

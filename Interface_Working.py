@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
         # DIA - SPDR Dow Jones Industrial Average ETF Trust
         # ^VIX - CBOE Volatility Index
         # GLD - SPDR Gold Shares
-        # SLV - iShares Silver Trust
+        # WTI - iShares Silver Trust
         # -------------------------------------------------------------------
         banner_indices = ['SPY', 'QQQ', 'IWM', 'DIA', '^VIX', 'GLD', 'SLV']
 

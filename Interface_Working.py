@@ -15,6 +15,14 @@ import requests,json
 
 
 class Ui_MainWindow(object):
+    # -------------------------------------------------------------------
+    # Function Name: UpdateTime
+    #
+    # Description: This function is run every 1 second to update the date
+    # and time labels on the top left of the main window.This function is
+    # called from the QT timer expiry at the bottom of the setupUI
+    # function.
+    # -------------------------------------------------------------------
     def UpdateTime(self):
         current_time = datetime.now()
         # To Debug the current time
@@ -24,6 +32,20 @@ class Ui_MainWindow(object):
         self.TimeNow_Label.setText(current_time.strftime("%H:%M:%S"))
         self.DateNow_Label.setText(current_time.strftime("%b %d %Y"))
 
+    # -------------------------------------------------------------------
+    # Function Name: UpdateBanner
+    #
+    # Description: This function is run every 30 seconds to update the
+    # banner on the top of main window application that refreshes by
+    # making a query to financialmodellingprep.com, multiple quotes.
+    # When we receive a correct result from the website, we would update
+    # the banners to have its information filled in.
+    #
+    # TODO:
+    # Change colour based on the percentaged changed being + or -
+    # Background colour flash for every update
+    # Improve mass updating of banners to shave processing time
+    # -------------------------------------------------------------------
     def UpdateBanner(self):
         # Fetch Real Time Data and Stores Previous Day Price
         # -------------------------------------------------------------------
@@ -39,51 +61,54 @@ class Ui_MainWindow(object):
         banner_indices = ['SPY', 'QQQ', 'IWM', 'DIA', '^VIX', 'GLD', 'SLV']
 
         # Iterate through the array of tickers and add it to the quote string
-        # We are requeseting multiple quotes from
+        # We are requesting multiple quotes from
         quote_string = ','.join(banner_indices)
 
+        # The URL that we will concatenate with quote_string, makes the request
+        # and stores the result into closing_price_data
         url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string
         session = requests.session()
         request = session.get(url, timeout=5)
         closing_price_data = request.json()
 
-        # print(closing_price_data)
+        # We would parse the data by looping through the nested dictionary and
+        # insert the content of each dictionary into its rightful place
         for key in closing_price_data:
             if key['symbol'] == banner_indices[0]:
                 self.Index_Symbol_0.setText(key['symbol'])
                 self.Index_Price_0.setText(str(key['price']))
-                self.Index_Name_0.setText(key['name'])
+                # We take out the one word pre-fix to the ETF name
+                self.Index_Name_0.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_0.setText(str(key['changesPercentage']) + "%")
-
             elif key['symbol'] == banner_indices[1]:
                 self.Index_Symbol_1.setText(key['symbol'])
                 self.Index_Price_1.setText(str(key['price']))
-                self.Index_Name_1.setText(key['name'])
+                self.Index_Name_1.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_1.setText(str(key['changesPercentage']) + "%")
             elif key['symbol'] == banner_indices[2]:
                 self.Index_Symbol_2.setText(key['symbol'])
                 self.Index_Price_2.setText(str(key['price']))
-                self.Index_Name_2.setText(key['name'])
+                self.Index_Name_2.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_2.setText(str(key['changesPercentage']) + "%")
             elif key['symbol'] == banner_indices[3]:
                 self.Index_Symbol_3.setText(key['symbol'])
                 self.Index_Price_3.setText(str(key['price']))
-                self.Index_Name_3.setText(key['name'])
+                self.Index_Name_3.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_3.setText(str(key['changesPercentage']) + "%")
             elif key['symbol'] == banner_indices[4]:
                 self.Index_Symbol_4.setText(key['symbol'])
                 self.Index_Price_4.setText(str(key['price']))
-                self.Index_Name_4.setText(key['name'])
+                self.Index_Name_4.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_4.setText(str(key['changesPercentage']) + "%")
             elif key['symbol'] == banner_indices[5]:
                 self.Index_Symbol_5.setText(key['symbol'])
                 self.Index_Price_5.setText(str(key['price']))
-                self.Index_Name_5.setText(key['name'])
+                self.Index_Name_5.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_5.setText(str(key['changesPercentage']) + "%")
             elif key['symbol'] == banner_indices[6]:
                 self.Index_Symbol_6.setText(key['symbol'])
                 self.Index_Price_6.setText(str(key['price']))
-                self.Index_Name_6.setText(key['name'])
+                self.Index_Name_6.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_6.setText(str(key['changesPercentage']) + "%")
 
     def setupUi(self, MainWindow):
@@ -319,11 +344,13 @@ class Ui_MainWindow(object):
         self.timer_painter.timeout.connect(self.UpdateTime)
         self.timer_painter.start(1000)
 
+        self.UpdateBanner()
+
         self.stock_update_timer = QtCore.QTimer()
         self.stock_update_timer.timeout.connect(self.UpdateBanner)
-        self.stock_update_timer.start(30000)
+        self.stock_update_timer.start(10000)
 
-        self.UpdateBanner()
+
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

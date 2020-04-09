@@ -85,24 +85,8 @@ def find_closing_price_multiple(tickers):
     request = session.get(url, timeout=5)
     closing_price_data = request.json()
 
-    for key in closing_price_data:
-        if key['symbol'] == banner_indices[0]:
 
 
-
-
-
-# We now iterate through the nested dictionaries and finding information that is relevant in banner indices
-# Above method is not efficient as we have to loop through all key value pairs in the nested dictionary
-# To get the previous business day closing prices, we need to utilize Bday function in Pandas library
-find_closing_price_multiple(banner_indices)
-"""
-print("Last Trading Day: " + str(date.today()-BDay(1)))
-for key in stock_data['majorIndexesList']:
-    if key['ticker'] in banner_indices:
-        print(key['ticker'])
-        print(key['price'])
-"""
 
 
 

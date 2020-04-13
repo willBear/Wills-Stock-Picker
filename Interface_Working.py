@@ -11,9 +11,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import requests,json
 
-
-
-
 class Ui_MainWindow(object):
     # -------------------------------------------------------------------
     # Function Name: UpdateTime
@@ -56,9 +53,9 @@ class Ui_MainWindow(object):
         # DIA - SPDR Dow Jones Industrial Average ETF Trust
         # ^VIX - CBOE Volatility Index
         # GLD - SPDR Gold Shares
-        # WTI - iShares Silver Trust
+        # WTI - Crude Oil Index
         # -------------------------------------------------------------------
-        banner_indices = ['SPY', 'QQQ', 'IWM', 'DIA', '^VIX', 'GLD', 'SLV']
+        banner_indices = ['SPY', 'QQQ', 'IWM', 'DIA', '^VIX', 'GLD', 'WTI']
 
         # Iterate through the array of tickers and add it to the quote string
         # We are requesting multiple quotes from
@@ -344,13 +341,9 @@ class Ui_MainWindow(object):
         self.timer_painter.timeout.connect(self.UpdateTime)
         self.timer_painter.start(1000)
 
-        self.UpdateBanner()
-
         self.stock_update_timer = QtCore.QTimer()
         self.stock_update_timer.timeout.connect(self.UpdateBanner)
         self.stock_update_timer.start(10000)
-
-
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

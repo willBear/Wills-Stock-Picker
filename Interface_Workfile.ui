@@ -656,38 +656,12 @@
      <string>Index_Name_6</string>
     </property>
    </widget>
-   <widget class="Line" name="line_9">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>80</y>
-      <width>3</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="Line" name="line_10">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>280</y>
-      <width>411</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>80</y>
-      <width>411</width>
+      <y>680</y>
+      <width>1024</width>
       <height>21</height>
      </rect>
     </property>
@@ -706,6 +680,386 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_0">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>710</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Consumer Discretionary</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_0">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>710</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_1">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>740</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_1">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>740</y>
+      <width>39</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Energy</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_2">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>710</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_2">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>710</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Communication Services</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_3">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>740</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_3">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>740</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Information Technology</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_4">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>710</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_4">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>710</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Consumer Staples</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_5">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>740</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_5">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>740</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Health Care</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_6">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>710</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_6">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>710</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Materials</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_7">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>740</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_7">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>740</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Utilities</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_9">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>740</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Financials</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_9">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>740</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Name_8">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>710</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Industrials</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Sector_Percentage_8">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>710</y>
+      <width>50</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-0.00%</string>
     </property>
    </widget>
   </widget>

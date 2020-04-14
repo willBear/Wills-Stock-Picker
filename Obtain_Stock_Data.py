@@ -28,7 +28,10 @@ def Populate_Sector_Performances():
     result = req_ob.json()
 
     print(type(result))
-    print(result["Global Quote"]['10. change percent'])
+    parsed_dictionary = result['Rank A: Real-Time Performance']
+
+    for key in parsed_dictionary:
+        print(key + ":" + parsed_dictionary[key])
 
 
 
@@ -86,7 +89,7 @@ def find_closing_price_multiple(tickers):
     closing_price_data = request.json()
 
 
-
+Populate_Sector_Performances()
 
 
 

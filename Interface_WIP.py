@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Interface_Workfile.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -29,20 +29,21 @@ class Ui_MainWindow(object):
         self.TimeNow_Label.setText(current_time.strftime("%H:%M:%S"))
         self.DateNow_Label.setText(current_time.strftime("%b %d %Y"))
 
-    # -------------------------------------------------------------------
-    # Function Name: UpdateBanner
-    #
-    # Description: This function is run every 30 seconds to update the
-    # banner on the top of main window application that refreshes by
-    # making a query to financialmodellingprep.com, multiple quotes.
-    # When we receive a correct result from the website, we would update
-    # the banners to have its information filled in.
-    #
-    # TODO:
-    # Change colour based on the percentaged changed being + or -
-    # Background colour flash for every update
-    # Improve mass updating of banners to shave processing time
-    # -------------------------------------------------------------------
+        # -------------------------------------------------------------------
+        # Function Name: UpdateBanner
+        #
+        # Description: This function is run every 30 seconds to update the
+        # banner on the top of main window application that refreshes by
+        # making a query to financialmodellingprep.com, multiple quotes.
+        # When we receive a correct result from the website, we would update
+        # the banners to have its information filled in.
+        #
+        # TODO:
+        # Change colour based on the percentaged changed being + or -
+        # Background colour flash for every update
+        # Improve mass updating of banners to shave processing time
+        # -------------------------------------------------------------------
+
     def UpdateBanner(self):
         # Fetch Real Time Data and Stores Previous Day Price
         # -------------------------------------------------------------------
@@ -107,7 +108,6 @@ class Ui_MainWindow(object):
                 self.Index_Price_6.setText(str(key['price']))
                 self.Index_Name_6.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_6.setText(str(key['changesPercentage']) + "%")
-
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -336,6 +336,156 @@ class Ui_MainWindow(object):
         self.Index_Name_6 = QtWidgets.QLabel(self.centralwidget)
         self.Index_Name_6.setGeometry(QtCore.QRect(910, 32, 111, 21))
         self.Index_Name_6.setObjectName("Index_Name_6")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 680, 1024, 21))
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setAutoFillBackground(False)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.Sector_Name_0 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_0.setGeometry(QtCore.QRect(10, 710, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_0.setFont(font)
+        self.Sector_Name_0.setObjectName("Sector_Name_0")
+        self.Sector_Percentage_0 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_0.setGeometry(QtCore.QRect(150, 710, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_0.setFont(font)
+        self.Sector_Percentage_0.setObjectName("Sector_Percentage_0")
+        self.Sector_Percentage_1 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_1.setGeometry(QtCore.QRect(150, 740, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_1.setFont(font)
+        self.Sector_Percentage_1.setObjectName("Sector_Percentage_1")
+        self.Sector_Name_1 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_1.setGeometry(QtCore.QRect(10, 740, 39, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_1.setFont(font)
+        self.Sector_Name_1.setObjectName("Sector_Name_1")
+        self.Sector_Percentage_2 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_2.setGeometry(QtCore.QRect(360, 710, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_2.setFont(font)
+        self.Sector_Percentage_2.setObjectName("Sector_Percentage_2")
+        self.Sector_Name_2 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_2.setGeometry(QtCore.QRect(210, 710, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_2.setFont(font)
+        self.Sector_Name_2.setObjectName("Sector_Name_2")
+        self.Sector_Percentage_3 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_3.setGeometry(QtCore.QRect(360, 740, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_3.setFont(font)
+        self.Sector_Percentage_3.setObjectName("Sector_Percentage_3")
+        self.Sector_Name_3 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_3.setGeometry(QtCore.QRect(210, 740, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_3.setFont(font)
+        self.Sector_Name_3.setObjectName("Sector_Name_3")
+        self.Sector_Percentage_4 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_4.setGeometry(QtCore.QRect(560, 710, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_4.setFont(font)
+        self.Sector_Percentage_4.setObjectName("Sector_Percentage_4")
+        self.Sector_Name_4 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_4.setGeometry(QtCore.QRect(420, 710, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_4.setFont(font)
+        self.Sector_Name_4.setObjectName("Sector_Name_4")
+        self.Sector_Percentage_5 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_5.setGeometry(QtCore.QRect(560, 740, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_5.setFont(font)
+        self.Sector_Percentage_5.setObjectName("Sector_Percentage_5")
+        self.Sector_Name_5 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_5.setGeometry(QtCore.QRect(420, 740, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_5.setFont(font)
+        self.Sector_Name_5.setObjectName("Sector_Name_5")
+        self.Sector_Percentage_6 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_6.setGeometry(QtCore.QRect(760, 710, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_6.setFont(font)
+        self.Sector_Percentage_6.setObjectName("Sector_Percentage_6")
+        self.Sector_Name_6 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_6.setGeometry(QtCore.QRect(620, 710, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_6.setFont(font)
+        self.Sector_Name_6.setObjectName("Sector_Name_6")
+        self.Sector_Percentage_7 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_7.setGeometry(QtCore.QRect(760, 740, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_7.setFont(font)
+        self.Sector_Percentage_7.setObjectName("Sector_Percentage_7")
+        self.Sector_Name_7 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_7.setGeometry(QtCore.QRect(620, 740, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_7.setFont(font)
+        self.Sector_Name_7.setObjectName("Sector_Name_7")
+        self.Sector_Name_9 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_9.setGeometry(QtCore.QRect(820, 740, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_9.setFont(font)
+        self.Sector_Name_9.setObjectName("Sector_Name_9")
+        self.Sector_Percentage_9 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_9.setGeometry(QtCore.QRect(960, 740, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_9.setFont(font)
+        self.Sector_Percentage_9.setObjectName("Sector_Percentage_9")
+        self.Sector_Name_8 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Name_8.setGeometry(QtCore.QRect(820, 710, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Sector_Name_8.setFont(font)
+        self.Sector_Name_8.setObjectName("Sector_Name_8")
+        self.Sector_Percentage_8 = QtWidgets.QLabel(self.centralwidget)
+        self.Sector_Percentage_8.setGeometry(QtCore.QRect(960, 710, 50, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sector_Percentage_8.setFont(font)
+        self.Sector_Percentage_8.setObjectName("Sector_Percentage_8")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.timer_painter = QtCore.QTimer()
@@ -382,6 +532,27 @@ class Ui_MainWindow(object):
         self.Index_Name_4.setText(_translate("MainWindow", "Index_Name_4"))
         self.Index_Name_5.setText(_translate("MainWindow", "Index_Name_5"))
         self.Index_Name_6.setText(_translate("MainWindow", "Index_Name_6"))
+        self.label.setText(_translate("MainWindow", "Sector Performance"))
+        self.Sector_Name_0.setText(_translate("MainWindow", "Consumer Discretionary"))
+        self.Sector_Percentage_0.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Percentage_1.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_1.setText(_translate("MainWindow", "Energy"))
+        self.Sector_Percentage_2.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_2.setText(_translate("MainWindow", "Communication Services"))
+        self.Sector_Percentage_3.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_3.setText(_translate("MainWindow", "Information Technology"))
+        self.Sector_Percentage_4.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_4.setText(_translate("MainWindow", "Consumer Staples"))
+        self.Sector_Percentage_5.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_5.setText(_translate("MainWindow", "Health Care"))
+        self.Sector_Percentage_6.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_6.setText(_translate("MainWindow", "Materials"))
+        self.Sector_Percentage_7.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_7.setText(_translate("MainWindow", "Utilities"))
+        self.Sector_Name_9.setText(_translate("MainWindow", "Financials"))
+        self.Sector_Percentage_9.setText(_translate("MainWindow", "-0.00%"))
+        self.Sector_Name_8.setText(_translate("MainWindow", "Industrials"))
+        self.Sector_Percentage_8.setText(_translate("MainWindow", "-0.00%"))
 
 
 if __name__ == "__main__":

@@ -28,10 +28,10 @@ def Populate_Sector_Performances():
     result = req_ob.json()
 
     print(type(result))
-    parsed_dictionary = result['Rank A: Real-Time Performance']
+    print(result)
+    #parsed_dictionary = result['Rank A: Real-Time Performance']
 
-    for key in parsed_dictionary:
-        print(key + ":" + parsed_dictionary[key])
+
 
 
 

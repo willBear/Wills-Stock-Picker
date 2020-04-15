@@ -656,32 +656,6 @@
      <string>Offshore, Inc.</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>680</y>
-      <width>1024</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>13</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="text">
-     <string>Sector Performance</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="Sector_Name_0">
     <property name="geometry">
      <rect>
@@ -1062,6 +1036,166 @@
      <string>-0.00%</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="Sector_Performance_Title">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>680</y>
+      <width>231</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Real-Time Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1 Day Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5 Day Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1 Month Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>3 Month Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Year-to-Date (YTD) Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1 Year Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>3 Year Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5 Year Performance</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10 Year Performance</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>680</y>
+      <width>1024</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Sector Performance</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>55</y>
+      <width>90</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Open</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>TimeNow_Label</zorder>
+   <zorder>DateNow_Label</zorder>
+   <zorder>Index_Symbol_0</zorder>
+   <zorder>Index_Percentage_0</zorder>
+   <zorder>Index_Price_0</zorder>
+   <zorder>line_2</zorder>
+   <zorder>line_3</zorder>
+   <zorder>Index_Symbol_1</zorder>
+   <zorder>Index_Percentage_1</zorder>
+   <zorder>Index_Price_1</zorder>
+   <zorder>Index_Percentage_2</zorder>
+   <zorder>line_4</zorder>
+   <zorder>Index_Symbol_2</zorder>
+   <zorder>Index_Price_2</zorder>
+   <zorder>Index_Percentage_3</zorder>
+   <zorder>line_5</zorder>
+   <zorder>Index_Symbol_3</zorder>
+   <zorder>Index_Price_3</zorder>
+   <zorder>Index_Percentage_4</zorder>
+   <zorder>line_6</zorder>
+   <zorder>Index_Symbol_4</zorder>
+   <zorder>Index_Price_4</zorder>
+   <zorder>Index_Percentage_5</zorder>
+   <zorder>line_7</zorder>
+   <zorder>Index_Symbol_5</zorder>
+   <zorder>Index_Price_5</zorder>
+   <zorder>line</zorder>
+   <zorder>line_8</zorder>
+   <zorder>Index_Percentage_6</zorder>
+   <zorder>Index_Symbol_6</zorder>
+   <zorder>Index_Price_6</zorder>
+   <zorder>Index_Name_0</zorder>
+   <zorder>Index_Name_1</zorder>
+   <zorder>Index_Name_2</zorder>
+   <zorder>Index_Name_3</zorder>
+   <zorder>Index_Name_4</zorder>
+   <zorder>Index_Name_5</zorder>
+   <zorder>Index_Name_6</zorder>
+   <zorder>Sector_Name_0</zorder>
+   <zorder>Sector_Percentage_0</zorder>
+   <zorder>Sector_Percentage_1</zorder>
+   <zorder>Sector_Name_1</zorder>
+   <zorder>Sector_Percentage_2</zorder>
+   <zorder>Sector_Name_2</zorder>
+   <zorder>Sector_Percentage_3</zorder>
+   <zorder>Sector_Name_3</zorder>
+   <zorder>Sector_Percentage_4</zorder>
+   <zorder>Sector_Name_4</zorder>
+   <zorder>Sector_Percentage_5</zorder>
+   <zorder>Sector_Name_5</zorder>
+   <zorder>Sector_Percentage_6</zorder>
+   <zorder>Sector_Name_6</zorder>
+   <zorder>Sector_Percentage_7</zorder>
+   <zorder>Sector_Name_7</zorder>
+   <zorder>Sector_Name_9</zorder>
+   <zorder>Sector_Percentage_9</zorder>
+   <zorder>Sector_Name_8</zorder>
+   <zorder>Sector_Percentage_8</zorder>
+   <zorder>Sector_Performance_Title</zorder>
+   <zorder>label_2</zorder>
   </widget>
  </widget>
  <resources/>

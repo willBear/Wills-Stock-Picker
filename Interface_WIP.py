@@ -70,6 +70,11 @@ class Ui_MainWindow(object):
         request = session.get(url, timeout=5)
         closing_price_data = request.json()
 
+        # Add the all widgets into an array t=
+        colour_change_widgets = [self.Index_Percentage_0,self.Index_Percentage_1,self.Index_Percentage_2,self.Index_Percentage_3,
+                                 self.Index_Percentage_4,self.Index_Percentage_5,self.Index_Percentage_6]
+
+
         # We would parse the data by looping through the nested dictionary and
         # insert the content of each dictionary into its rightful place
         for key in closing_price_data:
@@ -110,6 +115,15 @@ class Ui_MainWindow(object):
                 self.Index_Name_6.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_6.setText(str(key['changesPercentage']) + "%")
 
+        # Go through every single percentage changed that needs colour adjusted and make red for losses
+        # and green for anything that's above 0.00%
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
+
+
     # -------------------------------------------------------------------
     # Function Name: PopulateSectorPerformances
     #
@@ -149,6 +163,10 @@ class Ui_MainWindow(object):
                            'Rank G: 1 Year Performance', 'Rank H: 3 Year Performance','Rank I: 5 Year Performance',
                            'Rank J: 10 Year Performance']
 
+        colour_change_widgets = [self.Sector_Percentage_0,self.Sector_Percentage_1,self.Sector_Percentage_2,self.Sector_Percentage_3,
+                                 self.Sector_Percentage_4,self.Sector_Percentage_5,self.Sector_Percentage_6,self.Sector_Percentage_7,
+                                 self.Sector_Percentage_8,self.Sector_Percentage_9]
+
         # base_url variable that stores the base url
         base_url = "https://www.alphavantage.co/query?function=SECTOR"
 
@@ -158,9 +176,6 @@ class Ui_MainWindow(object):
         # get method of requests module
         # return response object
         req_ob = requests.get(main_url)
-
-        # json method return json format
-        # data into python dictionary data type.
 
         # result contains list of nested dictionaries
         result = req_ob.json()
@@ -199,6 +214,11 @@ class Ui_MainWindow(object):
                 self.Sector_Name_9.setText(key)
                 self.Sector_Percentage_9.setText(parsed_dictionary[key])
 
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -667,6 +687,7 @@ class Ui_MainWindow(object):
         # Singleshot Timers that sets up a timer and populates all formation, timed loop updates are then followed
         QtCore.QTimer.singleShot(1000, self.UpdateBanner)
         QtCore.QTimer.singleShot(1000, self.PopulateSectorPerformances)
+
 
         self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)

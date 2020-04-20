@@ -70,6 +70,11 @@ class Ui_MainWindow(object):
         request = session.get(url, timeout=5)
         closing_price_data = request.json()
 
+        # Add the all widgets into an array t=
+        colour_change_widgets = [self.Index_Percentage_0, self.Index_Percentage_1, self.Index_Percentage_2, self.Index_Percentage_3,
+                                 self.Index_Percentage_4, self.Index_Percentage_5, self.Index_Percentage_6]
+
+
         # We would parse the data by looping through the nested dictionary and
         # insert the content of each dictionary into its rightful place
         for key in closing_price_data:
@@ -109,6 +114,15 @@ class Ui_MainWindow(object):
                 self.Index_Price_6.setText(str(key['price']))
                 self.Index_Name_6.setText(str(key['name']).split(' ', 1)[1])
                 self.Index_Percentage_6.setText(str(key['changesPercentage']) + "%")
+
+        # Go through every single percentage changed that needs colour adjusted and make red for losses
+        # and green for anything that's above 0.00%
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
+
     # -------------------------------------------------------------------
     # Function Name: PopulateSectorPerformances
     #
@@ -134,9 +148,23 @@ class Ui_MainWindow(object):
         # Slot 7 - Utilities
         # Slot 8 - Industrials
         # Slot 9 - Financials
+        # Based on the selected index of the performance, we would update the
+        # titles and data associated with the sector performance
         # -------------------------------------------------------------------
-        sector_indices = ['Consumer Discretionary', 'Energy', 'Communication Services', 'Information Technology', 'Consumer Staples'
-                          ,'Health Care', 'Materials', 'Utilities', 'Industrials', 'Financials']
+        print("The index changed is: " + str(self.Sector_Performance_Title.currentIndex()))
+
+        sector_indices = ['Consumer Discretionary', 'Energy', 'Communication Services', 'Information Technology',
+                          'Consumer Staples', 'Health Care', 'Materials', 'Utilities', 'Industrials', 'Financials']
+
+        # This index maps the timeline to the dictionary passed by the json requests by alpha vantage
+        timeline_indice = ['Rank A: Real-Time Performance', 'Rank B: 1 Day Performance', 'Rank C: 5 Day Performance',
+                           'Rank D: 1 Month Performance', 'Rank E: 3 Month Performance', 'Rank F: Year-to-Date (YTD) Performance',
+                           'Rank G: 1 Year Performance', 'Rank H: 3 Year Performance', 'Rank I: 5 Year Performance',
+                           'Rank J: 10 Year Performance']
+
+        colour_change_widgets = [self.Sector_Percentage_0, self.Sector_Percentage_1, self.Sector_Percentage_2, self.Sector_Percentage_3,
+                                 self.Sector_Percentage_4, self.Sector_Percentage_5, self.Sector_Percentage_6, self.Sector_Percentage_7,
+                                 self.Sector_Percentage_8, self.Sector_Percentage_9]
 
         # base_url variable that stores the base url
         base_url = "https://www.alphavantage.co/query?function=SECTOR"
@@ -148,13 +176,10 @@ class Ui_MainWindow(object):
         # return response object
         req_ob = requests.get(main_url)
 
-        # json method return json format
-        # data into python dictionary data type.
-
         # result contains list of nested dictionaries
         result = req_ob.json()
 
-        parsed_dictionary = result['Rank A: Real-Time Performance']
+        parsed_dictionary = result[timeline_indice[self.Sector_Performance_Title.currentIndex()]]
 
         for key in parsed_dictionary:
             if key == sector_indices[0]:
@@ -188,6 +213,11 @@ class Ui_MainWindow(object):
                 self.Sector_Name_9.setText(key)
                 self.Sector_Percentage_9.setText(parsed_dictionary[key])
 
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -416,16 +446,6 @@ class Ui_MainWindow(object):
         self.Index_Name_6 = QtWidgets.QLabel(self.centralwidget)
         self.Index_Name_6.setGeometry(QtCore.QRect(910, 32, 130, 21))
         self.Index_Name_6.setObjectName("Index_Name_6")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(0, 680, 1024, 21))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setAutoFillBackground(False)
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
         self.Sector_Name_0 = QtWidgets.QLabel(self.centralwidget)
         self.Sector_Name_0.setGeometry(QtCore.QRect(14, 710, 141, 16))
         font = QtGui.QFont()
@@ -566,6 +586,93 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.Sector_Percentage_8.setFont(font)
         self.Sector_Percentage_8.setObjectName("Sector_Percentage_8")
+        self.Sector_Performance_Title = QtWidgets.QComboBox(self.centralwidget)
+        self.Sector_Performance_Title.setGeometry(QtCore.QRect(780, 680, 231, 30))
+        self.Sector_Performance_Title.setObjectName("Sector_Performance_Title")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.Sector_Performance_Title.addItem("")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 680, 1024, 30))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(5, 55, 90, 15))
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.label.raise_()
+        self.TimeNow_Label.raise_()
+        self.DateNow_Label.raise_()
+        self.Index_Symbol_0.raise_()
+        self.Index_Percentage_0.raise_()
+        self.Index_Price_0.raise_()
+        self.line_2.raise_()
+        self.line_3.raise_()
+        self.Index_Symbol_1.raise_()
+        self.Index_Percentage_1.raise_()
+        self.Index_Price_1.raise_()
+        self.Index_Percentage_2.raise_()
+        self.line_4.raise_()
+        self.Index_Symbol_2.raise_()
+        self.Index_Price_2.raise_()
+        self.Index_Percentage_3.raise_()
+        self.line_5.raise_()
+        self.Index_Symbol_3.raise_()
+        self.Index_Price_3.raise_()
+        self.Index_Percentage_4.raise_()
+        self.line_6.raise_()
+        self.Index_Symbol_4.raise_()
+        self.Index_Price_4.raise_()
+        self.Index_Percentage_5.raise_()
+        self.line_7.raise_()
+        self.Index_Symbol_5.raise_()
+        self.Index_Price_5.raise_()
+        self.line.raise_()
+        self.line_8.raise_()
+        self.Index_Percentage_6.raise_()
+        self.Index_Symbol_6.raise_()
+        self.Index_Price_6.raise_()
+        self.Index_Name_0.raise_()
+        self.Index_Name_1.raise_()
+        self.Index_Name_2.raise_()
+        self.Index_Name_3.raise_()
+        self.Index_Name_4.raise_()
+        self.Index_Name_5.raise_()
+        self.Index_Name_6.raise_()
+        self.Sector_Name_0.raise_()
+        self.Sector_Percentage_0.raise_()
+        self.Sector_Percentage_1.raise_()
+        self.Sector_Name_1.raise_()
+        self.Sector_Percentage_2.raise_()
+        self.Sector_Name_2.raise_()
+        self.Sector_Percentage_3.raise_()
+        self.Sector_Name_3.raise_()
+        self.Sector_Percentage_4.raise_()
+        self.Sector_Name_4.raise_()
+        self.Sector_Percentage_5.raise_()
+        self.Sector_Name_5.raise_()
+        self.Sector_Percentage_6.raise_()
+        self.Sector_Name_6.raise_()
+        self.Sector_Percentage_7.raise_()
+        self.Sector_Name_7.raise_()
+        self.Sector_Name_9.raise_()
+        self.Sector_Percentage_9.raise_()
+        self.Sector_Name_8.raise_()
+        self.Sector_Percentage_8.raise_()
+        self.Sector_Performance_Title.raise_()
+        self.label_2.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.timer_painter = QtCore.QTimer()
@@ -580,7 +687,7 @@ class Ui_MainWindow(object):
         QtCore.QTimer.singleShot(1000, self.UpdateBanner)
         QtCore.QTimer.singleShot(1000, self.PopulateSectorPerformances)
 
-
+        self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -617,7 +724,6 @@ class Ui_MainWindow(object):
         self.Index_Name_4.setText(_translate("MainWindow", "Volatility Index"))
         self.Index_Name_5.setText(_translate("MainWindow", "Gold Shares"))
         self.Index_Name_6.setText(_translate("MainWindow", "Offshore, Inc."))
-        self.label.setText(_translate("MainWindow", "Sector Performance"))
         self.Sector_Name_0.setText(_translate("MainWindow", "Consumer Discretionary"))
         self.Sector_Percentage_0.setText(_translate("MainWindow", "-0.00%"))
         self.Sector_Percentage_1.setText(_translate("MainWindow", "-0.00%"))
@@ -638,7 +744,18 @@ class Ui_MainWindow(object):
         self.Sector_Percentage_9.setText(_translate("MainWindow", "-0.00%"))
         self.Sector_Name_8.setText(_translate("MainWindow", "Industrials"))
         self.Sector_Percentage_8.setText(_translate("MainWindow", "-0.00%"))
-
+        self.Sector_Performance_Title.setItemText(0, _translate("MainWindow", "Real-Time Performance"))
+        self.Sector_Performance_Title.setItemText(1, _translate("MainWindow", "1 Day Performance"))
+        self.Sector_Performance_Title.setItemText(2, _translate("MainWindow", "5 Day Performance"))
+        self.Sector_Performance_Title.setItemText(3, _translate("MainWindow", "1 Month Performance"))
+        self.Sector_Performance_Title.setItemText(4, _translate("MainWindow", "3 Month Performance"))
+        self.Sector_Performance_Title.setItemText(5, _translate("MainWindow", "Year-to-Date (YTD) Performance"))
+        self.Sector_Performance_Title.setItemText(6, _translate("MainWindow", "1 Year Performance"))
+        self.Sector_Performance_Title.setItemText(7, _translate("MainWindow", "3 Year Performance"))
+        self.Sector_Performance_Title.setItemText(8, _translate("MainWindow", "5 Year Performance"))
+        self.Sector_Performance_Title.setItemText(9, _translate("MainWindow", "10 Year Performance"))
+        self.label.setText(_translate("MainWindow", "Sector Performance"))
+        self.label_2.setText(_translate("MainWindow", "Open"))
 
 if __name__ == "__main__":
     import sys

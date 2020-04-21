@@ -2,7 +2,11 @@
 
 # Form implementation generated from reading ui file 'Interface_Workfile.ui'
 #
+<<<<<<< Updated upstream
 # Created by: PyQt5 UI code generator 5.14.1
+=======
+# Created by: PyQt5 UI code generator 5.14.2
+>>>>>>> Stashed changes
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -70,10 +74,17 @@ class Ui_MainWindow(object):
         request = session.get(url, timeout=5)
         closing_price_data = request.json()
 
+<<<<<<< Updated upstream
         # Add the all widgets into an array t=
         colour_change_widgets = [self.Index_Percentage_0,self.Index_Percentage_1,self.Index_Percentage_2,self.Index_Percentage_3,
                                  self.Index_Percentage_4,self.Index_Percentage_5,self.Index_Percentage_6]
 
+=======
+        #Add percentage symbols in the array so we can loop through them in a more efficient manner
+        index_percentage_widgets = [self.Index_Percentage_0, self.Index_Percentage_1, self.Index_Percentage_2,
+                                    self.Index_Percentage_3, self.Index_Percentage_4, self.Index_Percentage_5,
+                                    self.Index_Percentage_6]
+>>>>>>> Stashed changes
 
         # We would parse the data by looping through the nested dictionary and
         # insert the content of each dictionary into its rightful place
@@ -117,13 +128,20 @@ class Ui_MainWindow(object):
 
         # Go through every single percentage changed that needs colour adjusted and make red for losses
         # and green for anything that's above 0.00%
+<<<<<<< Updated upstream
         for w in colour_change_widgets:
+=======
+        for w in index_percentage_widgets:
+>>>>>>> Stashed changes
             if '-' in w.text():
                 w.setStyleSheet("color:red")
             else:
                 w.setStyleSheet("color:green")
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     # -------------------------------------------------------------------
     # Function Name: PopulateSectorPerformances
     #
@@ -158,6 +176,7 @@ class Ui_MainWindow(object):
                           'Consumer Staples', 'Health Care', 'Materials', 'Utilities', 'Industrials', 'Financials']
 
         # This index maps the timeline to the dictionary passed by the json requests by alpha vantage
+<<<<<<< Updated upstream
         timeline_indice = ['Rank A: Real-Time Performance','Rank B: 1 Day Performance','Rank C: 5 Day Performance',
                            'Rank D: 1 Month Performance','Rank E: 3 Month Performance','Rank F: Year-to-Date (YTD) Performance',
                            'Rank G: 1 Year Performance', 'Rank H: 3 Year Performance','Rank I: 5 Year Performance',
@@ -166,6 +185,19 @@ class Ui_MainWindow(object):
         colour_change_widgets = [self.Sector_Percentage_0,self.Sector_Percentage_1,self.Sector_Percentage_2,self.Sector_Percentage_3,
                                  self.Sector_Percentage_4,self.Sector_Percentage_5,self.Sector_Percentage_6,self.Sector_Percentage_7,
                                  self.Sector_Percentage_8,self.Sector_Percentage_9]
+=======
+        timeline_indice = ['Rank A: Real-Time Performance', 'Rank B: 1 Day Performance', 'Rank C: 5 Day Performance',
+                           'Rank D: 1 Month Performance', 'Rank E: 3 Month Performance',
+                           'Rank F: Year-to-Date (YTD) Performance',
+                           'Rank G: 1 Year Performance', 'Rank H: 3 Year Performance', 'Rank I: 5 Year Performance',
+                           'Rank J: 10 Year Performance']
+
+        colour_change_widgets = [self.Sector_Percentage_0, self.Sector_Percentage_1, self.Sector_Percentage_2,
+                                 self.Sector_Percentage_3,
+                                 self.Sector_Percentage_4, self.Sector_Percentage_5, self.Sector_Percentage_6,
+                                 self.Sector_Percentage_7,
+                                 self.Sector_Percentage_8, self.Sector_Percentage_9]
+>>>>>>> Stashed changes
 
         # base_url variable that stores the base url
         base_url = "https://www.alphavantage.co/query?function=SECTOR"
@@ -226,7 +258,17 @@ class Ui_MainWindow(object):
         MainWindow.resize(1024, 768)
         MainWindow.setMouseTracking(False)
         MainWindow.setAcceptDrops(False)
+<<<<<<< Updated upstream
         MainWindow.setAutoFillBackground(False)
+=======
+        MainWindow.setAccessibleName("")
+        MainWindow.setAccessibleDescription("")
+        MainWindow.setAutoFillBackground(False)
+        MainWindow.setInputMethodHints(QtCore.Qt.ImhNone)
+        MainWindow.setIconSize(QtCore.QSize(0, 0))
+        MainWindow.setAnimated(True)
+        MainWindow.setDocumentMode(False)
+>>>>>>> Stashed changes
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.TimeNow_Label = QtWidgets.QLabel(self.centralwidget)
@@ -613,6 +655,21 @@ class Ui_MainWindow(object):
         self.label_2.setGeometry(QtCore.QRect(5, 55, 90, 15))
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
+<<<<<<< Updated upstream
+=======
+        self.Search_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.Search_Button.setGeometry(QtCore.QRect(120, 85, 25, 25))
+        self.Search_Button.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("Search_Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Search_Button.setIcon(icon)
+        self.Search_Button.setObjectName("Search_Button")
+        self.Search_Bar = QtWidgets.QLineEdit(self.centralwidget)
+        self.Search_Bar.setGeometry(QtCore.QRect(5, 85, 141, 25))
+        self.Search_Bar.setMaxLength(18)
+        self.Search_Bar.setObjectName("Search_Bar")
+        self.Search_Bar.raise_()
+>>>>>>> Stashed changes
         self.label.raise_()
         self.TimeNow_Label.raise_()
         self.DateNow_Label.raise_()
@@ -674,6 +731,10 @@ class Ui_MainWindow(object):
         self.Sector_Percentage_8.raise_()
         self.Sector_Performance_Title.raise_()
         self.label_2.raise_()
+<<<<<<< Updated upstream
+=======
+        self.Search_Button.raise_()
+>>>>>>> Stashed changes
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.timer_painter = QtCore.QTimer()
@@ -688,7 +749,10 @@ class Ui_MainWindow(object):
         QtCore.QTimer.singleShot(1000, self.UpdateBanner)
         QtCore.QTimer.singleShot(1000, self.PopulateSectorPerformances)
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -758,6 +822,10 @@ class Ui_MainWindow(object):
         self.Sector_Performance_Title.setItemText(9, _translate("MainWindow", "10 Year Performance"))
         self.label.setText(_translate("MainWindow", "Sector Performance"))
         self.label_2.setText(_translate("MainWindow", "Open"))
+<<<<<<< Updated upstream
+=======
+        self.Search_Bar.setPlaceholderText(_translate("MainWindow", "Ticker..."))
+>>>>>>> Stashed changes
 
 
 if __name__ == "__main__":

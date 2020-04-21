@@ -25,24 +25,6 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-<<<<<<< Updated upstream
-=======
-  <property name="inputMethodHints">
-   <set>Qt::ImhNone</set>
-  </property>
-  <property name="iconSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="animated">
-   <bool>true</bool>
-  </property>
-  <property name="documentMode">
-   <bool>false</bool>
-  </property>
->>>>>>> Stashed changes
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="TimeNow_Label">
     <property name="geometry">
@@ -1153,43 +1135,6 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-<<<<<<< Updated upstream
-=======
-   <widget class="QPushButton" name="Search_Button">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>85</y>
-      <width>25</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>Search_Icon.png</normaloff>Search_Icon.png</iconset>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="Search_Bar">
-    <property name="geometry">
-     <rect>
-      <x>5</x>
-      <y>85</y>
-      <width>141</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="maxLength">
-     <number>18</number>
-    </property>
-    <property name="placeholderText">
-     <string>Ticker...</string>
-    </property>
-   </widget>
-   <zorder>Search_Bar</zorder>
->>>>>>> Stashed changes
    <zorder>label</zorder>
    <zorder>TimeNow_Label</zorder>
    <zorder>DateNow_Label</zorder>
@@ -1251,10 +1196,6 @@
    <zorder>Sector_Percentage_8</zorder>
    <zorder>Sector_Performance_Title</zorder>
    <zorder>label_2</zorder>
-<<<<<<< Updated upstream
-=======
-   <zorder>Search_Button</zorder>
->>>>>>> Stashed changes
   </widget>
  </widget>
  <resources/>

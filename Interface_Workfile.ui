@@ -1150,10 +1150,58 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QTextEdit" name="Search_Bar">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>85</y>
+      <width>141</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhDigitsOnly</set>
+    </property>
+    <property name="documentTitle">
+     <string/>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="placeholderText">
+     <string notr="true">Ticker</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>120</y>
+      <width>141</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhSensitiveData</set>
+    </property>
+   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>150</x>
       <y>85</y>
       <width>25</width>
       <height>25</height>
@@ -1161,26 +1209,6 @@
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>Search_Icon.png</normaloff>Search_Icon.png</iconset>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>5</x>
-      <y>85</y>
-      <width>116</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>Tickers</string>
-    </property>
-    <property name="clearButtonEnabled">
-     <bool>false</bool>
     </property>
    </widget>
    <zorder>label</zorder>
@@ -1244,8 +1272,9 @@
    <zorder>Sector_Percentage_8</zorder>
    <zorder>Sector_Performance_Title</zorder>
    <zorder>label_2</zorder>
+   <zorder>Search_Bar</zorder>
+   <zorder>graphicsView</zorder>
    <zorder>pushButton</zorder>
-   <zorder>lineEdit</zorder>
   </widget>
  </widget>
  <resources/>

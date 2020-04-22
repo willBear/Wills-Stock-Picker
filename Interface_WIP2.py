@@ -6,13 +6,11 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 from datetime import datetime
 import requests, json
 import urllib
-
+alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -519,6 +517,19 @@ class Ui_MainWindow(object):
         self.Company_Image.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
         self.Search_Button.clicked.connect(self.Search_Stocks)
+        self.timer_painter = QtCore.QTimer()
+        self.timer_painter.timeout.connect(self.UpdateTime)
+        self.timer_painter.start(1000)
+
+        self.stock_update_timer = QtCore.QTimer()
+        self.stock_update_timer.timeout.connect(self.UpdateBanner)
+        self.stock_update_timer.start(10000)
+
+        # Singleshot Timers that sets up a timer and populates all formation, timed loop updates are then followed
+        QtCore.QTimer.singleShot(1000, self.UpdateBanner)
+        QtCore.QTimer.singleShot(1000, self.PopulateSectorPerformances)
+
+        self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -543,6 +554,216 @@ class Ui_MainWindow(object):
         image.loadFromData(data)
         self.Company_Image.setPixmap(QtGui.QPixmap(image))
 
+        # -------------------------------------------------------------------
+        # Function Name: UpdateTime
+        #
+        # Description: This function is run every 1 second to update the date
+        # and time labels on the top left of the main window.This function is
+        # called from the QT timer expiry at the bottom of the setupUI
+        # function.
+        # -------------------------------------------------------------------
+
+    def UpdateTime(self):
+        current_time = datetime.now()
+        # To Debug the current time
+        # print(current_time.strftime("%H:%M:%S"))
+
+        # Update the text label with current time, one for date and another for current time
+        self.TimeNow_Label.setText(current_time.strftime("%H:%M:%S"))
+        self.DateNow_Label.setText(current_time.strftime("%b %d %Y"))
+
+        # -------------------------------------------------------------------
+        # Function Name: UpdateBanner
+        #
+        # Description: This function is run every 30 seconds to update the
+        # banner on the top of main window application that refreshes by
+        # making a query to financialmodellingprep.com, multiple quotes.
+        # When we receive a correct result from the website, we would update
+        # the banners to have its information filled in.
+        #
+        # TODO:
+        # Change colour based on the percentaged changed being + or -
+        # Background colour flash for every update
+        # Improve mass updating of banners to shave processing time
+        # -------------------------------------------------------------------
+
+    def UpdateBanner(self):
+        # Fetch Real Time Data and Stores Previous Day Price
+        # -------------------------------------------------------------------
+        # ETFs Shown on Header:
+        # SPY - SPDR S&P 500 ETF Trust -
+        # QQQ - Invesco QQQ Trust
+        # IWM - iShares Russell 2000 ETF
+        # DIA - SPDR Dow Jones Industrial Average ETF Trust
+        # ^VIX - CBOE Volatility Index
+        # GLD - SPDR Gold Shares
+        # WTI - Crude Oil Index
+        # -------------------------------------------------------------------
+        banner_indices = ['SPY', 'QQQ', 'IWM', 'DIA', '^VIX', 'GLD', 'WTI']
+
+        # Iterate through the array of tickers and add it to the quote string
+        # We are requesting multiple quotes from
+        quote_string = ','.join(banner_indices)
+
+        # The URL that we will concatenate with quote_string, makes the request
+        # and stores the result into closing_price_data
+        url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string
+        session = requests.session()
+        request = session.get(url, timeout=5)
+        closing_price_data = request.json()
+
+        # Add the all widgets into an array t=
+        colour_change_widgets = [self.Index_Percentage_0, self.Index_Percentage_1, self.Index_Percentage_2,
+                                 self.Index_Percentage_3,
+                                 self.Index_Percentage_4, self.Index_Percentage_5, self.Index_Percentage_6]
+
+        # We would parse the data by looping through the nested dictionary and
+        # insert the content of each dictionary into its rightful place
+        for key in closing_price_data:
+            if key['symbol'] == banner_indices[0]:
+                self.Index_Symbol_0.setText(key['symbol'])
+                self.Index_Price_0.setText(str(key['price']))
+                # We take out the one word pre-fix to the ETF name
+                self.Index_Name_0.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_0.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[1]:
+                self.Index_Symbol_1.setText(key['symbol'])
+                self.Index_Price_1.setText(str(key['price']))
+                self.Index_Name_1.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_1.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[2]:
+                self.Index_Symbol_2.setText(key['symbol'])
+                self.Index_Price_2.setText(str(key['price']))
+                self.Index_Name_2.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_2.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[3]:
+                self.Index_Symbol_3.setText(key['symbol'])
+                self.Index_Price_3.setText(str(key['price']))
+                self.Index_Name_3.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_3.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[4]:
+                self.Index_Symbol_4.setText(key['symbol'])
+                self.Index_Price_4.setText(str(key['price']))
+                self.Index_Name_4.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_4.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[5]:
+                self.Index_Symbol_5.setText(key['symbol'])
+                self.Index_Price_5.setText(str(key['price']))
+                self.Index_Name_5.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_5.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[6]:
+                self.Index_Symbol_6.setText(key['symbol'])
+                self.Index_Price_6.setText(str(key['price']))
+                self.Index_Name_6.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_6.setText(str(key['changesPercentage']) + "%")
+
+        # Go through every single percentage changed that needs colour adjusted and make red for losses
+        # and green for anything that's above 0.00%
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
+
+        # -------------------------------------------------------------------
+        # Function Name: PopulateSectorPerformances
+        #
+        # Description: This function is called to populate the performances of
+        #              each sector performance in real time
+        #
+        # TODO:
+        # Change colour based on the percentaged changed being + or -
+        # Background colour flash for every update
+        # Improve mass updating of banners to shave processing time
+        # -------------------------------------------------------------------
+
+    def PopulateSectorPerformances(self):
+        # Fetch Real Time Data and Stores Previous Day Price
+        # -------------------------------------------------------------------
+        # Sectors Interested:
+        # Slot 0 - Consumer Discretionary
+        # Slot 1 - Energy
+        # Slot 2 - Communication Services
+        # Slot 3 - Information Technology
+        # Slot 4 - Consumer Staples
+        # Slot 5 - Health Care
+        # Slot 6 - Materials
+        # Slot 7 - Utilities
+        # Slot 8 - Industrials
+        # Slot 9 - Financials
+        # Based on the selected index of the performance, we would update the
+        # titles and data associated with the sector performance
+        # -------------------------------------------------------------------
+        print("The index changed is: " + str(self.Sector_Performance_Title.currentIndex()))
+
+        sector_indices = ['Consumer Discretionary', 'Energy', 'Communication Services', 'Information Technology',
+                          'Consumer Staples', 'Health Care', 'Materials', 'Utilities', 'Industrials', 'Financials']
+
+        # This index maps the timeline to the dictionary passed by the json requests by alpha vantage
+        timeline_indice = ['Rank A: Real-Time Performance', 'Rank B: 1 Day Performance', 'Rank C: 5 Day Performance',
+                           'Rank D: 1 Month Performance', 'Rank E: 3 Month Performance',
+                           'Rank F: Year-to-Date (YTD) Performance',
+                           'Rank G: 1 Year Performance', 'Rank H: 3 Year Performance', 'Rank I: 5 Year Performance',
+                           'Rank J: 10 Year Performance']
+
+        colour_change_widgets = [self.Sector_Percentage_0, self.Sector_Percentage_1, self.Sector_Percentage_2,
+                                 self.Sector_Percentage_3,
+                                 self.Sector_Percentage_4, self.Sector_Percentage_5, self.Sector_Percentage_6,
+                                 self.Sector_Percentage_7,
+                                 self.Sector_Percentage_8, self.Sector_Percentage_9]
+
+        # base_url variable that stores the base url
+        base_url = "https://www.alphavantage.co/query?function=SECTOR"
+
+        # main_url variable that stores complete url with API key
+        main_url = base_url + "&apikey=" + alpha_vantage_api_key
+
+        # get method of requests module
+        # return response object
+        req_ob = requests.get(main_url)
+
+        # result contains list of nested dictionaries
+        result = req_ob.json()
+
+        parsed_dictionary = result[timeline_indice[self.Sector_Performance_Title.currentIndex()]]
+
+        for key in parsed_dictionary:
+            if key == sector_indices[0]:
+                self.Sector_Name_0.setText(key)
+                self.Sector_Percentage_0.setText(parsed_dictionary[key])
+            elif key == sector_indices[1]:
+                self.Sector_Name_1.setText(key)
+                self.Sector_Percentage_1.setText(parsed_dictionary[key])
+            elif key == sector_indices[2]:
+                self.Sector_Name_2.setText(key)
+                self.Sector_Percentage_2.setText(parsed_dictionary[key])
+            elif key == sector_indices[3]:
+                self.Sector_Name_3.setText(key)
+                self.Sector_Percentage_3.setText(parsed_dictionary[key])
+            elif key == sector_indices[4]:
+                self.Sector_Name_4.setText(key)
+                self.Sector_Percentage_4.setText(parsed_dictionary[key])
+            elif key == sector_indices[5]:
+                self.Sector_Name_5.setText(key)
+                self.Sector_Percentage_5.setText(parsed_dictionary[key])
+            elif key == sector_indices[6]:
+                self.Sector_Name_6.setText(key)
+                self.Sector_Percentage_6.setText(parsed_dictionary[key])
+            elif key == sector_indices[7]:
+                self.Sector_Name_7.setText(key)
+                self.Sector_Percentage_7.setText(parsed_dictionary[key])
+            elif key == sector_indices[8]:
+                self.Sector_Name_8.setText(key)
+                self.Sector_Percentage_8.setText(parsed_dictionary[key])
+            elif key == sector_indices[9]:
+                self.Sector_Name_9.setText(key)
+                self.Sector_Percentage_9.setText(parsed_dictionary[key])
+
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

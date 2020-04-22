@@ -8,21 +8,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 from datetime import datetime
 import requests, json
+import urllib
 
-def Search_Stocks(self):
-    # We first check for the validity of the string input
-    ticker_string = self.Search_Bar.text()
-
-    # Get rid of white spaces if there are any
-    ticker_string = ticker_string.strip()
-
-    url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
-    session = requests.session()
-    request = session.get(url, timeout=5)
-    company_data = request.json()
-    print(company_data)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -424,16 +414,42 @@ class Ui_MainWindow(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.Search_Button = QtWidgets.QPushButton(self.centralwidget)
-        self.Search_Button.setGeometry(QtCore.QRect(117, 85, 25, 25))
+        self.Search_Button.setGeometry(QtCore.QRect(105, 85, 25, 21))
         self.Search_Button.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("Search_Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Search_Button.setIcon(icon)
-        self.Search_Button.setIconSize(QtCore.QSize(16, 16))
+        self.Search_Button.setIconSize(QtCore.QSize(21, 21))
         self.Search_Button.setObjectName("Search_Button")
         self.Search_Bar = QtWidgets.QLineEdit(self.centralwidget)
-        self.Search_Bar.setGeometry(QtCore.QRect(5, 85, 113, 25))
+        self.Search_Bar.setGeometry(QtCore.QRect(5, 85, 100, 21))
         self.Search_Bar.setObjectName("Search_Bar")
+        self.Company_Name = QtWidgets.QLabel(self.centralwidget)
+        self.Company_Name.setGeometry(QtCore.QRect(140, 85, 175, 21))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Company_Name.setFont(font)
+        self.Company_Name.setObjectName("Company_Name")
+        self.Description_Header = QtWidgets.QLabel(self.centralwidget)
+        self.Description_Header.setGeometry(QtCore.QRect(140, 120, 81, 21))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Description_Header.setFont(font)
+        self.Description_Header.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.Description_Header.setObjectName("Description_Header")
+        self.Description_Label = QtWidgets.QLabel(self.centralwidget)
+        self.Description_Label.setGeometry(QtCore.QRect(140, 140, 371, 101))
+        self.Description_Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.Description_Label.setWordWrap(True)
+        self.Description_Label.setObjectName("Description_Label")
+        self.Company_Image = QtWidgets.QLabel(self.centralwidget)
+        self.Company_Image.setGeometry(QtCore.QRect(5, 120, 125, 125))
+        self.Company_Image.setScaledContents(True)
+        self.Company_Image.setAlignment(QtCore.Qt.AlignCenter)
+        self.Company_Image.setObjectName("Company_Image")
         self.label.raise_()
         self.TimeNow_Label.raise_()
         self.DateNow_Label.raise_()
@@ -497,11 +513,36 @@ class Ui_MainWindow(object):
         self.label_2.raise_()
         self.Search_Button.raise_()
         self.Search_Bar.raise_()
+        self.Company_Name.raise_()
+        self.Description_Header.raise_()
+        self.Description_Label.raise_()
+        self.Company_Image.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
-        self.Search_Button.clicked.connect(
-            lambda:Search_Stocks(self))
+        self.Search_Button.clicked.connect(self.Search_Stocks)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def Search_Stocks(self):
+        # We first check for the validity of the string input
+        ticker_string = self.Search_Bar.text()
+
+        # Get rid of white spaces if there are any
+        ticker_string = ticker_string.strip()
+
+        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
+        session = requests.session()
+        request = session.get(url, timeout=5)
+        company_data = request.json()
+        company_profile = company_data['profile']
+        self.Company_Name.setText(company_profile['companyName'])
+        self.Description_Label.setText(company_profile['description'])
+
+        image_url = company_profile['image']
+        data = urllib.request.urlopen(image_url).read()
+        image = QtGui.QImage()
+        image.loadFromData(data)
+        self.Company_Image.setPixmap(QtGui.QPixmap(image))
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -569,6 +610,10 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Sector Performance"))
         self.label_2.setText(_translate("MainWindow", "Open"))
         self.Search_Bar.setPlaceholderText(_translate("MainWindow", "Tickers..."))
+        self.Company_Name.setText(_translate("MainWindow", "Apple Inc."))
+        self.Description_Header.setText(_translate("MainWindow", "Description:"))
+        self.Description_Label.setText(_translate("MainWindow", "Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications."))
+        self.Company_Image.setText(_translate("MainWindow", "[img]"))
 
 
 if __name__ == "__main__":

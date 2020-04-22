@@ -13,6 +13,19 @@ import requests, json
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
+def Search_Stocks(self):
+    # We first check for the validity of the string input
+    ticker_string = self.Search_Bar.text()
+
+    # Get rid of white spaces if there are any
+    ticker_string = ticker_string.strip()
+
+    url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
+    session = requests.session()
+    request = session.get(url, timeout=5)
+    company_data = request.json()
+    print(company_data)
+
 class Ui_MainWindow(object):
     # -------------------------------------------------------------------
     # Function Name: UpdateTime

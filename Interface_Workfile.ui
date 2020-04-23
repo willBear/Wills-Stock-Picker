@@ -1191,7 +1191,7 @@
      <rect>
       <x>140</x>
       <y>85</y>
-      <width>150</width>
+      <width>200</width>
       <height>21</height>
      </rect>
     </property>
@@ -1225,7 +1225,7 @@
      <string>Description:</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="Description_Label">
@@ -1252,8 +1252,8 @@
      <rect>
       <x>5</x>
       <y>120</y>
-      <width>125</width>
-      <height>125</height>
+      <width>100</width>
+      <height>100</height>
      </rect>
     </property>
     <property name="text">
@@ -1264,6 +1264,53 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Beta_Title">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>120</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Industry:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Beta_Title_2">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>145</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Exchange:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
     </property>
    </widget>
    <zorder>label</zorder>
@@ -1333,6 +1380,8 @@
    <zorder>Description_Header</zorder>
    <zorder>Description_Label</zorder>
    <zorder>Company_Image</zorder>
+   <zorder>Beta_Title</zorder>
+   <zorder>Beta_Title_2</zorder>
   </widget>
  </widget>
  <resources/>

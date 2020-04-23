@@ -423,7 +423,7 @@ class Ui_MainWindow(object):
         self.Search_Bar.setGeometry(QtCore.QRect(5, 85, 100, 21))
         self.Search_Bar.setObjectName("Search_Bar")
         self.Company_Name = QtWidgets.QLabel(self.centralwidget)
-        self.Company_Name.setGeometry(QtCore.QRect(140, 85, 175, 21))
+        self.Company_Name.setGeometry(QtCore.QRect(140, 85, 200, 21))
         font = QtGui.QFont()
         font.setPointSize(15)
         font.setBold(True)
@@ -444,7 +444,7 @@ class Ui_MainWindow(object):
         self.Description_Label.setWordWrap(True)
         self.Description_Label.setObjectName("Description_Label")
         self.Company_Image = QtWidgets.QLabel(self.centralwidget)
-        self.Company_Image.setGeometry(QtCore.QRect(5, 120, 125, 125))
+        self.Company_Image.setGeometry(QtCore.QRect(5, 120, 100, 100))
         self.Company_Image.setScaledContents(True)
         self.Company_Image.setAlignment(QtCore.Qt.AlignCenter)
         self.Company_Image.setObjectName("Company_Image")
@@ -516,6 +516,14 @@ class Ui_MainWindow(object):
         self.Description_Label.raise_()
         self.Company_Image.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
+
+        # Set the visibility of the widgets to 0 when we initialize
+        self.Company_Image.hide()
+        self.Company_Name.hide()
+        self.Description_Label.hide()
+        self.Description_Header.hide()
+
+        # Whenever the search button is pressed, we would run the search stocks function
         self.Search_Button.clicked.connect(self.Search_Stocks)
         self.timer_painter = QtCore.QTimer()
         self.timer_painter.timeout.connect(self.UpdateTime)
@@ -529,21 +537,32 @@ class Ui_MainWindow(object):
         QtCore.QTimer.singleShot(1000, self.UpdateBanner)
         QtCore.QTimer.singleShot(1000, self.PopulateSectorPerformances)
 
+        # Whenever the index of the performance title is changed, we would run populate Sector Performances Function
         self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def Search_Stocks(self):
-        # We first check for the validity of the string input
-        ticker_string = self.Search_Bar.text()
 
         # Get rid of white spaces if there are any
+        ticker_string = self.Search_Bar.text()
         ticker_string = ticker_string.strip()
+
+        # Group the widgets together in an array so we can group set its visibility status
+        stocks_group_widgets = [self.Company_Name,self.Company_Image,self.Description_Header,self.Description_Label]
 
         url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
         session = requests.session()
         request = session.get(url, timeout=5)
         company_data = request.json()
+
+        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
+        # pairs in the returned message, if it has less than 5 key-value pair, we would throw message
+        print(company_data)
+        if len(company_data) < 2:
+            return
+
         company_profile = company_data['profile']
         self.Company_Name.setText(company_profile['companyName'])
         self.Description_Label.setText(company_profile['description'])
@@ -553,6 +572,10 @@ class Ui_MainWindow(object):
         image = QtGui.QImage()
         image.loadFromData(data)
         self.Company_Image.setPixmap(QtGui.QPixmap(image))
+
+        # Now since all the data has been loaded, we would set the visibility of all widgets to be visible
+        for widget in stocks_group_widgets:
+            widget.show()
 
         # -------------------------------------------------------------------
         # Function Name: UpdateTime

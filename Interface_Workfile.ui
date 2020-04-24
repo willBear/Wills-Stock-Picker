@@ -1197,7 +1197,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>13</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -1206,7 +1206,7 @@
      <string>AAPL</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Description_Header">
+   <widget class="QLabel" name="Stock_Description_Header">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -1228,7 +1228,7 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Description_Label">
+   <widget class="QLabel" name="Stock_Description">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -1247,7 +1247,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="Company_Image">
+   <widget class="QLabel" name="Stock_Image">
     <property name="geometry">
      <rect>
       <x>5</x>
@@ -1266,7 +1266,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Industry_Title">
+   <widget class="QLabel" name="Stock_Industry_Title">
     <property name="geometry">
      <rect>
       <x>525</x>
@@ -1288,7 +1288,7 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Exchange_Title">
+   <widget class="QLabel" name="Stock_Exchange_Title">
     <property name="geometry">
      <rect>
       <x>525</x>
@@ -1313,7 +1313,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="Industry_Label">
+   <widget class="QLabel" name="Stock_Industry">
     <property name="geometry">
      <rect>
       <x>600</x>
@@ -1335,7 +1335,7 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Exchange_Label">
+   <widget class="QLabel" name="Exchange">
     <property name="geometry">
      <rect>
       <x>600</x>
@@ -1454,7 +1454,7 @@
      <rect>
       <x>0</x>
       <y>110</y>
-      <width>220</width>
+      <width>1024</width>
       <height>20</height>
      </rect>
     </property>
@@ -1469,43 +1469,23 @@
      <string>AAPL</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Name_Filler">
+   <widget class="QLabel" name="Stock_Market_Capitalization_Header">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>110</y>
-      <width>804</width>
+      <x>720</x>
+      <y>160</y>
+      <width>70</width>
       <height>20</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Stock_Market_Capitalization">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>85</y>
-      <width>140</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Mkt Cap: </string>
+     <string>Mkt Cap:</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1514,7 +1494,7 @@
    <widget class="QLabel" name="Stock_Beta">
     <property name="geometry">
      <rect>
-      <x>940</x>
+      <x>800</x>
       <y>85</y>
       <width>80</width>
       <height>20</height>
@@ -1599,6 +1579,75 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="Stock_Earnings_Title">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>180</y>
+      <width>70</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Earnings:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Market_Capitalization">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>160</y>
+      <width>120</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>1.3 Billion</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Earnings">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>180</y>
+      <width>120</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>13-Apr-2020</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>TimeNow_Label</zorder>
    <zorder>DateNow_Label</zorder>
@@ -1663,25 +1712,27 @@
    <zorder>Search_Button</zorder>
    <zorder>Search_Bar</zorder>
    <zorder>Stock_Symbol</zorder>
-   <zorder>Description_Header</zorder>
-   <zorder>Description_Label</zorder>
-   <zorder>Company_Image</zorder>
-   <zorder>Industry_Title</zorder>
-   <zorder>Exchange_Title</zorder>
-   <zorder>Industry_Label</zorder>
-   <zorder>Exchange_Label</zorder>
+   <zorder>Stock_Description_Header</zorder>
+   <zorder>Stock_Description</zorder>
+   <zorder>Stock_Image</zorder>
+   <zorder>Stock_Industry_Title</zorder>
+   <zorder>Stock_Exchange_Title</zorder>
+   <zorder>Stock_Industry</zorder>
+   <zorder>Exchange</zorder>
    <zorder>Stock_Price</zorder>
    <zorder>Stock_Percentage_Change</zorder>
    <zorder>Stock_Volume</zorder>
    <zorder>Stock_Line_1</zorder>
    <zorder>Stock_Line_2</zorder>
    <zorder>Stock_Name</zorder>
-   <zorder>Stock_Name_Filler</zorder>
-   <zorder>Stock_Market_Capitalization</zorder>
+   <zorder>Stock_Market_Capitalization_Header</zorder>
    <zorder>Stock_Beta</zorder>
    <zorder>Stock_Open</zorder>
    <zorder>Stock_High</zorder>
    <zorder>Stock_Low</zorder>
+   <zorder>Stock_Earnings_Title</zorder>
+   <zorder>Stock_Market_Capitalization</zorder>
+   <zorder>Stock_Earnings</zorder>
   </widget>
  </widget>
  <resources/>

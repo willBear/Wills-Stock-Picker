@@ -543,49 +543,6 @@ class Ui_MainWindow(object):
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def Search_Stocks(self):
-
-        # Get rid of white spaces if there are any
-        ticker_string = self.Search_Bar.text()
-        ticker_string = ticker_string.strip()
-
-        # Group the widgets together in an array so we can group set its visibility status
-        stocks_group_widgets = [self.Company_Name,self.Company_Image,self.Description_Header,self.Description_Label]
-
-        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
-        session = requests.session()
-        request = session.get(url, timeout=5)
-        company_data = request.json()
-
-        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
-        # pairs in the returned message, if it has less than 5 key-value pair, we would throw message
-        print(company_data)
-        if len(company_data) < 2:
-            return
-
-        company_profile = company_data['profile']
-        self.Company_Name.setText(company_profile['companyName'])
-        self.Description_Label.setText(company_profile['description'])
-
-        image_url = company_profile['image']
-        data = urllib.request.urlopen(image_url).read()
-        image = QtGui.QImage()
-        image.loadFromData(data)
-        self.Company_Image.setPixmap(QtGui.QPixmap(image))
-
-        # Now since all the data has been loaded, we would set the visibility of all widgets to be visible
-        for widget in stocks_group_widgets:
-            widget.show()
-
-        # -------------------------------------------------------------------
-        # Function Name: UpdateTime
-        #
-        # Description: This function is run every 1 second to update the date
-        # and time labels on the top left of the main window.This function is
-        # called from the QT timer expiry at the bottom of the setupUI
-        # function.
-        # -------------------------------------------------------------------
-
     def UpdateTime(self):
         current_time = datetime.now()
         # To Debug the current time
@@ -609,6 +566,54 @@ class Ui_MainWindow(object):
         # Background colour flash for every update
         # Improve mass updating of banners to shave processing time
         # -------------------------------------------------------------------
+
+    # -------------------------------------------------------------------
+    # Function Name: UpdateTime
+    #
+    # Description: This function is run every 1 second to update the date
+    # and time labels on the top left of the main window.This function is
+    # called from the QT timer expiry at the bottom of the setupUI
+    # function.
+    # -------------------------------------------------------------------
+
+    def Search_Stocks(self):
+
+        # Get rid of white spaces if there are any
+        ticker_string = self.Search_Bar.text()
+        ticker_string = ticker_string.strip()
+
+        # Group the widgets together in an array so we can group set its visibility status
+        stocks_group_widgets = [self.Company_Name, self.Company_Image, self.Description_Header, self.Description_Label]
+
+        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
+        session = requests.session()
+        request = session.get(url, timeout=5)
+        company_data = request.json()
+
+        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
+        # pairs in the returned message, if it has less than 5 key-value pair, we would throw message
+        print(company_data)
+        if len(company_data) < 2:
+            return
+
+        # We do some parsing of the company data
+        company_profile = company_data['profile']
+        self.Company_Name.setText(company_profile['companyName'])
+        self.Description_Label.setText(company_profile['description'])
+
+        # Take the Image URL from information passed down from Financial Modelling Prep
+        image_url = company_profile['image']
+
+        # We would use the URL module and read the image file, convert it to byte
+        data = urllib.request.urlopen(image_url).read()
+        image = QtGui.QImage()
+        image.loadFromData(data)
+        # We set the company image to have the converted image
+        self.Company_Image.setPixmap(QtGui.QPixmap(image))
+
+        # Now since all the data has been loaded, we would set the visibility of all widgets to be visible
+        for widget in stocks_group_widgets:
+            widget.show()
 
     def UpdateBanner(self):
         # Fetch Real Time Data and Stores Previous Day Price

@@ -724,9 +724,18 @@ class Ui_MainWindow(object):
         request = session.get(url, timeout=5)
         company_data = request.json()
 
+        quote_url = "https://financialmodelingprep.com/api/v3/quote/" + ticker_string
+        session = requests.session()
+        request = session.get(quote_url, timeout=5)
+        quote_data = request.json()
         # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
         # pairs in the returned message, if it has less than 2 key-value pairs, we would throw message
         print(company_data)
+        print('\n')
+        print(quote_data)
+        print(len(quote_data))
+        print(quote_data[0]['dayLow'])
+
         if len(company_data) < 2:
             return
 
@@ -754,7 +763,9 @@ class Ui_MainWindow(object):
         self.Stock_Percentage_Change.setText(percentage_change)
 
         self.Stock_Volume.setText('Vol: '+ company_profile['volAvg'])
-
+        self.Stock_Low.setText('L: ' + str(quote_data[0]['dayLow']))
+        self.Stock_High.setText('H: ' + str(quote_data[0]['dayHigh']))
+        self.Stock_Open.setText('O: ' + str(quote_data[0]['open']))
         beta = company_profile['beta']
         beta = beta[0:4]
 

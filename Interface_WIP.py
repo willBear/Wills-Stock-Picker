@@ -432,7 +432,7 @@ class Ui_MainWindow(object):
         self.Stock_Symbol.setFont(font)
         self.Stock_Symbol.setObjectName("Stock_Symbol")
         self.Description_Header = QtWidgets.QLabel(self.centralwidget)
-        self.Description_Header.setGeometry(QtCore.QRect(140, 128, 81, 21))
+        self.Description_Header.setGeometry(QtCore.QRect(140, 140, 81, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -440,17 +440,17 @@ class Ui_MainWindow(object):
         self.Description_Header.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Description_Header.setObjectName("Description_Header")
         self.Description_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Description_Label.setGeometry(QtCore.QRect(140, 148, 371, 101))
+        self.Description_Label.setGeometry(QtCore.QRect(140, 160, 371, 101))
         self.Description_Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.Description_Label.setWordWrap(True)
         self.Description_Label.setObjectName("Description_Label")
         self.Company_Image = QtWidgets.QLabel(self.centralwidget)
-        self.Company_Image.setGeometry(QtCore.QRect(5, 128, 100, 100))
+        self.Company_Image.setGeometry(QtCore.QRect(5, 140, 100, 100))
         self.Company_Image.setScaledContents(True)
         self.Company_Image.setAlignment(QtCore.Qt.AlignCenter)
         self.Company_Image.setObjectName("Company_Image")
         self.Industry_Title = QtWidgets.QLabel(self.centralwidget)
-        self.Industry_Title.setGeometry(QtCore.QRect(525, 145, 70, 20))
+        self.Industry_Title.setGeometry(QtCore.QRect(525, 160, 70, 20))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -458,7 +458,7 @@ class Ui_MainWindow(object):
         self.Industry_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Industry_Title.setObjectName("Industry_Title")
         self.Exchange_Title = QtWidgets.QLabel(self.centralwidget)
-        self.Exchange_Title.setGeometry(QtCore.QRect(525, 170, 70, 21))
+        self.Exchange_Title.setGeometry(QtCore.QRect(525, 180, 70, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -467,7 +467,7 @@ class Ui_MainWindow(object):
         self.Exchange_Title.setOpenExternalLinks(False)
         self.Exchange_Title.setObjectName("Exchange_Title")
         self.Industry_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Industry_Label.setGeometry(QtCore.QRect(600, 145, 120, 20))
+        self.Industry_Label.setGeometry(QtCore.QRect(600, 160, 200, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -475,7 +475,7 @@ class Ui_MainWindow(object):
         self.Industry_Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Industry_Label.setObjectName("Industry_Label")
         self.Exchange_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Exchange_Label.setGeometry(QtCore.QRect(600, 170, 120, 20))
+        self.Exchange_Label.setGeometry(QtCore.QRect(600, 180, 200, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -732,7 +732,7 @@ class Ui_MainWindow(object):
 
         # We do some parsing of the company data
         company_profile = company_data['profile']
-        self.Stock_Name.setText(company_profile['companyName'])
+        self.Stock_Name.setText('  ' + str(company_profile['companyName']))
         self.Stock_Symbol.setText(company_data['symbol'])
         self.Description_Label.setText(company_profile['description'])
 
@@ -753,14 +753,24 @@ class Ui_MainWindow(object):
         percentage_change = percentage_change[1:-1]
         self.Stock_Percentage_Change.setText(percentage_change)
 
-        self.Stock_Volume.setText(company_profile['volAvg'])
-        self.Stock_Beta.setText('Beta: '+ str(company_profile['beta']))
+        self.Stock_Volume.setText('Vol: '+ company_profile['volAvg'])
+
+        beta = company_profile['beta']
+        beta = beta[0:4]
+
+        self.Stock_Beta.setText('Beta: '+ beta)
         print(type(company_profile['mktCap']))
         self.Stock_Market_Capitalization.setText(company_profile['mktCap'])
+        self.Exchange_Label.setText(company_profile['exchange'])
+        self.Industry_Label.setText(company_profile['industry'])
+
 
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible
         for widget in Stock_Widgets:
             widget.show()
+
+        self.Stock_Name.setStyleSheet('Background:BROWN;Color:WHITE')
+        self.Stock_Name_Filler.setStyleSheet('Background:GREEN')
 
     # -------------------------------------------------------------------
     # Function Name: UpdateBanner

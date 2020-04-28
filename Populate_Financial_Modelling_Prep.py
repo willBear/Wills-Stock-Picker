@@ -24,11 +24,7 @@ def Populate_Stock_List():
     # we need to store the useful data into a server
     # The dictionary returned from the website is a nested dictionary
     # therefore we travelse through this dictionary and save it all
-    print(len(stock_list['symbolsList']))
-    hi = 0
-    for key in stock_list['symbolsList']:
-        print(stock_list['symbolsList'][hi])
-        hi = hi + 1
+    return(stock_list['symbolsList'])
 
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
@@ -42,7 +38,40 @@ def create_connection(db_file):
         if conn:
             conn.close()
 
+def create_table(db_file):
+    """ Try connection to the SQLite database  if not exist then we make a table
+        The table format are as of follows, please refer to dict.txt for more
+        information
+    """
+
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+        parsed_dictionary = Populate_Stock_List()
+        c = conn.cursor()
+        c.execute("DROP TABLE stocksList")
+        c.execute("CREATE TABLE IF NOT EXISTS stocksList( symbol TEXT, name TEXT, exchange TEXT);")
+        for key in parsed_dictionary:
+            print(key)
+            symbol = key['symbol']
+            if 'name' in key:
+                name = key['name']
+            else:
+                name = ''
+            if 'exchange' in key:
+                exchange = key['exchange']
+            else:
+                exchange = ''
+            insert_statement = 'INSERT INTO stocksList(symbol, name, exchange) VALUES("' + symbol +'","' + name + '","' + exchange + '");'
+            print(insert_statement)
+            c.execute(insert_statement)
+
+    except Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
 
 if __name__ == '__main__':
     database = r"/Users/weixiong/Documents/GitHub/Fundamental_Analysis/StockList.db"
-    create_connection(r"/Users/weixiong/Documents/GitHub/Fundamental_Analysis/StockList.db")
+    create_table(r"/Users/weixiong/Documents/GitHub/Fundamental_Analysis/StockList.db")

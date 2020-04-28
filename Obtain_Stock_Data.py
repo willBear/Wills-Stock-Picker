@@ -1,5 +1,5 @@
-import requests,json
 
+import requests,json
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -30,7 +30,7 @@ def Populate_Sector_Performances():
 
 
 def Retrieve_Technical_Indicators():
-    
+
 
 
 def Populate_Intraday_Price():

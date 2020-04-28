@@ -31,6 +31,9 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <property name="inputMethodHints">
    <set>Qt::ImhNone</set>
   </property>
@@ -1269,9 +1272,9 @@
    <widget class="QLabel" name="Stock_Industry_Title">
     <property name="geometry">
      <rect>
-      <x>525</x>
+      <x>530</x>
       <y>160</y>
-      <width>70</width>
+      <width>100</width>
       <height>20</height>
      </rect>
     </property>
@@ -1291,9 +1294,9 @@
    <widget class="QLabel" name="Stock_Exchange_Title">
     <property name="geometry">
      <rect>
-      <x>525</x>
+      <x>530</x>
       <y>180</y>
-      <width>70</width>
+      <width>100</width>
       <height>21</height>
      </rect>
     </property>
@@ -1316,7 +1319,7 @@
    <widget class="QLabel" name="Stock_Industry">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>635</x>
       <y>160</y>
       <width>120</width>
       <height>20</height>
@@ -1335,10 +1338,10 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Exchange">
+   <widget class="QLabel" name="Stock_Exchange">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>635</x>
       <y>180</y>
       <width>120</width>
       <height>20</height>
@@ -1465,16 +1468,19 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">Background-color:rgb(128, 0, 128); Color:White</string>
+    </property>
     <property name="text">
      <string>AAPL</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Market_Capitalization_Header">
+   <widget class="QLabel" name="Stock_Market_Capitalization_Title">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>755</x>
       <y>160</y>
-      <width>70</width>
+      <width>81</width>
       <height>20</height>
      </rect>
     </property>
@@ -1485,7 +1491,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Mkt Cap:</string>
+     <string>Market Cap:</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1582,9 +1588,9 @@
    <widget class="QLabel" name="Stock_Earnings_Title">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>755</x>
       <y>180</y>
-      <width>70</width>
+      <width>81</width>
       <height>21</height>
      </rect>
     </property>
@@ -1607,7 +1613,7 @@
    <widget class="QLabel" name="Stock_Market_Capitalization">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>840</x>
       <y>160</y>
       <width>120</width>
       <height>20</height>
@@ -1629,7 +1635,7 @@
    <widget class="QLabel" name="Stock_Earnings">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>840</x>
       <y>180</y>
       <width>120</width>
       <height>20</height>
@@ -1643,6 +1649,119 @@
     </property>
     <property name="text">
      <string>13-Apr-2020</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_AverageVolume_Title">
+    <property name="geometry">
+     <rect>
+      <x>755</x>
+      <y>200</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Avg Volume:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Average_Volume">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>200</y>
+      <width>120</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>1234567890</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Stock_View_Chart">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>260</y>
+      <width>100</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">Background-Color:rgb(41, 91, 128);Color:White;Font:Bold</string>
+    </property>
+    <property name="text">
+     <string>View Chart</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Avg_Price_200_Title">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>200</y>
+      <width>100</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>Price Avg 200:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Exchange_2">
+    <property name="geometry">
+     <rect>
+      <x>635</x>
+      <y>200</y>
+      <width>120</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>243.22</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1718,14 +1837,14 @@
    <zorder>Stock_Industry_Title</zorder>
    <zorder>Stock_Exchange_Title</zorder>
    <zorder>Stock_Industry</zorder>
-   <zorder>Exchange</zorder>
+   <zorder>Stock_Exchange</zorder>
    <zorder>Stock_Price</zorder>
    <zorder>Stock_Percentage_Change</zorder>
    <zorder>Stock_Volume</zorder>
    <zorder>Stock_Line_1</zorder>
    <zorder>Stock_Line_2</zorder>
    <zorder>Stock_Name</zorder>
-   <zorder>Stock_Market_Capitalization_Header</zorder>
+   <zorder>Stock_Market_Capitalization_Title</zorder>
    <zorder>Stock_Beta</zorder>
    <zorder>Stock_Open</zorder>
    <zorder>Stock_High</zorder>
@@ -1733,6 +1852,11 @@
    <zorder>Stock_Earnings_Title</zorder>
    <zorder>Stock_Market_Capitalization</zorder>
    <zorder>Stock_Earnings</zorder>
+   <zorder>Stock_AverageVolume_Title</zorder>
+   <zorder>Stock_Average_Volume</zorder>
+   <zorder>Stock_View_Chart</zorder>
+   <zorder>Stock_Avg_Price_200_Title</zorder>
+   <zorder>Stock_Exchange_2</zorder>
   </widget>
  </widget>
  <resources/>

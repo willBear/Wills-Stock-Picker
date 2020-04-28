@@ -1,4 +1,7 @@
 import requests, json
+import sqlite3
+from sqlite3 import Error
+
 # -------------------------------------------------------------------
 # Function Name: Populate_Stock_List
 #
@@ -27,6 +30,19 @@ def Populate_Stock_List():
         print(stock_list['symbolsList'][hi])
         hi = hi + 1
 
+def create_connection(db_file):
+    """ create a database connection to a SQLite database """
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+        print(sqlite3.version)
+    except Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
 
 
-Populate_Stock_List()
+if __name__ == '__main__':
+    database = r"/Users/weixiong/Documents/GitHub/Fundamental_Analysis/StockList.db"
+    create_connection(r"/Users/weixiong/Documents/GitHub/Fundamental_Analysis/StockList.db")

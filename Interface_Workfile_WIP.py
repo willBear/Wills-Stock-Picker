@@ -8,10 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from datetime import datetime
-import requests, json
-import urllib
-alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -23,6 +20,7 @@ class Ui_MainWindow(object):
         MainWindow.setAccessibleName("")
         MainWindow.setAccessibleDescription("")
         MainWindow.setAutoFillBackground(False)
+        MainWindow.setStyleSheet("")
         MainWindow.setInputMethodHints(QtCore.Qt.ImhNone)
         MainWindow.setAnimated(True)
         MainWindow.setDocumentMode(False)
@@ -424,64 +422,64 @@ class Ui_MainWindow(object):
         self.Search_Bar.setGeometry(QtCore.QRect(5, 85, 100, 21))
         self.Search_Bar.setObjectName("Search_Bar")
         self.Stock_Symbol = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Symbol.setGeometry(QtCore.QRect(140, 85, 50, 21))
+        self.Stock_Symbol.setGeometry(QtCore.QRect(140, 85, 50, 20))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(13)
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Symbol.setFont(font)
         self.Stock_Symbol.setObjectName("Stock_Symbol")
-        self.Description_Header = QtWidgets.QLabel(self.centralwidget)
-        self.Description_Header.setGeometry(QtCore.QRect(140, 140, 81, 21))
+        self.Stock_Description_Header = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Description_Header.setGeometry(QtCore.QRect(140, 140, 81, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.Description_Header.setFont(font)
-        self.Description_Header.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.Description_Header.setObjectName("Description_Header")
-        self.Description_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Description_Label.setGeometry(QtCore.QRect(140, 160, 371, 101))
-        self.Description_Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.Description_Label.setWordWrap(True)
-        self.Description_Label.setObjectName("Description_Label")
-        self.Company_Image = QtWidgets.QLabel(self.centralwidget)
-        self.Company_Image.setGeometry(QtCore.QRect(5, 140, 100, 100))
-        self.Company_Image.setScaledContents(True)
-        self.Company_Image.setAlignment(QtCore.Qt.AlignCenter)
-        self.Company_Image.setObjectName("Company_Image")
-        self.Industry_Title = QtWidgets.QLabel(self.centralwidget)
-        self.Industry_Title.setGeometry(QtCore.QRect(525, 160, 70, 20))
+        self.Stock_Description_Header.setFont(font)
+        self.Stock_Description_Header.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Description_Header.setObjectName("Stock_Description_Header")
+        self.Stock_Description = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Description.setGeometry(QtCore.QRect(140, 160, 371, 101))
+        self.Stock_Description.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.Stock_Description.setWordWrap(True)
+        self.Stock_Description.setObjectName("Stock_Description")
+        self.Stock_Image = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Image.setGeometry(QtCore.QRect(5, 140, 100, 100))
+        self.Stock_Image.setScaledContents(True)
+        self.Stock_Image.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Image.setObjectName("Stock_Image")
+        self.Stock_Industry_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Industry_Title.setGeometry(QtCore.QRect(530, 160, 100, 20))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.Industry_Title.setFont(font)
-        self.Industry_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.Industry_Title.setObjectName("Industry_Title")
-        self.Exchange_Title = QtWidgets.QLabel(self.centralwidget)
-        self.Exchange_Title.setGeometry(QtCore.QRect(525, 180, 70, 21))
+        self.Stock_Industry_Title.setFont(font)
+        self.Stock_Industry_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Industry_Title.setObjectName("Stock_Industry_Title")
+        self.Stock_Exchange_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Exchange_Title.setGeometry(QtCore.QRect(530, 180, 100, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.Exchange_Title.setFont(font)
-        self.Exchange_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.Exchange_Title.setOpenExternalLinks(False)
-        self.Exchange_Title.setObjectName("Exchange_Title")
-        self.Industry_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Industry_Label.setGeometry(QtCore.QRect(600, 160, 200, 20))
+        self.Stock_Exchange_Title.setFont(font)
+        self.Stock_Exchange_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Exchange_Title.setOpenExternalLinks(False)
+        self.Stock_Exchange_Title.setObjectName("Stock_Exchange_Title")
+        self.Stock_Industry = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Industry.setGeometry(QtCore.QRect(635, 160, 120, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Industry_Label.setFont(font)
-        self.Industry_Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.Industry_Label.setObjectName("Industry_Label")
-        self.Exchange_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Exchange_Label.setGeometry(QtCore.QRect(600, 180, 200, 20))
+        self.Stock_Industry.setFont(font)
+        self.Stock_Industry.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Industry.setObjectName("Stock_Industry")
+        self.Stock_Exchange = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Exchange.setGeometry(QtCore.QRect(635, 180, 120, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Exchange_Label.setFont(font)
-        self.Exchange_Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.Exchange_Label.setObjectName("Exchange_Label")
+        self.Stock_Exchange.setFont(font)
+        self.Stock_Exchange.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Exchange.setObjectName("Stock_Exchange")
         self.Stock_Price = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Price.setGeometry(QtCore.QRect(215, 85, 50, 20))
         font = QtGui.QFont()
@@ -517,32 +515,24 @@ class Ui_MainWindow(object):
         self.Stock_Line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.Stock_Line_2.setObjectName("Stock_Line_2")
         self.Stock_Name = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Name.setGeometry(QtCore.QRect(0, 110, 220, 20))
+        self.Stock_Name.setGeometry(QtCore.QRect(0, 110, 1024, 20))
         font = QtGui.QFont()
         font.setPointSize(15)
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Name.setFont(font)
+        self.Stock_Name.setStyleSheet("Background-color:rgb(128, 0, 128); Color:White")
         self.Stock_Name.setObjectName("Stock_Name")
-        self.Stock_Name_Filler = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Name_Filler.setGeometry(QtCore.QRect(220, 110, 804, 20))
+        self.Stock_Market_Capitalization_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Market_Capitalization_Title.setGeometry(QtCore.QRect(755, 160, 81, 20))
         font = QtGui.QFont()
-        font.setPointSize(15)
         font.setBold(True)
         font.setWeight(75)
-        self.Stock_Name_Filler.setFont(font)
-        self.Stock_Name_Filler.setText("")
-        self.Stock_Name_Filler.setObjectName("Stock_Name_Filler")
-        self.Stock_Market_Capitalization = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Market_Capitalization.setGeometry(QtCore.QRect(800, 85, 140, 20))
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.Stock_Market_Capitalization.setFont(font)
-        self.Stock_Market_Capitalization.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.Stock_Market_Capitalization.setObjectName("Stock_Market_Capitalization")
+        self.Stock_Market_Capitalization_Title.setFont(font)
+        self.Stock_Market_Capitalization_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Market_Capitalization_Title.setObjectName("Stock_Market_Capitalization_Title")
         self.Stock_Beta = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Beta.setGeometry(QtCore.QRect(940, 85, 80, 20))
+        self.Stock_Beta.setGeometry(QtCore.QRect(800, 85, 80, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -573,6 +563,70 @@ class Ui_MainWindow(object):
         self.Stock_Low.setFont(font)
         self.Stock_Low.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Low.setObjectName("Stock_Low")
+        self.Stock_Earnings_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Earnings_Title.setGeometry(QtCore.QRect(755, 180, 81, 21))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Earnings_Title.setFont(font)
+        self.Stock_Earnings_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Earnings_Title.setOpenExternalLinks(False)
+        self.Stock_Earnings_Title.setObjectName("Stock_Earnings_Title")
+        self.Stock_Market_Capitalization = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Market_Capitalization.setGeometry(QtCore.QRect(840, 160, 120, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Market_Capitalization.setFont(font)
+        self.Stock_Market_Capitalization.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Market_Capitalization.setObjectName("Stock_Market_Capitalization")
+        self.Stock_Earnings = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Earnings.setGeometry(QtCore.QRect(840, 180, 120, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Earnings.setFont(font)
+        self.Stock_Earnings.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Earnings.setObjectName("Stock_Earnings")
+        self.Stock_AverageVolume_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_AverageVolume_Title.setGeometry(QtCore.QRect(755, 200, 81, 21))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_AverageVolume_Title.setFont(font)
+        self.Stock_AverageVolume_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_AverageVolume_Title.setOpenExternalLinks(False)
+        self.Stock_AverageVolume_Title.setObjectName("Stock_AverageVolume_Title")
+        self.Stock_Average_Volume = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Average_Volume.setGeometry(QtCore.QRect(840, 200, 120, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Average_Volume.setFont(font)
+        self.Stock_Average_Volume.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Average_Volume.setObjectName("Stock_Average_Volume")
+        self.Stock_View_Chart = QtWidgets.QPushButton(self.centralwidget)
+        self.Stock_View_Chart.setGeometry(QtCore.QRect(5, 260, 100, 31))
+        self.Stock_View_Chart.setStyleSheet("Background-Color:rgb(41, 91, 128);Color:White;Font:Bold")
+        self.Stock_View_Chart.setObjectName("Stock_View_Chart")
+        self.Stock_Avg_Price_200_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Avg_Price_200_Title.setGeometry(QtCore.QRect(530, 200, 100, 21))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Avg_Price_200_Title.setFont(font)
+        self.Stock_Avg_Price_200_Title.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.Stock_Avg_Price_200_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Avg_Price_200_Title.setOpenExternalLinks(False)
+        self.Stock_Avg_Price_200_Title.setObjectName("Stock_Avg_Price_200_Title")
+        self.Stock_Exchange_2 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Exchange_2.setGeometry(QtCore.QRect(635, 200, 120, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Exchange_2.setFont(font)
+        self.Stock_Exchange_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Stock_Exchange_2.setObjectName("Stock_Exchange_2")
         self.label.raise_()
         self.TimeNow_Label.raise_()
         self.DateNow_Label.raise_()
@@ -637,343 +691,36 @@ class Ui_MainWindow(object):
         self.Search_Button.raise_()
         self.Search_Bar.raise_()
         self.Stock_Symbol.raise_()
-        self.Description_Header.raise_()
-        self.Description_Label.raise_()
-        self.Company_Image.raise_()
-        self.Industry_Title.raise_()
-        self.Exchange_Title.raise_()
-        self.Industry_Label.raise_()
-        self.Exchange_Label.raise_()
+        self.Stock_Description_Header.raise_()
+        self.Stock_Description.raise_()
+        self.Stock_Image.raise_()
+        self.Stock_Industry_Title.raise_()
+        self.Stock_Exchange_Title.raise_()
+        self.Stock_Industry.raise_()
+        self.Stock_Exchange.raise_()
         self.Stock_Price.raise_()
         self.Stock_Percentage_Change.raise_()
         self.Stock_Volume.raise_()
         self.Stock_Line_1.raise_()
         self.Stock_Line_2.raise_()
         self.Stock_Name.raise_()
-        self.Stock_Name_Filler.raise_()
-        self.Stock_Market_Capitalization.raise_()
+        self.Stock_Market_Capitalization_Title.raise_()
         self.Stock_Beta.raise_()
         self.Stock_Open.raise_()
         self.Stock_High.raise_()
         self.Stock_Low.raise_()
+        self.Stock_Earnings_Title.raise_()
+        self.Stock_Market_Capitalization.raise_()
+        self.Stock_Earnings.raise_()
+        self.Stock_AverageVolume_Title.raise_()
+        self.Stock_Average_Volume.raise_()
+        self.Stock_View_Chart.raise_()
+        self.Stock_Avg_Price_200_Title.raise_()
+        self.Stock_Exchange_2.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
-        # Set the visibility of the widgets to 0 when we initialize
-        Stock_Widgets = [self.Company_Image, self.Stock_Symbol,self.Stock_Name,self.Stock_Price,self.Stock_Percentage_Change,
-                         self.Stock_Open,self.Stock_High,self.Stock_Low,self.Stock_Volume,self.Stock_Market_Capitalization,
-                         self.Stock_Beta,self.Company_Image,self.Stock_Line_1,self.Stock_Line_2,self.Description_Label,
-                         self.Description_Header,self.Industry_Label,self.Industry_Title,self.Exchange_Label,self.Exchange_Title]
-
-        for widget in Stock_Widgets:
-            widget.setVisible(False)
-
-        # Whenever the search button is pressed, we would run the search stocks function
-        self.Search_Button.clicked.connect(self.Search_Stocks)
-
-        # We have a timer that updates every second and updates the current time of the clock
-        self.timer_painter = QtCore.QTimer()
-        self.timer_painter.timeout.connect(self.UpdateTime)
-        self.timer_painter.start(1000)
-
-        # Set up another timer that updates all the banner indices
-        self.stock_update_timer = QtCore.QTimer()
-        self.stock_update_timer.timeout.connect(self.UpdateBanner)
-        self.stock_update_timer.start(10000)
-
-        # Singleshot Timers that sets up a timer and populates all formation, timed loop updates are then followed
-        QtCore.QTimer.singleShot(1000, self.UpdateBanner)
-        QtCore.QTimer.singleShot(1000, self.PopulateSectorPerformances)
-
-        # Whenever the index of the performance title is changed, we would run populate Sector Performances Function
-        self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)
-
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-    # -------------------------------------------------------------------
-    # Function Name: UpdateTime
-    #
-    # Description: This function is run every 1 second to update the date
-    # and time labels on the top left of the main window.This function is
-    # called from the QT timer expiry at the bottom of the setupUI
-    # function.
-    # -------------------------------------------------------------------
-    def UpdateTime(self):
-        current_time = datetime.now()
-        # To Debug the current time
-        # print(current_time.strftime("%H:%M:%S"))
-
-        # Update the text label with current time, one for date and another for current time
-        self.TimeNow_Label.setText(current_time.strftime("%H:%M:%S"))
-        self.DateNow_Label.setText(current_time.strftime("%b %d %Y"))
-
-    def Search_Stocks(self):
-
-        # Get rid of white spaces if there are any
-        ticker_string = self.Search_Bar.text()
-        ticker_string = ticker_string.strip()
-
-        # Group the widgets together in an array so we can group set its visibility status
-        Stock_Widgets = [self.Company_Image, self.Stock_Symbol,self.Stock_Name,self.Stock_Price,self.Stock_Percentage_Change,
-                         self.Stock_Open,self.Stock_High,self.Stock_Low,self.Stock_Volume,self.Stock_Market_Capitalization,
-                         self.Stock_Beta,self.Company_Image,self.Stock_Line_1,self.Stock_Line_2,self.Description_Label,
-                         self.Description_Header,self.Industry_Label,self.Industry_Title,self.Exchange_Label,self.Exchange_Title]
-
-        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
-        session = requests.session()
-        request = session.get(url, timeout=5)
-        company_data = request.json()
-
-        quote_url = "https://financialmodelingprep.com/api/v3/quote/" + ticker_string
-        session = requests.session()
-        request = session.get(quote_url, timeout=5)
-        quote_data = request.json()
-        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
-        # pairs in the returned message, if it has less than 2 key-value pairs, we would throw message
-        print(company_data)
-        print('\n')
-        print(quote_data)
-        print(len(quote_data))
-        print(quote_data[0]['dayLow'])
-
-        if len(company_data) < 2:
-            return
-
-        # We do some parsing of the company data
-        company_profile = company_data['profile']
-        self.Stock_Name.setText('  ' + str(company_profile['companyName']))
-        self.Stock_Symbol.setText(company_data['symbol'])
-        self.Description_Label.setText(company_profile['description'])
-
-        # Take the Image URL from information passed down from Financial Modelling Prep
-        image_url = company_profile['image']
-
-        # We would use the URL module and read the image file, convert it to byte
-        data = urllib.request.urlopen(image_url).read()
-        image = QtGui.QImage()
-        image.loadFromData(data)
-
-        # We set the company image to have the converted image
-        self.Company_Image.setPixmap(QtGui.QPixmap(image))
-
-        self.Stock_Price.setText(str(company_profile['price']))
-
-        percentage_change = company_profile['changesPercentage']
-        percentage_change = percentage_change[1:-1]
-        self.Stock_Percentage_Change.setText(percentage_change)
-
-        self.Stock_Volume.setText('Vol: '+ company_profile['volAvg'])
-        self.Stock_Low.setText('L: ' + str(quote_data[0]['dayLow']))
-        self.Stock_High.setText('H: ' + str(quote_data[0]['dayHigh']))
-        self.Stock_Open.setText('O: ' + str(quote_data[0]['open']))
-        beta = company_profile['beta']
-        beta = beta[0:4]
-
-        self.Stock_Beta.setText('Beta: '+ beta)
-        print(type(company_profile['mktCap']))
-        self.Stock_Market_Capitalization.setText(company_profile['mktCap'])
-        self.Exchange_Label.setText(company_profile['exchange'])
-        self.Industry_Label.setText(company_profile['industry'])
-
-
-        # Now since all the data has been loaded, we would set the visibility of all widgets to be visible
-        for widget in Stock_Widgets:
-            widget.show()
-
-        self.Stock_Name.setStyleSheet('Background:BROWN;Color:WHITE')
-        self.Stock_Name_Filler.setStyleSheet('Background:GREEN')
-
-    # -------------------------------------------------------------------
-    # Function Name: UpdateBanner
-    #
-    # Description: This function is run every 30 seconds to update the
-    # banner on the top of main window application that refreshes by
-    # making a query to financialmodellingprep.com, multiple quotes.
-    # When we receive a correct result from the website, we would update
-    # the banners to have its information filled in.
-    #
-    # TODO:
-    # Change colour based on the percentaged changed being + or -
-    # Background colour flash for every update
-    # Improve mass updating of banners to shave processing time
-    # -------------------------------------------------------------------
-    def UpdateBanner(self):
-        # Fetch Real Time Data and Stores Previous Day Price
-        # -------------------------------------------------------------------
-        # ETFs Shown on Header:
-        # SPY - SPDR S&P 500 ETF Trust -
-        # QQQ - Invesco QQQ Trust
-        # IWM - iShares Russell 2000 ETF
-        # DIA - SPDR Dow Jones Industrial Average ETF Trust
-        # ^VIX - CBOE Volatility Index
-        # GLD - SPDR Gold Shares
-        # WTI - Crude Oil Index
-        # -------------------------------------------------------------------
-        banner_indices = ['SPY', 'QQQ', 'IWM', 'DIA', '^VIX', 'GLD', 'WTI']
-
-        # Iterate through the array of tickers and add it to the quote string
-        # We are requesting multiple quotes from
-        quote_string = ','.join(banner_indices)
-
-        # The URL that we will concatenate with quote_string, makes the request
-        # and stores the result into closing_price_data
-        url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string
-        session = requests.session()
-        request = session.get(url, timeout=5)
-        closing_price_data = request.json()
-
-        # Add the all widgets into an array t=
-        colour_change_widgets = [self.Index_Percentage_0, self.Index_Percentage_1, self.Index_Percentage_2,
-                                 self.Index_Percentage_3,
-                                 self.Index_Percentage_4, self.Index_Percentage_5, self.Index_Percentage_6]
-
-        # We would parse the data by looping through the nested dictionary and
-        # insert the content of each dictionary into its rightful place
-        for key in closing_price_data:
-            if key['symbol'] == banner_indices[0]:
-                self.Index_Symbol_0.setText(key['symbol'])
-                self.Index_Price_0.setText(str(key['price']))
-                # We take out the one word pre-fix to the ETF name
-                self.Index_Name_0.setText(str(key['name']).split(' ', 1)[1])
-                self.Index_Percentage_0.setText(str(key['changesPercentage']) + "%")
-            elif key['symbol'] == banner_indices[1]:
-                self.Index_Symbol_1.setText(key['symbol'])
-                self.Index_Price_1.setText(str(key['price']))
-                self.Index_Name_1.setText(str(key['name']).split(' ', 1)[1])
-                self.Index_Percentage_1.setText(str(key['changesPercentage']) + "%")
-            elif key['symbol'] == banner_indices[2]:
-                self.Index_Symbol_2.setText(key['symbol'])
-                self.Index_Price_2.setText(str(key['price']))
-                self.Index_Name_2.setText(str(key['name']).split(' ', 1)[1])
-                self.Index_Percentage_2.setText(str(key['changesPercentage']) + "%")
-            elif key['symbol'] == banner_indices[3]:
-                self.Index_Symbol_3.setText(key['symbol'])
-                self.Index_Price_3.setText(str(key['price']))
-                self.Index_Name_3.setText(str(key['name']).split(' ', 1)[1])
-                self.Index_Percentage_3.setText(str(key['changesPercentage']) + "%")
-            elif key['symbol'] == banner_indices[4]:
-                self.Index_Symbol_4.setText(key['symbol'])
-                self.Index_Price_4.setText(str(key['price']))
-                self.Index_Name_4.setText(str(key['name']).split(' ', 1)[1])
-                self.Index_Percentage_4.setText(str(key['changesPercentage']) + "%")
-            elif key['symbol'] == banner_indices[5]:
-                self.Index_Symbol_5.setText(key['symbol'])
-                self.Index_Price_5.setText(str(key['price']))
-                self.Index_Name_5.setText(str(key['name']).split(' ', 1)[1])
-                self.Index_Percentage_5.setText(str(key['changesPercentage']) + "%")
-            elif key['symbol'] == banner_indices[6]:
-                self.Index_Symbol_6.setText(key['symbol'])
-                self.Index_Price_6.setText(str(key['price']))
-                self.Index_Name_6.setText(str(key['name']).split(' ', 1)[1])
-                self.Index_Percentage_6.setText(str(key['changesPercentage']) + "%")
-
-        # Go through every single percentage changed that needs colour adjusted and make red for losses
-        # and green for anything that's above 0.00%
-        for w in colour_change_widgets:
-            if '-' in w.text():
-                w.setStyleSheet("color:red")
-            else:
-                w.setStyleSheet("color:green")
-
-    # -------------------------------------------------------------------
-    # Function Name: PopulateSectorPerformances
-    #
-    # Description: This function is called to populate the performances of
-    #              each sector performance in real time
-    #
-    # TODO:
-    # Change colour based on the percentaged changed being + or -
-    # Background colour flash for every update
-    # Improve mass updating of banners to shave processing time
-    # -------------------------------------------------------------------
-
-    def PopulateSectorPerformances(self):
-        # Fetch Real Time Data and Stores Previous Day Price
-        # -------------------------------------------------------------------
-        # Sectors Interested:
-        # Slot 0 - Consumer Discretionary
-        # Slot 1 - Energy
-        # Slot 2 - Communication Services
-        # Slot 3 - Information Technology
-        # Slot 4 - Consumer Staples
-        # Slot 5 - Health Care
-        # Slot 6 - Materials
-        # Slot 7 - Utilities
-        # Slot 8 - Industrials
-        # Slot 9 - Financials
-        # Based on the selected index of the performance, we would update the
-        # titles and data associated with the sector performance
-        # -------------------------------------------------------------------
-        print("The index changed is: " + str(self.Sector_Performance_Title.currentIndex()))
-
-        sector_indices = ['Consumer Discretionary', 'Energy', 'Communication Services', 'Information Technology',
-                          'Consumer Staples', 'Health Care', 'Materials', 'Utilities', 'Industrials', 'Financials']
-
-        # This index maps the timeline to the dictionary passed by the json requests by alpha vantage
-        timeline_indice = ['Rank A: Real-Time Performance', 'Rank B: 1 Day Performance', 'Rank C: 5 Day Performance',
-                           'Rank D: 1 Month Performance', 'Rank E: 3 Month Performance',
-                           'Rank F: Year-to-Date (YTD) Performance',
-                           'Rank G: 1 Year Performance', 'Rank H: 3 Year Performance', 'Rank I: 5 Year Performance',
-                           'Rank J: 10 Year Performance']
-
-        colour_change_widgets = [self.Sector_Percentage_0, self.Sector_Percentage_1, self.Sector_Percentage_2,
-                                 self.Sector_Percentage_3,
-                                 self.Sector_Percentage_4, self.Sector_Percentage_5, self.Sector_Percentage_6,
-                                 self.Sector_Percentage_7,
-                                 self.Sector_Percentage_8, self.Sector_Percentage_9]
-
-        # base_url variable that stores the base url
-        base_url = "https://www.alphavantage.co/query?function=SECTOR"
-
-        # main_url variable that stores complete url with API key
-        main_url = base_url + "&apikey=" + alpha_vantage_api_key
-
-        # get method of requests module
-        # return response object
-        req_ob = requests.get(main_url)
-
-        # result contains list of nested dictionaries
-        result = req_ob.json()
-
-        parsed_dictionary = result[timeline_indice[self.Sector_Performance_Title.currentIndex()]]
-
-        for key in parsed_dictionary:
-            if key == sector_indices[0]:
-                self.Sector_Name_0.setText(key)
-                self.Sector_Percentage_0.setText(parsed_dictionary[key])
-            elif key == sector_indices[1]:
-                self.Sector_Name_1.setText(key)
-                self.Sector_Percentage_1.setText(parsed_dictionary[key])
-            elif key == sector_indices[2]:
-                self.Sector_Name_2.setText(key)
-                self.Sector_Percentage_2.setText(parsed_dictionary[key])
-            elif key == sector_indices[3]:
-                self.Sector_Name_3.setText(key)
-                self.Sector_Percentage_3.setText(parsed_dictionary[key])
-            elif key == sector_indices[4]:
-                self.Sector_Name_4.setText(key)
-                self.Sector_Percentage_4.setText(parsed_dictionary[key])
-            elif key == sector_indices[5]:
-                self.Sector_Name_5.setText(key)
-                self.Sector_Percentage_5.setText(parsed_dictionary[key])
-            elif key == sector_indices[6]:
-                self.Sector_Name_6.setText(key)
-                self.Sector_Percentage_6.setText(parsed_dictionary[key])
-            elif key == sector_indices[7]:
-                self.Sector_Name_7.setText(key)
-                self.Sector_Percentage_7.setText(parsed_dictionary[key])
-            elif key == sector_indices[8]:
-                self.Sector_Name_8.setText(key)
-                self.Sector_Percentage_8.setText(parsed_dictionary[key])
-            elif key == sector_indices[9]:
-                self.Sector_Name_9.setText(key)
-                self.Sector_Percentage_9.setText(parsed_dictionary[key])
-
-        for w in colour_change_widgets:
-            if '-' in w.text():
-                w.setStyleSheet("color:red")
-            else:
-                w.setStyleSheet("color:green")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -1042,22 +789,30 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Open"))
         self.Search_Bar.setPlaceholderText(_translate("MainWindow", "Tickers..."))
         self.Stock_Symbol.setText(_translate("MainWindow", "AAPL"))
-        self.Description_Header.setText(_translate("MainWindow", "Description:"))
-        self.Description_Label.setText(_translate("MainWindow", "Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications."))
-        self.Company_Image.setText(_translate("MainWindow", "[img]"))
-        self.Industry_Title.setText(_translate("MainWindow", "Industry:"))
-        self.Exchange_Title.setText(_translate("MainWindow", "Exchange:"))
-        self.Industry_Label.setText(_translate("MainWindow", "Online Media"))
-        self.Exchange_Label.setText(_translate("MainWindow", "NASDAQ"))
+        self.Stock_Description_Header.setText(_translate("MainWindow", "Description:"))
+        self.Stock_Description.setText(_translate("MainWindow", "Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications."))
+        self.Stock_Image.setText(_translate("MainWindow", "[img]"))
+        self.Stock_Industry_Title.setText(_translate("MainWindow", "Industry:"))
+        self.Stock_Exchange_Title.setText(_translate("MainWindow", "Exchange:"))
+        self.Stock_Industry.setText(_translate("MainWindow", "Online Media"))
+        self.Stock_Exchange.setText(_translate("MainWindow", "NASDAQ"))
         self.Stock_Price.setText(_translate("MainWindow", "69.00"))
         self.Stock_Percentage_Change.setText(_translate("MainWindow", "+0.15"))
         self.Stock_Volume.setText(_translate("MainWindow", "Vol: "))
         self.Stock_Name.setText(_translate("MainWindow", "AAPL"))
-        self.Stock_Market_Capitalization.setText(_translate("MainWindow", "Mkt Cap: "))
+        self.Stock_Market_Capitalization_Title.setText(_translate("MainWindow", "Market Cap:"))
         self.Stock_Beta.setText(_translate("MainWindow", "Beta:"))
         self.Stock_Open.setText(_translate("MainWindow", "Open:"))
         self.Stock_High.setText(_translate("MainWindow", "H:"))
         self.Stock_Low.setText(_translate("MainWindow", "L:"))
+        self.Stock_Earnings_Title.setText(_translate("MainWindow", "Earnings:"))
+        self.Stock_Market_Capitalization.setText(_translate("MainWindow", "1.3 Billion"))
+        self.Stock_Earnings.setText(_translate("MainWindow", "13-Apr-2020"))
+        self.Stock_AverageVolume_Title.setText(_translate("MainWindow", "Avg Volume:"))
+        self.Stock_Average_Volume.setText(_translate("MainWindow", "1234567890"))
+        self.Stock_View_Chart.setText(_translate("MainWindow", "View Chart"))
+        self.Stock_Avg_Price_200_Title.setText(_translate("MainWindow", "Price Avg 200:"))
+        self.Stock_Exchange_2.setText(_translate("MainWindow", "243.22"))
 
 
 if __name__ == "__main__":

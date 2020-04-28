@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>768</height>
+    <height>723</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -1745,7 +1745,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Exchange_2">
+   <widget class="QLabel" name="Stock_Avg_Price_200">
     <property name="geometry">
      <rect>
       <x>635</x>
@@ -1856,7 +1856,7 @@
    <zorder>Stock_Average_Volume</zorder>
    <zorder>Stock_View_Chart</zorder>
    <zorder>Stock_Avg_Price_200_Title</zorder>
-   <zorder>Stock_Exchange_2</zorder>
+   <zorder>Stock_Avg_Price_200</zorder>
   </widget>
  </widget>
  <resources/>

@@ -791,7 +791,7 @@ class Ui_MainWindow(object):
     #
     # Description: This function is called whenever a ticker is searched
     # and it relies on Alphavantage and FinancialModellingPrep JSON to
-    # have data returned, labels are then generated and refreshed 
+    # have data returned, labels are then generated and refreshed
     # -------------------------------------------------------------------
     def Search_Stocks(self):
 

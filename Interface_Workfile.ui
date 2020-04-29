@@ -1319,9 +1319,9 @@
    <widget class="QLabel" name="Stock_Industry">
     <property name="geometry">
      <rect>
-      <x>635</x>
+      <x>630</x>
       <y>160</y>
-      <width>120</width>
+      <width>131</width>
       <height>20</height>
      </rect>
     </property>
@@ -1341,7 +1341,7 @@
    <widget class="QLabel" name="Stock_Exchange">
     <property name="geometry">
      <rect>
-      <x>635</x>
+      <x>630</x>
       <y>180</y>
       <width>120</width>
       <height>20</height>
@@ -1478,7 +1478,7 @@
    <widget class="QLabel" name="Stock_Market_Capitalization_Title">
     <property name="geometry">
      <rect>
-      <x>755</x>
+      <x>765</x>
       <y>160</y>
       <width>81</width>
       <height>20</height>
@@ -1588,7 +1588,7 @@
    <widget class="QLabel" name="Stock_Earnings_Title">
     <property name="geometry">
      <rect>
-      <x>755</x>
+      <x>765</x>
       <y>180</y>
       <width>81</width>
       <height>21</height>
@@ -1613,7 +1613,7 @@
    <widget class="QLabel" name="Stock_Market_Capitalization">
     <property name="geometry">
      <rect>
-      <x>840</x>
+      <x>850</x>
       <y>160</y>
       <width>120</width>
       <height>20</height>
@@ -1635,7 +1635,7 @@
    <widget class="QLabel" name="Stock_Earnings">
     <property name="geometry">
      <rect>
-      <x>840</x>
+      <x>850</x>
       <y>180</y>
       <width>120</width>
       <height>20</height>
@@ -1657,7 +1657,7 @@
    <widget class="QLabel" name="Stock_AverageVolume_Title">
     <property name="geometry">
      <rect>
-      <x>755</x>
+      <x>765</x>
       <y>200</y>
       <width>81</width>
       <height>21</height>
@@ -1682,7 +1682,7 @@
    <widget class="QLabel" name="Stock_Average_Volume">
     <property name="geometry">
      <rect>
-      <x>840</x>
+      <x>850</x>
       <y>200</y>
       <width>120</width>
       <height>20</height>
@@ -1748,7 +1748,7 @@
    <widget class="QLabel" name="Stock_Avg_Price_200">
     <property name="geometry">
      <rect>
-      <x>635</x>
+      <x>630</x>
       <y>200</y>
       <width>120</width>
       <height>20</height>

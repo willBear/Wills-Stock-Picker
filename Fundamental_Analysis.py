@@ -993,8 +993,6 @@ class Ui_MainWindow(object):
         request = session.get(url, timeout=5)
         market_status = request.json()
         print(market_status)
-        UpdateBanner()
-
 
     # -------------------------------------------------------------------
     # Function Name: PopulateSectorPerformances

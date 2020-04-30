@@ -9,12 +9,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
-import requests, json
-import urllib
-import webbrowser
+import requests, json, urllib,webbrowser
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

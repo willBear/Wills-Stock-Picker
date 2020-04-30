@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1813f08a-fc21-4b0f-a015-ed485dcafe4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Obtain_Stock_Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Obtain_Stock_Data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fundamental_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Fundamental_Analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface_Workfile.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Interface_Workfile.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,6 +160,10 @@
       <screen x="1366" y="-575" width="1920" height="1057" />
     </state>
     <state x="2048" y="-432" key="#Interface_Workfile_WIP/1366.-575.1920.1057/0.23.1366.745@1366.-575.1920.1057" timestamp="1588206359912" />
+    <state x="2032" y="-432" key="#Populate_Financial_Modelling_Prep" timestamp="1588229370075">
+      <screen x="1366" y="-575" width="1920" height="1057" />
+    </state>
+    <state x="2032" y="-432" key="#Populate_Financial_Modelling_Prep/1366.-575.1920.1057/0.23.1366.745@1366.-575.1920.1057" timestamp="1588229370075" />
     <state x="2060" y="-329" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588104619815">
       <screen x="1366" y="-666" width="1920" height="1057" />
     </state>

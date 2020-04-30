@@ -1058,9 +1058,9 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>680</y>
+      <y>685</y>
       <width>231</width>
-      <height>30</height>
+      <height>25</height>
      </rect>
     </property>
     <item>
@@ -1117,10 +1117,10 @@
    <widget class="QLabel" name="Sector_Performance_Title_2">
     <property name="geometry">
      <rect>
-      <x>412</x>
-      <y>680</y>
-      <width>200</width>
-      <height>30</height>
+      <x>437</x>
+      <y>685</y>
+      <width>150</width>
+      <height>25</height>
      </rect>
     </property>
     <property name="font">
@@ -1137,7 +1137,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="Marke_Open_Label">
     <property name="geometry">
      <rect>
       <x>5</x>
@@ -1796,8 +1796,8 @@
    <widget class="QLabel" name="Stock_Financial_Title">
     <property name="geometry">
      <rect>
-      <x>412</x>
-      <y>305</y>
+      <x>170</x>
+      <y>300</y>
       <width>200</width>
       <height>21</height>
      </rect>
@@ -1810,18 +1810,18 @@
      </font>
     </property>
     <property name="text">
-     <string>Financial Growth</string>
+     <string>Annual Financial Growth</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Report_Date">
+   <widget class="QLabel" name="Stock_Gross_Profit_Title">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>305</y>
-      <width>121</width>
+      <x>0</x>
+      <y>350</y>
+      <width>135</width>
       <height>21</height>
      </rect>
     </property>
@@ -1832,42 +1832,186 @@
      </font>
     </property>
     <property name="text">
-     <string>13-Apr-2020</string>
+     <string>Gross Profit:</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="Stock_View_Annual_Btn">
+   <widget class="QLabel" name="Stock_Report_Date_3">
     <property name="geometry">
      <rect>
-      <x>920</x>
-      <y>305</y>
-      <width>100</width>
+      <x>0</x>
+      <y>370</y>
+      <width>135</width>
       <height>21</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">Background-Color:rgb(41, 91, 128);Color:White;Font:Bold</string>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
-     <string>View Annual</string>
+     <string>EBIT:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="Stock_View_Quarter_Btn">
+   <widget class="QLabel" name="Stock_Report_Date_4">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>305</y>
-      <width>100</width>
+      <x>0</x>
+      <y>390</y>
+      <width>135</width>
       <height>21</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">Background-Color:rgb(41, 91, 128);Color:White;Font:Bold</string>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
-     <string>View Quarter</string>
+     <string>Operating income:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Report_Date_5">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>410</y>
+      <width>135</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Net Income:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Report_Date_6">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>430</y>
+      <width>135</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Earnings per Share:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Report_Date_7">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>450</y>
+      <width>135</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Dividend per Share:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Report_Date_8">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>470</y>
+      <width>135</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Rev Growth (Share):</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Report_Date_9">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>490</y>
+      <width>135</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Debt Growth:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Report_Date_10">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>510</y>
+      <width>135</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>R &amp; D Expense:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <zorder>Sector_Performance_Title_2</zorder>
@@ -1930,7 +2074,7 @@
    <zorder>Sector_Name_8</zorder>
    <zorder>Sector_Percentage_8</zorder>
    <zorder>Sector_Performance_Title</zorder>
-   <zorder>label_2</zorder>
+   <zorder>Marke_Open_Label</zorder>
    <zorder>Search_Button</zorder>
    <zorder>Search_Bar</zorder>
    <zorder>Stock_Symbol</zorder>
@@ -1963,9 +2107,15 @@
    <zorder>Stock_Line_3</zorder>
    <zorder>Stock_Line_4</zorder>
    <zorder>Stock_Financial_Title</zorder>
-   <zorder>Stock_Report_Date</zorder>
-   <zorder>Stock_View_Annual_Btn</zorder>
-   <zorder>Stock_View_Quarter_Btn</zorder>
+   <zorder>Stock_Gross_Profit_Title</zorder>
+   <zorder>Stock_Report_Date_3</zorder>
+   <zorder>Stock_Report_Date_4</zorder>
+   <zorder>Stock_Report_Date_5</zorder>
+   <zorder>Stock_Report_Date_6</zorder>
+   <zorder>Stock_Report_Date_7</zorder>
+   <zorder>Stock_Report_Date_8</zorder>
+   <zorder>Stock_Report_Date_9</zorder>
+   <zorder>Stock_Report_Date_10</zorder>
   </widget>
  </widget>
  <resources/>

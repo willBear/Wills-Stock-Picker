@@ -884,9 +884,16 @@ class Ui_MainWindow(object):
         for widget in stock_widgets:
             widget.show()
             widget.repaint()
-
+    # -------------------------------------------------------------------
+    # Function Name: OpenTradingView
+    #
+    # Description: This function is ran everytime a stock is searched up
+    # and whenever this button is shown, we open the webpage to trading
+    # view interface on our browser.
+    # -------------------------------------------------------------------
     def OpenTradingView(self):
-        tradingview_url = "https://www.tradingview.com/symbols/" + self.Stock_Exchange_Variable + '-' + self.Stock_Symbol.text()
+        tradingview_url = "https://www.tradingview.com/symbols/" + self.Stock_Exchange_Variable + '-' \
+                          + self.Stock_Symbol.text()
         webbrowser.open(tradingview_url)
 
 
@@ -930,7 +937,7 @@ class Ui_MainWindow(object):
         request = session.get(url, timeout=5)
         closing_price_data = request.json()
 
-        # Add the all widgets into an array t=
+        # Add the all widgets into an array
         colour_change_widgets = [self.Index_Percentage_0, self.Index_Percentage_1, self.Index_Percentage_2,
                                  self.Index_Percentage_3,
                                  self.Index_Percentage_4, self.Index_Percentage_5, self.Index_Percentage_6]
@@ -983,17 +990,26 @@ class Ui_MainWindow(object):
             else:
                 w.setStyleSheet("color:green")
 
-        # -------------------------------------------------------------------
-        # Function Name: PopulateSectorPerformances
-        #
-        # Description: This function is called to populate the performances of
-        #              each sector performance in real time
-        #
-        # TODO:
-        # Change colour based on the percentaged changed being + or -
-        # Background colour flash for every update
-        # Improve mass updating of banners to shave processing time
-        # -------------------------------------------------------------------
+    def Check_Market_Status(self):
+        url = "https://financialmodelingprep.com/api/v3/is-the-market-open"
+        session = requests.session()
+        request = session.get(url, timeout=5)
+        market_status = request.json()
+        print(market_status)
+        UpdateBanner()
+
+
+    # -------------------------------------------------------------------
+    # Function Name: PopulateSectorPerformances
+    #
+    # Description: This function is called to populate the performances of
+    #              each sector performance in real time
+    #
+    # TODO:
+    # Change colour based on the percentaged changed being + or -
+    # Background colour flash for every update
+    # Improve mass updating of banners to shave processing time
+    # -------------------------------------------------------------------
 
     def PopulateSectorPerformances(self):
         # Fetch Real Time Data and Stores Previous Day Price

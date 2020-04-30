@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import requests, json
 import urllib
+import webbrowser
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -746,6 +747,8 @@ class Ui_MainWindow(object):
         # Whenever the search button is pressed, we would run the search stocks function
         self.Search_Button.clicked.connect(self.Search_Stocks)
 
+        # Whenever the view chart button is pressed, we would call a function to open the web browser
+        self.Stock_View_Chart.clicked.connect(self.OpenTradingView)
         # We have a timer that updates every second and updates the current time of the clock
         self.timer_painter = QtCore.QTimer()
         self.timer_painter.timeout.connect(self.UpdateTime)
@@ -764,7 +767,6 @@ class Ui_MainWindow(object):
         self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)
 
-        # Whenever theb utton
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -862,11 +864,12 @@ class Ui_MainWindow(object):
 
         print(type(company_profile['mktCap']))
         self.Stock_Market_Capitalization.setText(company_profile['mktCap'])
-        self.Stock_Exchange.setText(company_profile['exchange'])
+        self.Stock_Exchange.setText(quote_data[0]['exhange'])
         self.Stock_Industry.setText(company_profile['industry'])
         self.Stock_Avg_Price_200.setText(str(quote_data[0]['priceAvg200'])[0:7])
         self.Stock_Average_Volume.setText(str(quote_data[0]['avgVolume']))
         self.Stock_Earnings.setText(quote_data[0]['earningsAnnouncement'][0:10])
+        self.Stock_Exchange_Variable = quote_data[0]['exhange']
         if (quote_data[0]['changesPercentage']) < 0:
             self.Stock_Price.setStyleSheet('Color:RED')
             self.Stock_Percentage_Change.setStyleSheet('Color:RED')
@@ -882,21 +885,25 @@ class Ui_MainWindow(object):
             widget.show()
             widget.repaint()
 
+    def OpenTradingView(self):
+        tradingview_url = "https://www.tradingview.com/symbols/" + self.Stock_Exchange_Variable + '-' + self.Stock_Symbol.text()
+        webbrowser.open(tradingview_url)
 
-        # -------------------------------------------------------------------
-        # Function Name: UpdateBanner
-        #
-        # Description: This function is run every 30 seconds to update the
-        # banner on the top of main window application that refreshes by
-        # making a query to financialmodellingprep.com, multiple quotes.
-        # When we receive a correct result from the website, we would update
-        # the banners to have its information filled in.
-        #
-        # TODO:
-        # Change colour based on the percentaged changed being + or -
-        # Background colour flash for every update
-        # Improve mass updating of banners to shave processing time
-        # -------------------------------------------------------------------
+
+    # -------------------------------------------------------------------
+    # Function Name: UpdateBanner
+    #
+    # Description: This function is run every 30 seconds to update the
+    # banner on the top of main window application that refreshes by
+    # making a query to financialmodellingprep.com, multiple quotes.
+    # When we receive a correct result from the website, we would update
+    # the banners to have its information filled in.
+    #
+    # TODO:
+    # Change colour based on the percentaged changed being + or -
+    # Background colour flash for every update
+    # Improve mass updating of banners to shave processing time
+    # -------------------------------------------------------------------
 
     def UpdateBanner(self):
         # Fetch Real Time Data and Stores Previous Day Price

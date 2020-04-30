@@ -1810,7 +1810,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Financial Statement</string>
+     <string>Financial Growth</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -1836,6 +1836,38 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Stock_View_Annual_Btn">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>305</y>
+      <width>100</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">Background-Color:rgb(41, 91, 128);Color:White;Font:Bold</string>
+    </property>
+    <property name="text">
+     <string>View Annual</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Stock_View_Quarter_Btn">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>305</y>
+      <width>100</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">Background-Color:rgb(41, 91, 128);Color:White;Font:Bold</string>
+    </property>
+    <property name="text">
+     <string>View Quarter</string>
     </property>
    </widget>
    <zorder>Sector_Performance_Title_2</zorder>
@@ -1932,6 +1964,8 @@
    <zorder>Stock_Line_4</zorder>
    <zorder>Stock_Financial_Title</zorder>
    <zorder>Stock_Report_Date</zorder>
+   <zorder>Stock_View_Annual_Btn</zorder>
+   <zorder>Stock_View_Quarter_Btn</zorder>
   </widget>
  </widget>
  <resources/>

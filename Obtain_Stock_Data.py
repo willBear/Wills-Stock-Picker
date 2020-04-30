@@ -29,8 +29,15 @@ def Populate_Sector_Performances():
     #parsed_dictionary = result['Rank A: Real-Time Performance']
 
 
-def Retrieve_Technical_Indicators():
+def Retrieve_Financial_Ratios():
+    # base_url variable that stores the base url
+    base_url = "https://financialmodelingprep.com/api/v3/financial-statement-growth/AAPL?period=Annual"
 
+    session = requests.session()
+    request = session.get(base_url, timeout=5)
+    financial_ratio = request.json()
+
+    print(financial_ratio)
 
 
 def Populate_Intraday_Price():
@@ -87,7 +94,8 @@ def find_closing_price_multiple(tickers):
     closing_price_data = request.json()
 
 
-Populate_Sector_Performances()
+Retrieve_Financial_Ratios()
+
 
 
 

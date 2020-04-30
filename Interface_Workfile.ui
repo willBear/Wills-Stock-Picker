@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>723</height>
+    <height>768</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -1114,12 +1114,12 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="Sector_Performance_Title_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>412</x>
       <y>680</y>
-      <width>1024</width>
+      <width>200</width>
       <height>30</height>
      </rect>
     </property>
@@ -1237,7 +1237,7 @@
       <x>140</x>
       <y>160</y>
       <width>371</width>
-      <height>101</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="text">
@@ -1767,7 +1767,78 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <zorder>label</zorder>
+   <widget class="Line" name="Stock_Line_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>300</y>
+      <width>1024</width>
+      <height>5</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="Stock_Line_4">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>680</y>
+      <width>1024</width>
+      <height>5</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Financial_Title">
+    <property name="geometry">
+     <rect>
+      <x>412</x>
+      <y>305</y>
+      <width>200</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Financial Statement</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Report_Date">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>305</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>13-Apr-2020</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <zorder>Sector_Performance_Title_2</zorder>
    <zorder>TimeNow_Label</zorder>
    <zorder>DateNow_Label</zorder>
    <zorder>Index_Symbol_0</zorder>
@@ -1857,6 +1928,10 @@
    <zorder>Stock_View_Chart</zorder>
    <zorder>Stock_Avg_Price_200_Title</zorder>
    <zorder>Stock_Avg_Price_200</zorder>
+   <zorder>Stock_Line_3</zorder>
+   <zorder>Stock_Line_4</zorder>
+   <zorder>Stock_Financial_Title</zorder>
+   <zorder>Stock_Report_Date</zorder>
   </widget>
  </widget>
  <resources/>

@@ -1477,6 +1477,22 @@ class Ui_MainWindow(object):
             self.Stock_Percentage_Change.setStyleSheet('Color:GREEN')
             self.Stock_Name.setStyleSheet('Background-Color:GREEN;Color:WHITE')
 
+        # Now we manipulate data to fit our needs for growth of data
+        # We first make arrays for efficiency later
+        date_array = {self.Stock_Growth_Date1,self.Stock_Growth_Date2,self.Stock_Growth_Date3}
+        gross_profit = {self.Stock_Growth_Date1, self.Stock_Growth_Date2, self.Stock_Growth_Date3}
+        ebit_array
+
+        base_url = "https://financialmodelingprep.com/api/v3/financial-statement-growth/" + \
+                   ticker_string + "?period=annual"
+
+        session = requests.session()
+        request = session.get(base_url, timeout=5)
+        growth_ratio = request.json()
+        print(growth_ratio)
+        print(len(growth_ratio['growth']))
+        print(growth_ratio['growth'][0])
+
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
         # widgets that are changed to see labels be updated
         for widget in self.stock_widgets:

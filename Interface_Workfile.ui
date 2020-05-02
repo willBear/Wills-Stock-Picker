@@ -1926,7 +1926,7 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share_Title">
+   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow_Title">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1942,7 +1942,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Dividend per Share:</string>
+     <string>Operating Cashflow:</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2411,7 +2411,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share1">
+   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow1">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -2631,7 +2631,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share2">
+   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow2">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -2851,7 +2851,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share3">
+   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow1_2">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -3290,7 +3290,6 @@
    <zorder>Search_Bar</zorder>
    <zorder>Stock_Symbol</zorder>
    <zorder>Stock_Description_Header</zorder>
-   <zorder>Stock_Description</zorder>
    <zorder>Stock_Image</zorder>
    <zorder>Stock_Industry_Title</zorder>
    <zorder>Stock_Exchange_Title</zorder>
@@ -3323,7 +3322,7 @@
    <zorder>Stock_Growth_Operating_Income_Title</zorder>
    <zorder>Stock_Growth_Net_Income_Title</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share_Title</zorder>
-   <zorder>Stock_Growth_Dividend_Per_Share_Title</zorder>
+   <zorder>Stock_Growth_Operating_Cashflow_Title</zorder>
    <zorder>Stock_Growth_Revenue_Share_Title</zorder>
    <zorder>Stock_Growth_Debt_Title</zorder>
    <zorder>Stock_Growth_RD_Expense_Title</zorder>
@@ -3345,7 +3344,7 @@
    <zorder>Stock_Growth_Operating_Income1</zorder>
    <zorder>Stock_Growth_Net_Income1</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share1</zorder>
-   <zorder>Stock_Growth_Dividend_Per_Share1</zorder>
+   <zorder>Stock_Growth_Operating_Cashflow1</zorder>
    <zorder>Stock_Growth_Revenue_Share1</zorder>
    <zorder>Stock_Growth_Debt1</zorder>
    <zorder>Stock_Growth_RD_Expense1</zorder>
@@ -3355,7 +3354,7 @@
    <zorder>Stock_Growth_Operating_Income2</zorder>
    <zorder>Stock_Growth_Net_Income2</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share2</zorder>
-   <zorder>Stock_Growth_Dividend_Per_Share2</zorder>
+   <zorder>Stock_Growth_Operating_Cashflow2</zorder>
    <zorder>Stock_Growth_Revenue_Share2</zorder>
    <zorder>Stock_Growth_Debt2</zorder>
    <zorder>Stock_Growth_RD_Expense2</zorder>
@@ -3365,7 +3364,7 @@
    <zorder>Stock_Growth_Operating_Income3</zorder>
    <zorder>Stock_Growth_Net_Income3</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share3</zorder>
-   <zorder>Stock_Growth_Dividend_Per_Share3</zorder>
+   <zorder>Stock_Growth_Operating_Cashflow1_2</zorder>
    <zorder>Stock_Growth_Revenue_Share3</zorder>
    <zorder>Stock_Growth_Debt3</zorder>
    <zorder>Stock_Growth_RD_Expense3</zorder>
@@ -3382,6 +3381,7 @@
    <zorder>Stock_Growth_Longterm_Shareholder_Equity2</zorder>
    <zorder>Stock_Growth_Longterm_Net_Income3</zorder>
    <zorder>Stock_Growth_Longterm_Shareholder_Equity3</zorder>
+   <zorder>Stock_Description</zorder>
   </widget>
  </widget>
  <resources/>

@@ -1510,7 +1510,9 @@ class Ui_MainWindow(object):
         # We will now run a for loop that loops through the growth data set and input the data in
         for growth_period in growth_ratio['growth']:
             print(growth_period)
-            date_array_widgets[growth_index].setText(growth_period['date'])
+            print(type(growth_period['date']))
+            Convert_to_Percentage_String()
+            date_array_widgets[growth_index].setText(Convert_to_Percentage_String(growth_period['date']))
             gross_profit_widgets[growth_index].setText(growth_period['Gross Profit Growth'])
             ebit_widgets[growth_index].setText(growth_period['EBIT Growth'])
             operating_income_widgets[growth_index].setText(growth_period['Operating Income Growth'])
@@ -1531,6 +1533,12 @@ class Ui_MainWindow(object):
         for widget in self.stock_widgets:
             widget.show()
             widget.repaint()
+
+    def Convert_to_Percentage_String(string_input):
+        string_float = float(string_input)
+        return(str(string_float*100)[0:6]+ "%")
+
+
 
     # -------------------------------------------------------------------
     # Function Name: OpenTradingView

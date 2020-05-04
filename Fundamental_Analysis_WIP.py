@@ -1559,11 +1559,9 @@ class Ui_MainWindow(object):
 
         growth_index = 0
 
-        # We will now run a for loop that loops through the growth data set and input the data in
+        # We will now run a for loop that loops through the growth data set and take the most recent 3 earnings
+        # report, parse the data and put it at it respective place after parsing through calling another function
         for growth_period in growth_ratio['growth']:
-            # print(growth_period)
-            # print(type(growth_period['date']))
-
             date_array_widgets[growth_index].setText((growth_period['date']))
             gross_profit_widgets[growth_index].setText(
                 self.Convert_to_Percentage_String(growth_period['Gross Profit Growth']))
@@ -1583,10 +1581,42 @@ class Ui_MainWindow(object):
                 self.Convert_to_Percentage_String(growth_period['R&D Expense Growth']))
             sga_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['SG&A Expenses Growth']))
 
-            # We only need the first 3 data sets that are given by the data
+            # We only need the first 3 data sets that are given by the data, once we detect we reach the fourth
+            # data set, we would break out of the for loop
             growth_index = growth_index + 1
             if (growth_index > 2):
                 break
+        # All earnings data are loaded, we now parse and load data into long term financial data
+        most_recent_report = growth_ratio['growth'][0]
+        print(most_recent_report)
+        # First we parse long term revenue growths
+        self.Stock_Growth_Longterm_Revenue1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Revenue Growth (per Share)']))
+        self.Stock_Growth_Longterm_Revenue2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Revenue Growth (per Share)']))
+        self.Stock_Growth_Longterm_Revenue3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Revenue Growth (per Share)']))
+        # Then we parse and parse and add Operating Cash flow
+        self.Stock_Growth_Longterm_Operating_Cashflow1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Operating CF Growth (per Share)']))
+        self.Stock_Growth_Longterm_Operating_Cashflow2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Operating CF Growth (per Share)']))
+        self.Stock_Growth_Longterm_Operating_Cashflow3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Operating CF Growth (per Share)']))
+        # Then we parse and add Net Income
+        self.Stock_Growth_Longterm_Net_Income1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Net Income Growth (per Share)']))
+        self.Stock_Growth_Longterm_Net_Income2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Net Income Growth (per Share)']))
+        self.Stock_Growth_Longterm_Net_Income3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Net Income Growth (per Share)']))
+        # Then we parse and add Shareholder Equity
+        self.Stock_Growth_Longterm_Shareholder_Equity1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Shareholders Equity Growth (per Share)']))
+        self.Stock_Growth_Longterm_Shareholder_Equity2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Shareholders Equity Growth (per Share)']))
+        self.Stock_Growth_Longterm_Shareholder_Equity3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Shareholders Equity Growth (per Share)']))
 
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
         # widgets that are changed to see labels be updated

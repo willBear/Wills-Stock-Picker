@@ -1468,7 +1468,8 @@ class Ui_MainWindow(object):
         self.Stock_Average_Volume.setText(str(quote_data[0]['avgVolume']))
         self.Stock_Earnings.setText(quote_data[0]['earningsAnnouncement'][0:10])
         self.Stock_Exchange_Variable = quote_data[0]['exhange']
-        if (quote_data[0]['changesPercentage']) < 0:
+
+        if  (quote_data[0]['changesPercentage']) < 0:
             self.Stock_Price.setStyleSheet('Color:RED')
             self.Stock_Percentage_Change.setStyleSheet('Color:RED')
             self.Stock_Name.setStyleSheet('Background-Color:RED;Color:WHITE')
@@ -1480,7 +1481,7 @@ class Ui_MainWindow(object):
         # Now we manipulate data to fit our needs for growth of data
         # We first make arrays for efficiency of putting it in later
         date_array_widgets = [self.Stock_Growth_Date1,self.Stock_Growth_Date2,self.Stock_Growth_Date3]
-        gross_profit_widgets = [self.Stock_Growth_Date1, self.Stock_Growth_Date2, self.Stock_Growth_Date3]
+        gross_profit_widgets = [self.Stock_Gross_Profit1, self.Stock_Gross_Profit2, self.Stock_Gross_Profit3]
         ebit_widgets = [self.Stock_Growth_EBIT1,self.Stock_Growth_EBIT2,self.Stock_Growth_EBIT3]
         operating_income_widgets = [self.Stock_Growth_Operating_Income1,self.Stock_Growth_Operating_Income2,self.Stock_Growth_Operating_Income3]
         net_income_widgets = [self.Stock_Growth_Net_Income1,self.Stock_Growth_Net_Income2,self.Stock_Growth_Net_Income3]
@@ -1490,8 +1491,6 @@ class Ui_MainWindow(object):
         debt_growth_widgets = [self.Stock_Growth_Debt1,self.Stock_Growth_Debt2,self.Stock_Growth_Debt3]
         rd_expense_widgets = [self.Stock_Growth_RD_Expense1,self.Stock_Growth_RD_Expense2,self.Stock_Growth_RD_Expense3]
         sga_widgets = [self.Stock_Growth_SGA_Expense1,self.Stock_Growth_SGA_Expense2,self.Stock_Growth_SGA_Expense3]
-
-
 
 
         base_url = "https://financialmodelingprep.com/api/v3/financial-statement-growth/" + \
@@ -1509,24 +1508,26 @@ class Ui_MainWindow(object):
         growth_index = 0
         # We will now run a for loop that loops through the growth data set and input the data in
         for growth_period in growth_ratio['growth']:
-            print(growth_period)
-            print(type(growth_period['date']))
-            Convert_to_Percentage_String()
-            date_array_widgets[growth_index].setText(Convert_to_Percentage_String(growth_period['date']))
-            gross_profit_widgets[growth_index].setText(growth_period['Gross Profit Growth'])
-            ebit_widgets[growth_index].setText(growth_period['EBIT Growth'])
-            operating_income_widgets[growth_index].setText(growth_period['Operating Income Growth'])
-            net_income_widgets[growth_index].setText(growth_period['Net Income Growth'])
-            earnings_per_share_widgets[growth_index].setText(growth_period['EPS Growth'])
-            dividend_per_share_widgets[growth_index].setText(growth_period['Dividends per Share Growth'])
-            free_cash_flow_widgets[growth_index].setText(growth_period['Free Cash Flow growth'])
-            debt_growth_widgets[growth_index].setText(growth_period['Debt Growth'])
-            rd_expense_widgets[growth_index].setText(growth_period['R&D Expense Growth'])
-            sga_widgets[growth_index].setText(growth_period['SG&A Expenses Growth'])
+            # print(growth_period)
+            # print(type(growth_period['date']))
+
+            date_array_widgets[growth_index].setText((growth_period['date']))
+            gross_profit_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Gross Profit Growth']))
+            ebit_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['EBIT Growth']))
+            operating_income_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Operating Income Growth']))
+            net_income_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Net Income Growth']))
+            earnings_per_share_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['EPS Growth']))
+            dividend_per_share_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Dividends per Share Growth']))
+            free_cash_flow_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Free Cash Flow growth']))
+            debt_growth_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Debt Growth']))
+            rd_expense_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['R&D Expense Growth']))
+            sga_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['SG&A Expenses Growth']))
+
             # We only need the first 3 data sets that are given by the data
             growth_index = growth_index + 1
             if (growth_index > 2):
                 break
+
 
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
         # widgets that are changed to see labels be updated
@@ -1534,9 +1535,15 @@ class Ui_MainWindow(object):
             widget.show()
             widget.repaint()
 
-    def Convert_to_Percentage_String(string_input):
+    def Convert_to_Percentage_String(self,string_input):
         string_float = float(string_input)
-        return(str(string_float*100)[0:6]+ "%")
+        if (string_float < 0 ):
+            return_string = str(string_float*100)[0:6]+ "%"
+        else:
+
+            return_string = '+' + str(string_float * 100)[0:5] + "%"
+        print(return_string)
+        return(return_string)
 
 
 

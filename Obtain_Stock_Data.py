@@ -27,7 +27,17 @@ def Populate_Sector_Performances():
     print(type(result))
     print(result)
     #parsed_dictionary = result['Rank A: Real-Time Performance']
-
+def retrieve_technical_indicator():
+    base_url = "https://www.alphavantage.co/query?function=SMA&symbol=IBM&interval=daily&time_period=10&series_type=open&apikey="+alpha_vantage_api_key
+    session = requests.session()
+    request = session.get(base_url, timeout=5)
+    technical_data = request.json()
+    print(technical_data)
+    base_url = "https://www.alphavantage.co/query?function=RSI&symbol=IBM&interval=daily&time_period=10&series_type=open&apikey="+alpha_vantage_api_key
+    session = requests.session()
+    request = session.get(base_url, timeout=5)
+    rsi = request.json()
+    print(rsi)
 
 def Retrieve_Financial_Ratios():
     # base_url variable that stores the base url
@@ -94,7 +104,7 @@ def find_closing_price_multiple(tickers):
     closing_price_data = request.json()
 
 
-Retrieve_Financial_Ratios()
+retrieve_technical_indicator()
 
 
 

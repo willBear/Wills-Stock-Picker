@@ -3468,6 +3468,19 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="Stock_Growth_Switch_Button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>300</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Quarterly</string>
+    </property>
+   </widget>
    <zorder>Sector_Performance_Title_2</zorder>
    <zorder>TimeNow_Label</zorder>
    <zorder>DateNow_Label</zorder>
@@ -3636,6 +3649,7 @@
    <zorder>Stock_Growth_Date1_6</zorder>
    <zorder>Stock_Growth_Date1_7</zorder>
    <zorder>Stock_Technical_MACD_Title</zorder>
+   <zorder>Stock_Growth_Switch_Button</zorder>
   </widget>
  </widget>
  <resources/>

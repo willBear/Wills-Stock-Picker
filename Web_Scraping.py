@@ -19,4 +19,19 @@ def find_stock_price():
     print(price)
 
 def find_analyst_target(symbol):
-    url = 'https://www.tradingview.com/symbols/NYSE-BA/technicals/'
+    url = 'https://finance.yahoo.com/quote/'+symbol+'?p=' + symbol
+    response = requests.get(url)
+
+    # Call the response and convert it into a lxml format
+    soup = BeautifulSoup(response.text,'lxml')
+    # print(soup)
+    data_table = soup.find_all('table', {'class':'W(100%) M(0) Bdcl(c)'})
+    print(data_table)
+
+    target_price = data_table[0].find('td', {'class':'Ta(end) Fw(600) Lh(14px)','data-test':'ONE_YEAR_TARGET_PRICE-value'})
+    print(target_price)
+    print(target_price.text)
+
+
+
+find_analyst_target('WMT')

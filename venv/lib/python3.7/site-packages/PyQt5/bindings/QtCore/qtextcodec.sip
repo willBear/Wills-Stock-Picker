@@ -20,7 +20,7 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-class QTextCodec /Abstract,Supertype=sip.wrapper/
+class QTextCodec /Supertype=sip.wrapper/
 {
 %TypeHeaderCode
 #include <qtextcodec.h>
@@ -74,6 +74,7 @@ public:
 
 protected:
     virtual QString convertToUnicode(const char *in /Array/, int length /ArraySize/, QTextCodec::ConverterState *state) const = 0;
+    virtual QByteArray convertFromUnicode(const QChar *in /Array/, int length /ArraySize/, QTextCodec::ConverterState *state) const = 0;
     QTextCodec() /Transfer/;
     virtual ~QTextCodec();
 

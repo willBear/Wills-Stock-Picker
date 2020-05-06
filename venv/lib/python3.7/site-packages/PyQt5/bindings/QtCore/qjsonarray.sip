@@ -19,9 +19,9 @@
 
 
 // Note that we assume any iterable can be converted to a QJsonArray.  However,
-// because QJsonObject is implemented as a dict (which is also an iterable),
-// then any overloads that handle both must be ordered so that QJsonObject is
-// checked first.
+// because QJsonValue is an iterable and QJsonObject is implemented as a dict
+// (which is also an iterable), then any overloads that handle one or more of
+// them must be ordered so that QJsonArray is checked last.
 
 %MappedType QJsonArray
         /TypeHintIn="Iterable[QJsonValue]", TypeHintOut="List[QJsonValue]",

@@ -29,8 +29,8 @@ int PYQT_VERSION;
 const char *PYQT_VERSION_STR;
 
 %ModuleCode
-static int PYQT_VERSION = 0x050e01;
-static const char *PYQT_VERSION_STR = "5.14.1";
+static int PYQT_VERSION = 0x050e02;
+static const char *PYQT_VERSION_STR = "5.14.2";
 %End
 const int QT_VERSION;
 const char *QT_VERSION_STR;
@@ -77,6 +77,12 @@ public:
     QFlags(const QFlags &);
 
     operator int() const;
+
+    // This is required for Python v3.8 and later.
+    int __index__() const;
+%MethodCode
+        sipRes = sipCpp->operator QFlags::Int();
+%End
 
     QFlags operator~() const;
 

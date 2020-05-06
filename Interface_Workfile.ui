@@ -3481,6 +3481,29 @@
      <string>Quarterly</string>
     </property>
    </widget>
+   <widget class="QLabel" name="Stock_Technical_Title_2">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>460</y>
+      <width>231</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Analyst Price Targets</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <zorder>Sector_Performance_Title_2</zorder>
    <zorder>TimeNow_Label</zorder>
    <zorder>DateNow_Label</zorder>
@@ -3650,6 +3673,7 @@
    <zorder>Stock_Growth_Date1_7</zorder>
    <zorder>Stock_Technical_MACD_Title</zorder>
    <zorder>Stock_Growth_Switch_Button</zorder>
+   <zorder>Stock_Technical_Title_2</zorder>
   </widget>
  </widget>
  <resources/>

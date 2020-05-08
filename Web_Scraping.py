@@ -32,6 +32,21 @@ def find_analyst_target(symbol):
     print(target_price)
     print(target_price.text)
 
+def find_technical_details(symbol):
+    url = 'https://www.investing.com/equities/apple-computer-inc-technical'
+    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
 
+    soup = BeautifulSoup(response.text,'lxml')
+    # print(soup)
+    data_table = soup.find_all('div', {'id':'techinalContent'})
+    # print(data_table)
+    cols = [td.text for td in data_table[0].select('td')]
+    print(cols)
+    #
+    # print(type(cols))
+    #
+    # target_price = data_table[0].find('td', {'class':'Ta(end) Fw(600) Lh(14px)','data-test':'ONE_YEAR_TARGET_PRICE-value'})
+    # print(target_price)
+    # print(target_price.text)
 
-find_analyst_target('WMT')
+find_technical_details('ROK')

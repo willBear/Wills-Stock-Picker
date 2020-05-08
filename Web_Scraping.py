@@ -42,11 +42,11 @@ def find_technical_details(symbol):
     # print(data_table)
     cols = [td.text for td in data_table[0].select('td')]
     print(cols)
-    #
-    # print(type(cols))
-    #
-    # target_price = data_table[0].find('td', {'class':'Ta(end) Fw(600) Lh(14px)','data-test':'ONE_YEAR_TARGET_PRICE-value'})
-    # print(target_price)
-    # print(target_price.text)
+    parsed_list=[]
+    for text in cols:
+        parsed_list.append(text.strip())
+
+    print(parsed_list)
+
 
 find_technical_details('ROK')

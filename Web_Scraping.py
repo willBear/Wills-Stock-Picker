@@ -7,6 +7,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+import investpy
 
 def find_stock_price():
     url = 'https://finance.yahoo.com/quote/FB?p=FB'
@@ -33,15 +34,21 @@ def find_analyst_target(symbol):
     print(target_price.text)
 
 def find_technical_details(symbol):
-    url = 'https://www.investing.com/equities/apple-computer-inc-technical'
-    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    company_profile = investpy.get_stock_company_profile(stock=symbol,
+                                                        country='United States')
+    print(company_profile)
+    company_profile_url = company_profile['url']
+    technical_url = company_profile_url[:-15] + 'technical'
+
+    response = requests.get(technical_url, headers={'User-Agent': 'Mozilla/5.0'})
 
     soup = BeautifulSoup(response.text,'lxml')
     # print(soup)
     data_table = soup.find_all('div', {'id':'techinalContent'})
     # print(data_table)
     cols = [td.text for td in data_table[0].select('td')]
-    print(cols)
+    # print(cols)
+
     parsed_list=[]
     for text in cols:
         parsed_list.append(text.strip())
@@ -49,4 +56,4 @@ def find_technical_details(symbol):
     print(parsed_list)
 
 
-find_technical_details('ROK')
+find_technical_details('IBM')

@@ -3311,16 +3311,6 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>330</y>
-      <width>561</width>
-      <height>321</height>
-     </rect>
-    </property>
-   </widget>
    <zorder>Sector_Performance_Title_2</zorder>
    <zorder>TimeNow_Label</zorder>
    <zorder>DateNow_Label</zorder>
@@ -3482,7 +3472,6 @@
    <zorder>Stock_1Year_Target_Title</zorder>
    <zorder>Stock_Avg_Price_200</zorder>
    <zorder>Stock_1Year_Target_Title_2</zorder>
-   <zorder>graphicsView</zorder>
   </widget>
  </widget>
  <resources/>

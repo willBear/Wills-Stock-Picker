@@ -70,27 +70,31 @@ def find_technical_details(symbol):
     print('row: ' + str(row) + ' column: ' + str(column))
 
     # Declare an empty array with corresponding rows and columns
-    parsed_array = [[''] * column] * row
+    # technical_values = [] * column
+    technical_values = [[None] * column] * row
+    print(technical_values)
     found_data = False
-    array_index_row = 0
-
+    row_index = 0
     # We process the following data into a two dimensional array
     for text in parsed_list:
         if found_data and (control_index < terminating_index):
-            # parsed_array[row_index][control_index].insert(text)
             print('Row: ' + str(row_index) +' Column: ' +str(control_index) + ' Text is:' + text)
+            # print('the type for text is:'+ str(type(text)))
+            # technical_values[row_index][control_index] = text
             control_index = control_index + 1
         else:
             found_data = False
 
         if text in technical_indicators:
-            parsed_array.insert(array_index_row, text)
-            row_index = list(technical_indicators).index(text)
-            print('Text Found: ' + str(text) + ' ' + str(row_index))
+            # row_index = list(technical_indicators).index(text)
+            technical_values[row_index].append(text)
+            row_index = row_index + 1
+            print('Title Found: ' + str(text) + ' ' + str(row_index))
             terminating_index = technical_indicators[text]
             found_data = True
             control_index = 0
 
+    print(technical_values)
 
 
 find_technical_details('IBM')

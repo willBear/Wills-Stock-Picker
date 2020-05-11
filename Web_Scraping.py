@@ -8,6 +8,7 @@
 import requests
 from bs4 import BeautifulSoup
 import investpy
+from array import *
 
 def find_stock_price():
     url = 'https://finance.yahoo.com/quote/FB?p=FB'
@@ -49,11 +50,38 @@ def find_technical_details(symbol):
     cols = [td.text for td in data_table[0].select('td')]
     # print(cols)
 
+    # We initializa a empty list
     parsed_list=[]
+
+    # Parse data that we receive from web scraping into array
     for text in cols:
         parsed_list.append(text.strip())
 
-    print(parsed_list)
+    # Now we initialize a dictionary that contains information in regards to the data we want, as well as how
+    # many number of  elements are contained in the array
+    technical_indicators = {'Classic': 7, 'RSI(14)': 1, 'MACD(12,26)': 2, 'MA10':1, 'MA20':1, 'MA100':1, }
+
+    array_index_row = 0
+    parsed_array = []
+    found_data = False
+    # We process the following data into a two dimensional array
+
+    for text in parsed_list:
+        if found_data and (control_index < terminating_index):
+            parsed_array[row_index].insert(text)
+            control_index = control_index + 1
+        else:
+            found_data = False
+
+        if text in technical_indicators:
+            parsed_array.insert(array_index_row,text)
+            row_index = list(technical_indicators).index(text)
+            print('Text Found' + str(text) + ' ' + str(row_index))
+            terminating_index = technical_indicators[text]
+            found_data = True
+            control_index = 0
+
+
 
 
 find_technical_details('IBM')

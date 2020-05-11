@@ -34,9 +34,13 @@ def find_analyst_target(symbol):
     print(target_price.text)
 
 def find_technical_details(symbol):
+    # Using the investpy module, we would get investing.com website url for the company
+    # TODO:
+    # Add functionality for Canadian and Stocks that are from other parts of the world
     company_profile = investpy.get_stock_company_profile(stock=symbol,
                                                         country='United States')
-    print(company_profile)
+    # print(company_profile)
+
     company_profile_url = company_profile['url']
     technical_url = company_profile_url[:-15] + 'technical'
 
@@ -60,22 +64,27 @@ def find_technical_details(symbol):
     # many number of  elements are contained in the array
     technical_indicators = {'Classic': 7, 'RSI(14)': 1, 'MACD(12,26)': 2, 'MA10': 1, 'MA20': 1, 'MA100': 1, }
 
-    array_index_row = 0
+    # We have to populate an empty array with the correct rows and columns,
     row = len(technical_indicators)
     column = max(technical_indicators.values())
     print('row: ' + str(row) + ' column: ' + str(column))
-    parsed_array = [[0] * column] * row
+
+    # Declare an empty array with corresponding rows and columns
+    parsed_array = [[''] * column] * row
     found_data = False
+    array_index_row = 0
+
     # We process the following data into a two dimensional array
     for text in parsed_list:
         if found_data and (control_index < terminating_index):
-            parsed_array[row_index].insert(text)
+            # parsed_array[row_index][control_index].insert(text)
+            print('Row: ' + str(row_index) +' Column: ' +str(control_index) + ' Text is:' + text)
             control_index = control_index + 1
         else:
             found_data = False
 
         if text in technical_indicators:
-            parsed_array.insert(array_index_row,text)
+            parsed_array.insert(array_index_row, text)
             row_index = list(technical_indicators).index(text)
             print('Text Found: ' + str(text) + ' ' + str(row_index))
             terminating_index = technical_indicators[text]

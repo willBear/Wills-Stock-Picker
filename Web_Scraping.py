@@ -8,7 +8,6 @@
 import requests
 from bs4 import BeautifulSoup
 import investpy
-from array import *
 
 def find_stock_price():
     url = 'https://finance.yahoo.com/quote/FB?p=FB'
@@ -59,13 +58,15 @@ def find_technical_details(symbol):
 
     # Now we initialize a dictionary that contains information in regards to the data we want, as well as how
     # many number of  elements are contained in the array
-    technical_indicators = {'Classic': 7, 'RSI(14)': 1, 'MACD(12,26)': 2, 'MA10':1, 'MA20':1, 'MA100':1, }
+    technical_indicators = {'Classic': 7, 'RSI(14)': 1, 'MACD(12,26)': 2, 'MA10': 1, 'MA20': 1, 'MA100': 1, }
 
     array_index_row = 0
-    parsed_array = []
+    row = len(technical_indicators)
+    column = max(technical_indicators.values())
+    print('row: ' + str(row) + ' column: ' + str(column))
+    parsed_array = [[0] * column] * row
     found_data = False
     # We process the following data into a two dimensional array
-
     for text in parsed_list:
         if found_data and (control_index < terminating_index):
             parsed_array[row_index].insert(text)
@@ -76,11 +77,10 @@ def find_technical_details(symbol):
         if text in technical_indicators:
             parsed_array.insert(array_index_row,text)
             row_index = list(technical_indicators).index(text)
-            print('Text Found' + str(text) + ' ' + str(row_index))
+            print('Text Found: ' + str(text) + ' ' + str(row_index))
             terminating_index = technical_indicators[text]
             found_data = True
             control_index = 0
-
 
 
 

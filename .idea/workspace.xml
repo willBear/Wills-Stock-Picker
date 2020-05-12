@@ -32,7 +32,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.Web_Scraping">
+  <component name="RunManager" selected="Python.Fundamental_Analysis_WIP">
     <configuration name="Fundamental_Analysis_WIP" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Fundamental_Analysis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -140,8 +140,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Web_Scraping" />
         <item itemvalue="Python.Fundamental_Analysis_WIP" />
+        <item itemvalue="Python.Web_Scraping" />
         <item itemvalue="Python.Obtain_Stock_Data" />
         <item itemvalue="Python.Interface_Workfile_WIP" />
         <item itemvalue="Python.Populate_Financial_Modelling_Prep" />

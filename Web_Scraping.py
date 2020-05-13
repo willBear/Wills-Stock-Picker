@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 import investpy
 from selenium import webdriver
-from
+
 
 def find_stock_price():
     url = 'https://finance.yahoo.com/quote/FB?p=FB'
@@ -60,43 +60,50 @@ def find_technical_details(symbol):
 
     # Parse data that we receive from web scraping into array
     for text in cols:
-        parsed_list.append(text.strip())
+        parsed_text = text.strip()
+        if '\t' or '\n' in text:
+            parsed_text = text.replace('\n', '')
+            parsed_text = parsed_text.replace('\t', '')
+        parsed_list.append(parsed_text)
+    print(parsed_list)
+
 
     # Now we initialize a dictionary that contains information in regards to the data we want, as well as how
     # many number of  elements are contained in the array
-    technical_indicators = {'Classic': 7, 'RSI(14)': 1, 'MACD(12,26)': 2, 'MA10': 1, 'MA20': 1, 'MA100': 1, }
+    technical_indicators = {'Classic': 7, 'RSI(14)': 2, 'MACD(12,26)': 2, 'MA10': 1, 'MA20': 1,'MA50': 1, 'MA100': 1, }
 
+    """ SECOND APPROACH
     # We have to populate an empty array with the correct rows and columns,
-    row = len(technical_indicators)
-    column = max(technical_indicators.values())
-    print('row: ' + str(row) + ' column: ' + str(column))
+    # row = len(technical_indicators)
+    # column = max(technical_indicators.values())
+    # print('row: ' + str(row) + ' column: ' + str(column))
 
-    # Declare an empty array with corresponding rows and columns
-    # technical_values = [] * column
-    technical_values = [[None] * column] * row
-    print(technical_values)
-    found_data = False
-    row_index = 0
-    # We process the following data into a two dimensional array
-    for text in parsed_list:
-        if found_data and (control_index < terminating_index):
-            print('Row: ' + str(row_index) +' Column: ' +str(control_index) + ' Text is:' + text)
-            # print('the type for text is:'+ str(type(text)))
-            # technical_values[row_index][control_index] = text
-            control_index = control_index + 1
-        else:
-            found_data = False
+    # # Declare an empty array with corresponding rows and columns
+    # # technical_values = [] * column
+    # technical_values = [[None] * column] * row
+    # print(technical_values)
+    # found_data = False
+    # row_index = 0
+    # # We process the following data into a two dimensional array
+    # for text in parsed_list:
+    #     if found_data and (control_index < terminating_index):
+    #         print('Row: ' + str(row_index) +' Column: ' +str(control_index) + ' Text is:' + text)
+    #         # print('the type for text is:'+ str(type(text)))
+    #         # technical_values[row_index][control_index] = text
+    #         control_index = control_index + 1
+    #     else:
+    #         found_data = False
+    # 
+    #     if text in technical_indicators:
+    #         # row_index = list(technical_indicators).index(text)
+    #         technical_values[row_index].append(text)
+    #         row_index = row_index + 1
+    #         print('Title Found: ' + str(text) + ' ' + str(row_index))
+    #         terminating_index = technical_indicators[text]
+    #         found_data = True
+    #         control_index = 0
+    """
+    # print(technical_values)
 
-        if text in technical_indicators:
-            # row_index = list(technical_indicators).index(text)
-            technical_values[row_index].append(text)
-            row_index = row_index + 1
-            print('Title Found: ' + str(text) + ' ' + str(row_index))
-            terminating_index = technical_indicators[text]
-            found_data = True
-            control_index = 0
 
-    print(technical_values)
-
-
-find_technical_details('IBM')
+find_technical_details('AAPL')

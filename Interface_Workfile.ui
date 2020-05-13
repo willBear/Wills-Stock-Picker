@@ -2030,7 +2030,7 @@
      </font>
     </property>
     <property name="text">
-     <string>RSI:</string>
+     <string>RSI(14):</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -3225,29 +3225,6 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Technical_Title">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>300</y>
-      <width>391</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Technical Indicators</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QPushButton" name="Stock_Growth_Switch_Button">
     <property name="geometry">
      <rect>
@@ -3314,11 +3291,17 @@
    <widget class="QLabel" name="Stock_Technical_S3_Title">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>530</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>S3</string>
@@ -3330,11 +3313,17 @@
    <widget class="QLabel" name="Stock_Technical_S2_Title">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>580</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>S2</string>
@@ -3346,11 +3335,17 @@
    <widget class="QLabel" name="Stock_Technical_S1_Title">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>630</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>S1</string>
@@ -3362,7 +3357,7 @@
    <widget class="QLabel" name="Stock_Technical_Pivot_Point_Title">
     <property name="geometry">
      <rect>
-      <x>615</x>
+      <x>685</x>
       <y>320</y>
       <width>70</width>
       <height>16</height>
@@ -3384,11 +3379,17 @@
    <widget class="QLabel" name="labelStock_Technical_R1_Title">
     <property name="geometry">
      <rect>
-      <x>695</x>
+      <x>765</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>R1</string>
@@ -3400,11 +3401,17 @@
    <widget class="QLabel" name="Stock_Technical_R2_Title">
     <property name="geometry">
      <rect>
-      <x>745</x>
+      <x>815</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>R2</string>
@@ -3416,11 +3423,17 @@
    <widget class="QLabel" name="Stock_Technical_R3_Title">
     <property name="geometry">
      <rect>
-      <x>795</x>
+      <x>865</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>R3</string>
@@ -3432,7 +3445,7 @@
    <widget class="QLabel" name="Stock_Technical_S3">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>530</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3454,7 +3467,7 @@
    <widget class="QLabel" name="Stock_Technical_S2">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>580</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3476,7 +3489,7 @@
    <widget class="QLabel" name="Stock_Technical_S1">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>630</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3498,7 +3511,7 @@
    <widget class="QLabel" name="Stock_Technical_Pivot_Point">
     <property name="geometry">
      <rect>
-      <x>615</x>
+      <x>685</x>
       <y>340</y>
       <width>70</width>
       <height>20</height>
@@ -3517,10 +3530,10 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Gross_Profit1_6">
+   <widget class="QLabel" name="Stock_Technical_R1">
     <property name="geometry">
      <rect>
-      <x>695</x>
+      <x>765</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3539,10 +3552,10 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Gross_Profit1_7">
+   <widget class="QLabel" name="Stock_Technical_R2">
     <property name="geometry">
      <rect>
-      <x>745</x>
+      <x>815</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3561,11 +3574,275 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Gross_Profit1_8">
+   <widget class="QLabel" name="Stock_Technical_R3">
     <property name="geometry">
      <rect>
-      <x>795</x>
+      <x>865</x>
       <y>340</y>
+      <width>45</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>132.32</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S3_Title_2">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>380</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>MA5</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S3_2">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>400</y>
+      <width>45</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>132.32</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S2_2">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>400</y>
+      <width>45</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>132.32</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_2">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>400</y>
+      <width>45</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>132.32</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S2_Title_2">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>380</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>MA10</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_Title_2">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>380</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>MA20</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_Title_3">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>380</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>MA50</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_3">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>400</y>
+      <width>45</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>132.32</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_Title_4">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>380</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>MA50</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_4">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>400</y>
+      <width>45</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>132.32</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_Title_5">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>380</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>MA50</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_S1_5">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>400</y>
       <width>45</width>
       <height>20</height>
      </rect>
@@ -3739,7 +4016,6 @@
    <zorder>Stock_Growth_Longterm_Net_Income3</zorder>
    <zorder>Stock_Growth_Longterm_Shareholder_Equity3</zorder>
    <zorder>Stock_Description</zorder>
-   <zorder>Stock_Technical_Title</zorder>
    <zorder>Stock_Growth_Switch_Button</zorder>
    <zorder>Stock_1Year_Target_Title</zorder>
    <zorder>Stock_Avg_Price_200</zorder>
@@ -3755,9 +4031,21 @@
    <zorder>Stock_Technical_S2</zorder>
    <zorder>Stock_Technical_S1</zorder>
    <zorder>Stock_Technical_Pivot_Point</zorder>
-   <zorder>Stock_Gross_Profit1_6</zorder>
-   <zorder>Stock_Gross_Profit1_7</zorder>
-   <zorder>Stock_Gross_Profit1_8</zorder>
+   <zorder>Stock_Technical_R1</zorder>
+   <zorder>Stock_Technical_R2</zorder>
+   <zorder>Stock_Technical_R3</zorder>
+   <zorder>Stock_Technical_S3_Title_2</zorder>
+   <zorder>Stock_Technical_S3_2</zorder>
+   <zorder>Stock_Technical_S2_2</zorder>
+   <zorder>Stock_Technical_S1_2</zorder>
+   <zorder>Stock_Technical_S2_Title_2</zorder>
+   <zorder>Stock_Technical_S1_Title_2</zorder>
+   <zorder>Stock_Technical_S1_Title_3</zorder>
+   <zorder>Stock_Technical_S1_3</zorder>
+   <zorder>Stock_Technical_S1_Title_4</zorder>
+   <zorder>Stock_Technical_S1_4</zorder>
+   <zorder>Stock_Technical_S1_Title_5</zorder>
+   <zorder>Stock_Technical_S1_5</zorder>
   </widget>
  </widget>
  <resources/>

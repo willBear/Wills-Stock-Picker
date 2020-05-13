@@ -8,7 +8,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from datetime import datetime
+import requests, json, urllib, webbrowser
 
+alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -1452,8 +1455,533 @@ class Ui_MainWindow(object):
         self.Stock_Technical_MACD.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
+        # Set the visibility of the widgets to 0 when we initialize
+        self.stock_widgets = {self.Stock_Symbol, self.Stock_Description_Header, self.Stock_Description,
+                              self.Stock_Image,
+                              self.Stock_Industry_Title, self.Stock_Exchange_Title, self.Stock_Industry,
+                              self.Stock_Exchange,
+                              self.Stock_Price, self.Stock_Percentage_Change, self.Stock_Volume, self.Stock_Line_1,
+                              self.Stock_Line_2, self.Stock_Name, self.Stock_Market_Capitalization_Title,
+                              self.Stock_Beta,
+                              self.Stock_Open, self.Stock_High, self.Stock_Low, self.Stock_Earnings_Title,
+                              self.Stock_Market_Capitalization,
+                              self.Stock_Earnings, self.Stock_AverageVolume_Title, self.Stock_Average_Volume,
+                              self.Stock_View_Chart,
+                              self.Stock_Avg_Price_200_Title, self.Stock_Avg_Price_200, self.Stock_Line_3,
+                              self.Stock_Line_4,
+                              self.Stock_Growth_Financia_Title, self.Stock_Gross_Profit_Title,
+                              self.Stock_Growth_EBIT_Title,
+                              self.Stock_Growth_Operating_Income_Title, self.Stock_Growth_Net_Income_Title,
+                              self.Stock_Growth_Earnings_Per_Share_Title, self.Stock_Growth_Dividend_Per_Share_Title,
+                              self.Stock_Growth_Operating_Cashflow_Title, self.Stock_Growth_Debt_Title,
+                              self.Stock_Growth_RD_Expense_Title,
+                              self.Stock_RSI, self.Stock_Growth_SGA_Expense_Title,
+                              self.Stock_Growth_Longterm_Financial_Growth_Title,
+                              self.Stock_Growth_Longterm_Revenue_Title,
+                              self.Stock_Growth_Longterm_Operating_Cashflow_Title,
+                              self.Stock_Growth_Longterm_Net_Income_Title,
+                              self.Stock_Growth_Longterm_Shareholder_Equity_Title,
+                              self.Stock_Growth_Date1, self.Stock_Growth_Date2, self.Stock_Growth_Date3,
+                              self.Stock_Growth_Longterm_Date1,
+                              self.Stock_Growth_Longterm_Date2, self.Stock_Growth_Longterm_Date3,
+                              self.Stock_Gross_Profit1,
+                              self.Stock_Growth_EBIT1, self.Stock_Growth_Operating_Income1,
+                              self.Stock_Growth_Net_Income1,
+                              self.Stock_Growth_Earnings_Per_Share1, self.Stock_Growth_Dividend_Per_Share1,
+                              self.Stock_Growth_Operating_Cashflow1,
+                              self.Stock_Growth_Debt1, self.Stock_Growth_RD_Expense1, self.Stock_Growth_SGA_Expense1,
+                              self.Stock_Gross_Profit2,
+                              self.Stock_Growth_EBIT2, self.Stock_Growth_Operating_Income2,
+                              self.Stock_Growth_Net_Income2,
+                              self.Stock_Growth_Earnings_Per_Share2, self.Stock_Growth_Dividend_Per_Share2,
+                              self.Stock_Growth_Operating_Cashflow2,
+                              self.Stock_Growth_Debt2, self.Stock_Growth_RD_Expense2, self.Stock_Growth_SGA_Expense2,
+                              self.Stock_Gross_Profit3,
+                              self.Stock_Growth_EBIT3, self.Stock_Growth_Operating_Income3,
+                              self.Stock_Growth_Net_Income3, self.Stock_Growth_Earnings_Per_Share3,
+                              self.Stock_Growth_Dividend_Per_Share3, self.Stock_Growth_Operating_Cashflow3,
+                              self.Stock_Growth_Debt3,
+                              self.Stock_Growth_RD_Expense3, self.Stock_Growth_SGA_Expense3,
+                              self.Stock_Growth_Longterm_Revenue1,
+                              self.Stock_Growth_Longterm_Revenue2, self.Stock_Growth_Longterm_Revenue3,
+                              self.Stock_Growth_Longterm_Operating_Cashflow1,
+                              self.Stock_Growth_Longterm_Operating_Cashflow2,
+                              self.Stock_Growth_Longterm_Operating_Cashflow3,
+                              self.Stock_Growth_Longterm_Net_Income1, self.Stock_Growth_Longterm_Shareholder_Equity1,
+                              self.Stock_Growth_Longterm_Net_Income2, self.Stock_Growth_Longterm_Shareholder_Equity2,
+                              self.Stock_Growth_Longterm_Net_Income3, self.Stock_Growth_Longterm_Shareholder_Equity3,
+                              self.Stock_Technical_MACD,self.Stock_Technical_Pivot_Point,self.Stock_Technical_Pivot_Point_Title,
+                              self.Stock_Technical_R1,self.Stock_Technical_R2,self.Stock_Technical_R3,self.Stock_Technical}
+
+        for widget in self.stock_widgets:
+            widget.setVisible(False)
+
+        # Whenever the search button is pressed, we would run the search stocks function
+        self.Search_Button.clicked.connect(self.Search_Stocks)
+
+        # Whenever the view chart button is pressed, we would call a function to open the web browser
+        self.Stock_View_Chart.clicked.connect(self.OpenTradingView)
+        # We have a timer that updates every second and updates the current time of the clock
+        self.timer_painter = QtCore.QTimer()
+        self.timer_painter.timeout.connect(self.UpdateTime)
+        self.timer_painter.start(1000)
+
+        # Set up another timer that updates all the banner indices
+        self.stock_update_timer = QtCore.QTimer()
+        self.stock_update_timer.timeout.connect(self.UpdateBanner)
+        self.stock_update_timer.start(10000)
+
+        # Singleshot Timers that sets up a timer and populates all formation, timed loop updates are then followed
+        QtCore.QTimer.singleShot(1000, self.UpdateBanner)
+        QtCore.QTimer.singleShot(1000, self.PopulateSectorPerformances)
+
+        # Whenever the index of the performance title is changed, we would run populate Sector Performances Function
+        self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
+        self.retranslateUi(MainWindow)
+
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    # -------------------------------------------------------------------
+    # Function Name: UpdateTime
+    #
+    # Description: This function is run every 1 second to update the date
+    # and time labels on the top left of the main window.This function is
+    # called from the QT timer expiry at the bottom of the setupUI
+    # function.
+    # -------------------------------------------------------------------
+
+    def UpdateTime(self):
+        current_time = datetime.now()
+        # To Debug the current time
+        # print(current_time.strftime("%H:%M:%S"))
+
+        # Update the text label with current time, one for date and another for current time
+        self.TimeNow_Label.setText(current_time.strftime("%H:%M:%S"))
+        self.DateNow_Label.setText(current_time.strftime("%b %d %Y"))
+
+    # -------------------------------------------------------------------
+    # Function Name: Search_Stocks
+    #
+    # Description: This function is called whenever a ticker is searched
+    # and it relies on Alphavantage and FinancialModellingPrep JSON to
+    # have data returned, labels are then generated and refreshed
+    # -------------------------------------------------------------------
+
+    def Search_Stocks(self):
+
+        # Get rid of white spaces if there are any
+        ticker_string = self.Search_Bar.text()
+        ticker_string = ticker_string.strip()
+
+        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
+        session = requests.session()
+        request = session.get(url, timeout=5)
+        company_data = request.json()
+
+        quote_url = "https://financialmodelingprep.com/api/v3/quote/" + ticker_string
+        session = requests.session()
+        request = session.get(quote_url, timeout=5)
+        quote_data = request.json()
+        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
+        # pairs in the returned message, if it has less than 2 key-value pairs, we would throw message
+        print(company_data)
+
+        print(quote_data)
+        if len(company_data) < 2:
+            return
+
+        # We do some parsing of the company data
+        company_profile = company_data['profile']
+        self.Stock_Name.setText('  ' + str(company_profile['companyName']))
+        self.Stock_Symbol.setText(company_data['symbol'])
+        self.Stock_Description.setText(company_profile['description'])
+
+        # Take the Image URL from information passed down from Financial Modelling Prep
+        image_url = company_profile['image']
+
+        # We would use the URL module and read the image file, convert it to byte
+        data = urllib.request.urlopen(image_url).read()
+        image = QtGui.QImage()
+        image.loadFromData(data)
+
+        # We set the company image to have the converted image
+        self.Stock_Image.setPixmap(QtGui.QPixmap(image))
+
+        self.Stock_Price.setText(str(company_profile['price']))
+
+        percentage_change = company_profile['changesPercentage']
+        percentage_change = percentage_change[1:-1]
+        self.Stock_Percentage_Change.setText(percentage_change)
+
+        self.Stock_Volume.setText('Vol: ' + company_profile['volAvg'])
+        self.Stock_Low.setText('L: ' + str(quote_data[0]['dayLow']))
+        self.Stock_High.setText('H: ' + str(quote_data[0]['dayHigh']))
+        self.Stock_Open.setText('O: ' + str(quote_data[0]['open']))
+
+        beta = company_profile['beta']
+        beta = beta[0:4]
+        self.Stock_Beta.setText('Beta: ' + beta)
+
+        print(type(company_profile['mktCap']))
+        self.Stock_Market_Capitalization.setText(company_profile['mktCap'])
+        self.Stock_Exchange.setText(quote_data[0]['exhange'])
+        self.Stock_Industry.setText(company_profile['industry'])
+        self.Stock_Avg_Price_200.setText(str(quote_data[0]['priceAvg200'])[0:7])
+        self.Stock_Average_Volume.setText(str(quote_data[0]['avgVolume']))
+        self.Stock_Earnings.setText(quote_data[0]['earningsAnnouncement'][0:10])
+        self.Stock_Exchange_Variable = quote_data[0]['exhange']
+
+        if (quote_data[0]['changesPercentage']) < 0:
+            self.Stock_Price.setStyleSheet('Color:RED')
+            self.Stock_Percentage_Change.setStyleSheet('Color:RED')
+            self.Stock_Name.setStyleSheet('Background-Color:RED;Color:WHITE')
+        else:
+            self.Stock_Price.setStyleSheet('Color:GREEN')
+            self.Stock_Percentage_Change.setStyleSheet('Color:GREEN')
+            self.Stock_Name.setStyleSheet('Background-Color:GREEN;Color:WHITE')
+
+        # Now we manipulate data to fit our needs for growth of data
+        # We first make arrays for efficiency of putting it in later
+        date_array_widgets = [self.Stock_Growth_Date1, self.Stock_Growth_Date2, self.Stock_Growth_Date3]
+        gross_profit_widgets = [self.Stock_Gross_Profit1, self.Stock_Gross_Profit2, self.Stock_Gross_Profit3]
+        ebit_widgets = [self.Stock_Growth_EBIT1, self.Stock_Growth_EBIT2, self.Stock_Growth_EBIT3]
+        operating_income_widgets = [self.Stock_Growth_Operating_Income1, self.Stock_Growth_Operating_Income2,
+                                    self.Stock_Growth_Operating_Income3]
+        net_income_widgets = [self.Stock_Growth_Net_Income1, self.Stock_Growth_Net_Income2,
+                              self.Stock_Growth_Net_Income3]
+        earnings_per_share_widgets = [self.Stock_Growth_Earnings_Per_Share1, self.Stock_Growth_Earnings_Per_Share2,
+                                      self.Stock_Growth_Earnings_Per_Share3]
+        dividend_per_share_widgets = [self.Stock_Growth_Dividend_Per_Share1, self.Stock_Growth_Dividend_Per_Share2,
+                                      self.Stock_Growth_Dividend_Per_Share3]
+        free_cash_flow_widgets = [self.Stock_Growth_Operating_Cashflow1, self.Stock_Growth_Operating_Cashflow2,
+                                  self.Stock_Growth_Operating_Cashflow3]
+        debt_growth_widgets = [self.Stock_Growth_Debt1, self.Stock_Growth_Debt2, self.Stock_Growth_Debt3]
+        rd_expense_widgets = [self.Stock_Growth_RD_Expense1, self.Stock_Growth_RD_Expense2,
+                              self.Stock_Growth_RD_Expense3]
+        sga_widgets = [self.Stock_Growth_SGA_Expense1, self.Stock_Growth_SGA_Expense2, self.Stock_Growth_SGA_Expense3]
+
+        base_url = "https://financialmodelingprep.com/api/v3/financial-statement-growth/" + \
+                   ticker_string + "?period=annual"
+
+        session = requests.session()
+        request = session.get(base_url, timeout=5)
+        growth_ratio = request.json()
+
+        # Debug Statements
+        # print(growth_ratio)
+        # print(len(growth_ratio['growth']))
+        # print(growth_ratio['growth'][0])
+
+        growth_index = 0
+
+        # We will now run a for loop that loops through the growth data set and take the most recent 3 earnings
+        # report, parse the data and put it at it respective place after parsing through calling another function
+        for growth_period in growth_ratio['growth']:
+            date_array_widgets[growth_index].setText((growth_period['date']))
+            gross_profit_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Gross Profit Growth']))
+            ebit_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['EBIT Growth']))
+            operating_income_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Operating Income Growth']))
+            net_income_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Net Income Growth']))
+            earnings_per_share_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['EPS Growth']))
+            dividend_per_share_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Dividends per Share Growth']))
+            free_cash_flow_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Free Cash Flow growth']))
+            debt_growth_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Debt Growth']))
+            rd_expense_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['R&D Expense Growth']))
+            sga_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['SG&A Expenses Growth']))
+
+            # We only need the first 3 data sets that are given by the data, once we detect we reach the fourth
+            # data set, we would break out of the for loop
+            growth_index = growth_index + 1
+            if (growth_index > 2):
+                break
+        # All earnings data are loaded, we now parse and load data into long term financial data
+        most_recent_report = growth_ratio['growth'][0]
+        print(most_recent_report)
+        # First we parse long term revenue growths
+        self.Stock_Growth_Longterm_Revenue1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Revenue Growth (per Share)']))
+        self.Stock_Growth_Longterm_Revenue2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Revenue Growth (per Share)']))
+        self.Stock_Growth_Longterm_Revenue3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Revenue Growth (per Share)']))
+        # Then we parse and parse and add Operating Cash flow
+        self.Stock_Growth_Longterm_Operating_Cashflow1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Operating CF Growth (per Share)']))
+        self.Stock_Growth_Longterm_Operating_Cashflow2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Operating CF Growth (per Share)']))
+        self.Stock_Growth_Longterm_Operating_Cashflow3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Operating CF Growth (per Share)']))
+        # Then we parse and add Net Income
+        self.Stock_Growth_Longterm_Net_Income1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Net Income Growth (per Share)']))
+        self.Stock_Growth_Longterm_Net_Income2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Net Income Growth (per Share)']))
+        self.Stock_Growth_Longterm_Net_Income3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Net Income Growth (per Share)']))
+        # Then we parse and add Shareholder Equity
+        self.Stock_Growth_Longterm_Shareholder_Equity1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Shareholders Equity Growth (per Share)']))
+        self.Stock_Growth_Longterm_Shareholder_Equity2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Shareholders Equity Growth (per Share)']))
+        self.Stock_Growth_Longterm_Shareholder_Equity3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Shareholders Equity Growth (per Share)']))
+
+        # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
+        # widgets that are changed to see labels be updated
+        for widget in self.stock_widgets:
+            widget.show()
+            widget.repaint()
+
+    # -------------------------------------------------------------------
+    # Function Name: Convert_to_Percentage_String
+    #
+    # Description: This function is called to convert string numbers into
+    # its perspective float and parses it to have 5 significant figures
+    # and returns data that are parsed
+    # -------------------------------------------------------------------
+
+    def Convert_to_Percentage_String(self, string_input):
+        # We first convert the string to float
+        string_float = float(string_input)
+        # if the float value is less than 0, there would already be an - sign, add %
+        # else we would add the + sign and cut off one less character
+        if string_float < 0:
+            return_string = str(string_float * 100)[0:6] + "%"
+        else:
+            return_string = '+' + str(string_float * 100)[0:5] + "%"
+
+        return return_string
+
+    # -------------------------------------------------------------------
+    # Function Name: OpenTradingView
+    #
+    # Description: This function is ran everytime a stock is searched up
+    # and whenever this button is shown, we open the webpage to trading
+    # view interface on our browser.
+    # -------------------------------------------------------------------
+
+    def OpenTradingView(self):
+        # Opens trading view on the default browser with stocks already selected
+        tradingview_url = "https://www.tradingview.com/symbols/" + self.Stock_Exchange_Variable + '-' \
+                          + self.Stock_Symbol.text()
+
+        webbrowser.open(tradingview_url)
+
+    # -------------------------------------------------------------------
+    # Function Name: UpdateBanner
+    #
+    # Description: This function is run every 30 seconds to update the
+    # banner on the top of main window application that refreshes by
+    # making a query to financialmodellingprep.com, multiple quotes.
+    # When we receive a correct result from the website, we would update
+    # the banners to have its information filled in.
+    #
+    # TODO:
+    # Change colour based on the percentaged changed being + or -
+    # Background colour flash for every update
+    # Improve mass updating of banners to shave processing time
+    # -------------------------------------------------------------------
+
+    def UpdateBanner(self):
+
+        # Fetch Real Time Data and Stores Previous Day Price
+        # -------------------------------------------------------------------
+        # ETFs Shown on Header:
+        # SPY - SPDR S&P 500 ETF Trust -
+        # QQQ - Invesco QQQ Trust
+        # IWM - iShares Russell 2000 ETF
+        # DIA - SPDR Dow Jones Industrial Average ETF Trust
+        # ^VIX - CBOE Volatility Index
+        # GLD - SPDR Gold Shares
+        # WTI - Crude Oil Index
+        # -------------------------------------------------------------------
+        banner_indices = ['SPY', 'QQQ', 'IWM', 'DIA', '^VIX', 'GLD', 'WTI']
+
+        # Iterate through the array of tickers and add it to the quote string
+        # We are requesting multiple quotes from
+        quote_string = ','.join(banner_indices)
+
+        # The URL that we will concatenate with quote_string, makes the request
+        # and stores the result into closing_price_data
+        url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string
+        session = requests.session()
+        request = session.get(url, timeout=5)
+        closing_price_data = request.json()
+
+        # Add the all widgets into an array
+        colour_change_widgets = [self.Index_Percentage_0, self.Index_Percentage_1, self.Index_Percentage_2,
+                                 self.Index_Percentage_3,
+                                 self.Index_Percentage_4, self.Index_Percentage_5, self.Index_Percentage_6]
+
+        # We would parse the data by looping through the nested dictionary and
+        # insert the content of each dictionary into its rightful place
+        for key in closing_price_data:
+            if key['symbol'] == banner_indices[0]:
+                self.Index_Symbol_0.setText(key['symbol'])
+                self.Index_Price_0.setText(str(key['price']))
+                # We take out the one word pre-fix to the ETF name
+                self.Index_Name_0.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_0.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[1]:
+                self.Index_Symbol_1.setText(key['symbol'])
+                self.Index_Price_1.setText(str(key['price']))
+                self.Index_Name_1.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_1.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[2]:
+                self.Index_Symbol_2.setText(key['symbol'])
+                self.Index_Price_2.setText(str(key['price']))
+                self.Index_Name_2.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_2.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[3]:
+                self.Index_Symbol_3.setText(key['symbol'])
+                self.Index_Price_3.setText(str(key['price']))
+                self.Index_Name_3.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_3.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[4]:
+                self.Index_Symbol_4.setText(key['symbol'])
+                self.Index_Price_4.setText(str(key['price']))
+                self.Index_Name_4.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_4.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[5]:
+                self.Index_Symbol_5.setText(key['symbol'])
+                self.Index_Price_5.setText(str(key['price']))
+                self.Index_Name_5.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_5.setText(str(key['changesPercentage']) + "%")
+            elif key['symbol'] == banner_indices[6]:
+                self.Index_Symbol_6.setText(key['symbol'])
+                self.Index_Price_6.setText(str(key['price']))
+                self.Index_Name_6.setText(str(key['name']).split(' ', 1)[1])
+                self.Index_Percentage_6.setText(str(key['changesPercentage']) + "%")
+        # Go through every single percentage changed that needs colour adjusted and make red for losses
+        # and green for anything that's above 0.00%
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
+
+    # -------------------------------------------------------------------
+    # Function Name: PopulateSectorPerformances
+    #
+    # Description: This function is called to populate the performances of
+    #              each sector performance in real time
+    #
+    # TODO:
+    # Change colour based on the percentaged changed being + or -
+    # Background colour flash for every update
+    # Improve mass updating of banners to shave processing time
+    # -------------------------------------------------------------------
+
+    def PopulateSectorPerformances(self):
+        # Fetch Real Time Data and Stores Previous Day Price
+        # -------------------------------------------------------------------
+        # Sectors Interested:
+        # Slot 0 - Consumer Discretionary
+        # Slot 1 - Energy
+        # Slot 2 - Communication Services
+        # Slot 3 - Information Technology
+        # Slot 4 - Consumer Staples
+        # Slot 5 - Health Care
+        # Slot 6 - Materials
+        # Slot 7 - Utilities
+        # Slot 8 - Industrials
+        # Slot 9 - Financials
+        # Based on the selected index of the performance, we would update the
+        # titles and data associated with the sector performance
+        # -------------------------------------------------------------------
+        print("The index changed is: " + str(self.Sector_Performance_Title.currentIndex()))
+
+        sector_indices = ['Consumer Discretionary', 'Energy', 'Communication Services', 'Information Technology',
+                          'Consumer Staples', 'Health Care', 'Materials', 'Utilities', 'Industrials', 'Financials']
+
+        # This index maps the timeline to the dictionary passed by the json requests by alpha vantage
+        timeline_indice = ['Rank A: Real-Time Performance', 'Rank B: 1 Day Performance', 'Rank C: 5 Day Performance',
+                           'Rank D: 1 Month Performance', 'Rank E: 3 Month Performance',
+                           'Rank F: Year-to-Date (YTD) Performance',
+                           'Rank G: 1 Year Performance', 'Rank H: 3 Year Performance', 'Rank I: 5 Year Performance',
+                           'Rank J: 10 Year Performance']
+
+        colour_change_widgets = [self.Sector_Percentage_0, self.Sector_Percentage_1, self.Sector_Percentage_2,
+                                 self.Sector_Percentage_3,
+                                 self.Sector_Percentage_4, self.Sector_Percentage_5, self.Sector_Percentage_6,
+                                 self.Sector_Percentage_7,
+                                 self.Sector_Percentage_8, self.Sector_Percentage_9]
+
+        # base_url variable that stores the base url
+        base_url = "https://www.alphavantage.co/query?function=SECTOR"
+
+        # main_url variable that stores complete url with API key
+        main_url = base_url + "&apikey=" + alpha_vantage_api_key
+
+        # get method of requests module
+        # return response object
+        req_ob = requests.get(main_url)
+
+        # result contains list of nested dictionaries
+        result = req_ob.json()
+
+        parsed_dictionary = result[timeline_indice[self.Sector_Performance_Title.currentIndex()]]
+
+        for key in parsed_dictionary:
+            if key == sector_indices[0]:
+                self.Sector_Name_0.setText(key)
+                self.Sector_Percentage_0.setText(parsed_dictionary[key])
+            elif key == sector_indices[1]:
+                self.Sector_Name_1.setText(key)
+                self.Sector_Percentage_1.setText(parsed_dictionary[key])
+            elif key == sector_indices[2]:
+                self.Sector_Name_2.setText(key)
+                self.Sector_Percentage_2.setText(parsed_dictionary[key])
+            elif key == sector_indices[3]:
+                self.Sector_Name_3.setText(key)
+                self.Sector_Percentage_3.setText(parsed_dictionary[key])
+            elif key == sector_indices[4]:
+                self.Sector_Name_4.setText(key)
+                self.Sector_Percentage_4.setText(parsed_dictionary[key])
+            elif key == sector_indices[5]:
+                self.Sector_Name_5.setText(key)
+                self.Sector_Percentage_5.setText(parsed_dictionary[key])
+            elif key == sector_indices[6]:
+                self.Sector_Name_6.setText(key)
+                self.Sector_Percentage_6.setText(parsed_dictionary[key])
+            elif key == sector_indices[7]:
+                self.Sector_Name_7.setText(key)
+                self.Sector_Percentage_7.setText(parsed_dictionary[key])
+            elif key == sector_indices[8]:
+                self.Sector_Name_8.setText(key)
+                self.Sector_Percentage_8.setText(parsed_dictionary[key])
+            elif key == sector_indices[9]:
+                self.Sector_Name_9.setText(key)
+                self.Sector_Percentage_9.setText(parsed_dictionary[key])
+
+        status_url = "https://financialmodelingprep.com/api/v3/is-the-market-open"
+        session = requests.session()
+        request = session.get(status_url, timeout=5)
+        market_status = request.json()
+        print(type(market_status['isTheStockMarketOpen']))
+        print(market_status['isTheStockMarketOpen'])
+
+        if (market_status['isTheStockMarketOpen'] == True):
+            self.Marke_Open_Label.setText("Market Open")
+            self.Marke_Open_Label.setStyleSheet('Background-Color:GREEN;COLOR:WHITE')
+        else:
+            self.Marke_Open_Label.setText("Market Closed")
+            self.Marke_Open_Label.setStyleSheet('Background-Color:RED;COLOR:WHITE')
+
+        for w in colour_change_widgets:
+            if '-' in w.text():
+                w.setStyleSheet("color:red")
+            else:
+                w.setStyleSheet("color:green")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -1626,7 +2154,7 @@ class Ui_MainWindow(object):
         self.Stock_Technical_R1.setText(_translate("MainWindow", "132.32"))
         self.Stock_Technical_R2.setText(_translate("MainWindow", "132.32"))
         self.Stock_Technical_R3.setText(_translate("MainWindow", "132.32"))
-from mplcanvas import MplCanvas
+
 
 
 if __name__ == "__main__":

@@ -3228,9 +3228,9 @@
    <widget class="QLabel" name="Stock_Technical_Title">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>460</x>
       <y>300</y>
-      <width>281</width>
+      <width>391</width>
       <height>21</height>
      </rect>
     </property>
@@ -3311,10 +3311,10 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="Stock_Technical_S3_Title">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>460</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
@@ -3323,11 +3323,14 @@
     <property name="text">
      <string>S3</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="Stock_Technical_S2_Title">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>510</x>
       <y>320</y>
       <width>45</width>
       <height>16</height>
@@ -3336,8 +3339,11 @@
     <property name="text">
      <string>S2</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="Stock_Technical_S1_Title">
     <property name="geometry">
      <rect>
       <x>560</x>
@@ -3349,11 +3355,14 @@
     <property name="text">
      <string>S1</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="Stock_Technical_Pivot_Point_Title">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>615</x>
       <y>320</y>
       <width>70</width>
       <height>16</height>
@@ -3368,47 +3377,59 @@
     <property name="text">
      <string>Pivot Point</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="labelStock_Technical_R1_Title">
     <property name="geometry">
      <rect>
-      <x>680</x>
+      <x>695</x>
       <y>320</y>
-      <width>16</width>
+      <width>45</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>R1</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="Stock_Technical_R2_Title">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>745</x>
       <y>320</y>
-      <width>16</width>
+      <width>45</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>R2</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="Stock_Technical_R3_Title">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>795</x>
       <y>320</y>
-      <width>16</width>
+      <width>45</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>R3</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="Stock_Gross_Profit1_2">
+   <widget class="QLabel" name="Stock_Technical_S3">
     <property name="geometry">
      <rect>
       <x>460</x>
@@ -3430,7 +3451,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Gross_Profit1_3">
+   <widget class="QLabel" name="Stock_Technical_S2">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -3452,7 +3473,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Gross_Profit1_4">
+   <widget class="QLabel" name="Stock_Technical_S1">
     <property name="geometry">
      <rect>
       <x>560</x>
@@ -3474,10 +3495,10 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Gross_Profit1_5">
+   <widget class="QLabel" name="Stock_Technical_Pivot_Point">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>615</x>
       <y>340</y>
       <width>70</width>
       <height>20</height>
@@ -3499,7 +3520,7 @@
    <widget class="QLabel" name="Stock_Gross_Profit1_6">
     <property name="geometry">
      <rect>
-      <x>670</x>
+      <x>695</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3521,7 +3542,7 @@
    <widget class="QLabel" name="Stock_Gross_Profit1_7">
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>745</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3543,7 +3564,7 @@
    <widget class="QLabel" name="Stock_Gross_Profit1_8">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>795</x>
       <y>340</y>
       <width>45</width>
       <height>20</height>
@@ -3723,17 +3744,17 @@
    <zorder>Stock_1Year_Target_Title</zorder>
    <zorder>Stock_Avg_Price_200</zorder>
    <zorder>Stock_1Year_Target_Title_2</zorder>
-   <zorder>label</zorder>
-   <zorder>label_2</zorder>
-   <zorder>label_3</zorder>
-   <zorder>label_4</zorder>
-   <zorder>label_5</zorder>
-   <zorder>label_6</zorder>
-   <zorder>label_7</zorder>
-   <zorder>Stock_Gross_Profit1_2</zorder>
-   <zorder>Stock_Gross_Profit1_3</zorder>
-   <zorder>Stock_Gross_Profit1_4</zorder>
-   <zorder>Stock_Gross_Profit1_5</zorder>
+   <zorder>Stock_Technical_S3_Title</zorder>
+   <zorder>Stock_Technical_S2_Title</zorder>
+   <zorder>Stock_Technical_S1_Title</zorder>
+   <zorder>Stock_Technical_Pivot_Point_Title</zorder>
+   <zorder>labelStock_Technical_R1_Title</zorder>
+   <zorder>Stock_Technical_R2_Title</zorder>
+   <zorder>Stock_Technical_R3_Title</zorder>
+   <zorder>Stock_Technical_S3</zorder>
+   <zorder>Stock_Technical_S2</zorder>
+   <zorder>Stock_Technical_S1</zorder>
+   <zorder>Stock_Technical_Pivot_Point</zorder>
    <zorder>Stock_Gross_Profit1_6</zorder>
    <zorder>Stock_Gross_Profit1_7</zorder>
    <zorder>Stock_Gross_Profit1_8</zorder>

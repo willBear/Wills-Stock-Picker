@@ -3600,7 +3600,7 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>380</y>
+      <y>390</y>
       <width>45</width>
       <height>16</height>
      </rect>
@@ -3622,7 +3622,7 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>400</y>
+      <y>410</y>
       <width>45</width>
       <height>20</height>
      </rect>
@@ -3644,7 +3644,7 @@
     <property name="geometry">
      <rect>
       <x>620</x>
-      <y>400</y>
+      <y>410</y>
       <width>45</width>
       <height>20</height>
      </rect>
@@ -3666,7 +3666,7 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>400</y>
+      <y>410</y>
       <width>45</width>
       <height>20</height>
      </rect>
@@ -3688,7 +3688,7 @@
     <property name="geometry">
      <rect>
       <x>620</x>
-      <y>380</y>
+      <y>390</y>
       <width>45</width>
       <height>16</height>
      </rect>
@@ -3710,7 +3710,7 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>380</y>
+      <y>390</y>
       <width>45</width>
       <height>16</height>
      </rect>
@@ -3732,7 +3732,7 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>380</y>
+      <y>390</y>
       <width>45</width>
       <height>16</height>
      </rect>
@@ -3754,7 +3754,7 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>400</y>
+      <y>410</y>
       <width>45</width>
       <height>20</height>
      </rect>
@@ -3776,7 +3776,7 @@
     <property name="geometry">
      <rect>
       <x>770</x>
-      <y>380</y>
+      <y>390</y>
       <width>45</width>
       <height>16</height>
      </rect>
@@ -3798,7 +3798,7 @@
     <property name="geometry">
      <rect>
       <x>770</x>
-      <y>400</y>
+      <y>410</y>
       <width>45</width>
       <height>20</height>
      </rect>
@@ -3820,7 +3820,7 @@
     <property name="geometry">
      <rect>
       <x>820</x>
-      <y>380</y>
+      <y>390</y>
       <width>45</width>
       <height>16</height>
      </rect>
@@ -3842,7 +3842,7 @@
     <property name="geometry">
      <rect>
       <x>820</x>
-      <y>400</y>
+      <y>410</y>
       <width>45</width>
       <height>20</height>
      </rect>
@@ -3855,6 +3855,28 @@
     </property>
     <property name="text">
      <string>132.32</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Stock_Technical_Pivot_Point_Title_2">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>370</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Moving Averages</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -4046,6 +4068,7 @@
    <zorder>Stock_Technical_S1_4</zorder>
    <zorder>Stock_Technical_S1_Title_5</zorder>
    <zorder>Stock_Technical_S1_5</zorder>
+   <zorder>Stock_Technical_Pivot_Point_Title_2</zorder>
   </widget>
  </widget>
  <resources/>

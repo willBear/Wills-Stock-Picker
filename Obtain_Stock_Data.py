@@ -105,7 +105,7 @@ def find_closing_price_multiple(tickers):
 
 def populate_MACD_graph(ticker):
     technical_url = 'https://www.alphavantage.co/query?function=MACD&symbol='+ ticker +\
-                    '&interval=daily&series_type=open&apikey='+ alpha_vantage_api_key
+                    '&interval=daily&series_type=open&datatype=csv&apikey='+ alpha_vantage_api_key
 
     # main_url variable that stores complete url with API key
     req_ob = requests.get(technical_url)

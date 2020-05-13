@@ -25,6 +25,7 @@ def pull_stock_macd_data(ticker):
     date_array = []
     macd_array = []
     macd_signal_array = []
+    macd_hist_array = []
     print('The type of data of macd_data is:' + str(type(macd_data)))
     print(macd_data)
 
@@ -36,18 +37,21 @@ def pull_stock_macd_data(ticker):
             date_array.append(data)
             macd_array.append(float(macd_data[data]['MACD']))
             macd_signal_array.append(float(macd_data[data]['MACD_Signal']))
+            macd_hist_array.append(float(macd_data[data]['MACD_Hist']))
             index = index + 1
         else:
             break
     date_array.reverse()
     macd_array.reverse()
     macd_signal_array.reverse()
+    macd_hist_array.reverse()
 
     plt.yticks(np.arange(min(macd_array), max(macd_array), step=(max(macd_array) - min(macd_array))/10))
     plt.xticks(rotation=45)
-    plt.plot(date_array, macd_array, marker='o', linestyle='-', color = 'blue')
-    plt.plot(date_array, macd_signal_array, marker='o', linestyle='-', color = 'orange')
-    plt.grid(True)
+    plt.plot(date_array, macd_array, linestyle='-', color = 'blue')
+    plt.plot(date_array, macd_signal_array, linestyle='-', color = 'orange')
+    plt.bar(date_array,macd_hist_array)
+    # plt.grid(True)
     plt.show()
 
 

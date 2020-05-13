@@ -1,6 +1,6 @@
 
 import requests,json
-
+import csv
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
 def Populate_Sector_Performances():
@@ -103,9 +103,19 @@ def find_closing_price_multiple(tickers):
     request = session.get(url, timeout=5)
     closing_price_data = request.json()
 
+def populate_MACD_graph(ticker):
+    technical_url = 'https://www.alphavantage.co/query?function=MACD&symbol='+ ticker +\
+                    '&interval=daily&series_type=open&apikey='+ alpha_vantage_api_key
 
-retrieve_technical_indicator()
+    # main_url variable that stores complete url with API key
+    req_ob = requests.get(technical_url)
 
+    # result contains list of nested dictionaries
+    result = req_ob.json()
+
+    print(result)
+
+populate_MACD_graph('AAPL')
 
 
 

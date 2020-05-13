@@ -1,6 +1,6 @@
-import mplfinance
+import matplotlib.pyplot as plt
 import requests,json
-import pandas as pd
+import numpy as np
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -24,13 +24,31 @@ def pull_stock_macd_data(ticker):
     # Declare Four Variables that we need to plot into the graph
     date_array = []
     macd_array = []
+    macd_signal_array = []
+    print('The type of data of macd_data is:' + str(type(macd_data)))
+    print(macd_data)
 
-    # Go through this loop and store everything into an array later for plotting
-    for date in macd_data:
-        date_array.append(date)
-        macd_array.append(date['MACD'])
-    mplfinance.plot()
+    index = 0
+    # # Go through this loop and store everything into an array later for plotting
+    for data in macd_data:
+        if index < 200:
+            print(data)
+            date_array.append(data)
+            macd_array.append(float(macd_data[data]['MACD']))
+            macd_signal_array.append(float(macd_data[data]['MACD_Signal']))
+            index = index + 1
+        else:
+            break
+    date_array.reverse()
+    macd_array.reverse()
+    macd_signal_array.reverse()
 
-    # print(result)
+    plt.yticks(np.arange(min(macd_array), max(macd_array), step=(max(macd_array) - min(macd_array))/10))
+    plt.xticks(rotation=45)
+    plt.plot(date_array, macd_array, marker='o', linestyle='-', color = 'blue')
+    plt.plot(date_array, macd_signal_array, marker='o', linestyle='-', color = 'orange')
+    plt.grid(True)
+    plt.show()
+
 
 pull_stock_macd_data('aapl')

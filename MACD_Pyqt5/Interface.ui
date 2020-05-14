@@ -14,31 +14,38 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="frame">
+   <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>170</y>
-      <width>751</width>
-      <height>361</height>
+      <x>10</x>
+      <y>410</y>
+      <width>781</width>
+      <height>131</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QWidget" name="widget" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>751</width>
-       <height>361</height>
-      </rect>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Draw</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Clear</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>781</width>
+      <height>391</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

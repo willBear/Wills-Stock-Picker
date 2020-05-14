@@ -9,8 +9,11 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pyqtgraph import PlotWidget
-import numpy as np
+from pyqtgraph import AxisItem
+import numpy
 import requests
+from datetime import datetime,timedelta
+from time import mktime
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -28,7 +31,9 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.splitter)
         self.pushButton_2.setObjectName("pushButton_2")
+
         self.graphicsView = PlotWidget(self.centralwidget)
+
         self.graphicsView.setGeometry(QtCore.QRect(10, 10, 781, 391))
         self.graphicsView.setObjectName("graphicsView")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -43,8 +48,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     def draw(self):
-        x = np.random.normal(size=1000)
-        y = np.random.normal(size=(3,1000))
+        x = numpy.random.normal(size=1000)
+        y = numpy.random.normal(size=(3,1000))
         for i in range(3):
             self.graphicsView.plot(x, y[i], pen=(i, 1))
 
@@ -77,14 +82,17 @@ class Ui_MainWindow(object):
         macd_signal_array = []
         macd_hist_array = []
         print('The type of data of macd_data is:' + str(type(macd_data)))
-        print(macd_data)
-
+        # print(macd_data)
+        # date_axix = TimeAxisItem()
         index = 0
         # # Go through this loop and store everything into an array later for plotting
         for data in macd_data:
-            if index < 200:
-                print(type(data))
-                date_array.append(data)
+            if index < 50:
+                #print(type(data))
+                date = datetime.strptime(data,'%Y-%m-%d')
+                print('The type of data is: ' + str(type(date))+ ' and the value is:' + str(date))
+                date_array.append(date)
+               # date_array.append(data)
                 macd_array.append(float(macd_data[data]['MACD']))
                 macd_signal_array.append(float(macd_data[data]['MACD_Signal']))
                 macd_hist_array.append(float(macd_data[data]['MACD_Hist']))
@@ -95,6 +103,20 @@ class Ui_MainWindow(object):
         macd_array.reverse()
         macd_signal_array.reverse()
         macd_hist_array.reverse()
+
+        self.graphicsView.
+
+        self.graphicsView.plot(x = date_array, y=numpy.random(100), symbol='o')
+
+class TimeAxisItem(pg.AxisItem):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setLabel(text='Time', units=None)
+        self.enableAutoSIPrefix(False)
+
+    def tickStrings(self, values, scale, spacing):
+        return [datetime.datetime.fromtimestamp(value).strftime("%H:%M") for value in values]
+
 
 if __name__ == "__main__":
     import sys

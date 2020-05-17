@@ -9,10 +9,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pyqtgraph as pg
-import numpy
 import requests
-from datetime import datetime,timedelta
-from time import mktime
+from datetime import datetime
+
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -32,8 +31,14 @@ class Ui_MainWindow(object):
         self.pushButton_2.setObjectName("pushButton_2")
 
         date_axis = TimeAxisItem(orientation='bottom')
-        self.graphicsView = pg.PlotWidget(self.centralwidget, axisItems={'bottom':date_axis})
+        date_axis.setGrid(255)
+
+        y_axis = pg.AxisItem(orientation='left')
+        y_axis.setGrid(255)
+
+        self.graphicsView = pg.PlotWidget(self.centralwidget, axisItems={'bottom': date_axis, 'left': y_axis})
         self.graphicsView.setBackground('w')
+
 
         self.graphicsView.setGeometry(QtCore.QRect(10, 10, 781, 391))
         self.graphicsView.setObjectName("graphicsView")
@@ -108,8 +113,6 @@ class Ui_MainWindow(object):
                 line_symbol = 't'
 
             self.graphicsView.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i,2), symbol=line_symbol)
-
-            # self.graphicsView.BarGraphitem(x=[x.timestamp() for x in date_array],height = macd_hist_array,brush = 'b')
 
 
 class TimeAxisItem(pg.AxisItem):

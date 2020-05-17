@@ -33,6 +33,7 @@ class Ui_MainWindow(object):
 
         date_axis = TimeAxisItem(orientation='bottom')
         self.graphicsView = pg.PlotWidget(self.centralwidget, axisItems={'bottom':date_axis})
+        self.graphicsView.setBackground('w')
 
         self.graphicsView.setGeometry(QtCore.QRect(10, 10, 781, 391))
         self.graphicsView.setObjectName("graphicsView")
@@ -47,11 +48,6 @@ class Ui_MainWindow(object):
         self.pushButton.clicked.connect(lambda:self.pull_stock_macd_data())
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-    def draw(self):
-        x = numpy.random.normal(size=1000)
-        y = numpy.random.normal(size=(3,1000))
-        for i in range(3):
-            self.graphicsView.plot(x, y[i], pen=(i, 1))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -82,8 +78,7 @@ class Ui_MainWindow(object):
         macd_signal_array = []
         macd_hist_array = []
         print('The type of data of macd_data is:' + str(type(macd_data)))
-        # print(macd_data)
-        # date_axix = TimeAxisItem()
+
         index = 0
         # # Go through this loop and store everything into an array later for plotting
         for data in macd_data:
@@ -92,7 +87,6 @@ class Ui_MainWindow(object):
                 date = datetime.strptime(data,'%Y-%m-%d')
                 print('The type of data is: ' + str(type(date))+ ' and the value is:' + str(date))
                 date_array.append(date)
-               # date_array.append(data)
                 macd_array.append(float(macd_data[data]['MACD']))
                 macd_signal_array.append(float(macd_data[data]['MACD_Signal']))
                 macd_hist_array.append(float(macd_data[data]['MACD_Hist']))
@@ -105,7 +99,18 @@ class Ui_MainWindow(object):
         macd_signal_array.reverse()
         macd_hist_array.reverse()
 
-        self.graphicsView.plot(x = [x.timestamp() for x in date_array],y = macd_array , symbol='o')
+        for i in range(2):
+            if i == 0:
+                y_data = macd_array
+                line_symbol = 'o'
+            elif i == 1:
+                y_data = macd_signal_array
+                line_symbol = 't'
+
+            self.graphicsView.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i,2), symbol=line_symbol)
+
+            # self.graphicsView.BarGraphitem(x=[x.timestamp() for x in date_array],height = macd_hist_array,brush = 'b')
+
 
 class TimeAxisItem(pg.AxisItem):
     def tickStrings(self, values, scale, spacing):

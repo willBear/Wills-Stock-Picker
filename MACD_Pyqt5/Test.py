@@ -29,16 +29,21 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.splitter)
         self.pushButton_2.setObjectName("pushButton_2")
-
+        # -----------------------------------------------------------------------------------------------------
+        # We first initialize the x and y axis, x axis needs to be in date time
         date_axis = TimeAxisItem(orientation='bottom')
+        y_axis = pg.AxisItem(orientation='left')
+
+        # Show grid with opacity = 255
+        y_axis.setGrid(255)
         date_axis.setGrid(255)
 
-        y_axis = pg.AxisItem(orientation='left')
-        y_axis.setGrid(255)
-
+        # We initialize the widget to have properties of pyqtgraph and inherit properties of both x and y axis
         self.graphicsView = pg.PlotWidget(self.centralwidget, axisItems={'bottom': date_axis, 'left': y_axis})
-        self.graphicsView.setBackground('w')
 
+        # Set the background colour to be white
+        self.graphicsView.setBackground('w')
+        # -----------------------------------------------------------------------------------------------------
 
         self.graphicsView.setGeometry(QtCore.QRect(10, 10, 781, 391))
         self.graphicsView.setObjectName("graphicsView")
@@ -82,15 +87,18 @@ class Ui_MainWindow(object):
         macd_array = []
         macd_signal_array = []
         macd_hist_array = []
-        print('The type of data of macd_data is:' + str(type(macd_data)))
+        # print('The type of data of macd_data is:' + str(type(macd_data)))
 
         index = 0
-        # # Go through this loop and store everything into an array later for plotting
+        # Go through this loop and store everything into an array later for plotting
         for data in macd_data:
-            if index < 50:
-                #print(type(data))
-                date = datetime.strptime(data,'%Y-%m-%d')
-                print('The type of data is: ' + str(type(date))+ ' and the value is:' + str(date))
+            if index < 200:
+                # print('The type of data is: ' + str(type(date))+ ' and the value is:' + str(date))
+
+                # First convert the string to datetime function
+                date = datetime.strptime(data, '%Y-%m-%d')
+
+                # Store the respective variables into an array
                 date_array.append(date)
                 macd_array.append(float(macd_data[data]['MACD']))
                 macd_signal_array.append(float(macd_data[data]['MACD_Signal']))
@@ -98,21 +106,31 @@ class Ui_MainWindow(object):
                 index = index + 1
             else:
                 break
+        # THIS IS NO LONGER NEEDED AS WE HAVE DATE TIME IN THE X AXIS
+        # date_array.reverse()
+        # macd_array.reverse()
+        # macd_signal_array.reverse()
+        # macd_hist_array.reverse()
 
-        date_array.reverse()
-        macd_array.reverse()
-        macd_signal_array.reverse()
-        macd_hist_array.reverse()
-
+        # Seperately plot two lines into the pyqtgraph widget, one for MACD Signal and one for MACD
         for i in range(2):
             if i == 0:
+                # First plot the MACD values
                 y_data = macd_array
                 line_symbol = 'o'
             elif i == 1:
+                # Then we plot the MACD Signals
                 y_data = macd_signal_array
                 line_symbol = 't'
 
-            self.graphicsView.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i,2), symbol=line_symbol)
+            # Now we plot our values onto the widget
+            self.graphicsView.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i, 2), symbol=line_symbol)
+
+        # Initialize the bar chart
+        bar = pg.BarGraphItem(x=[x.timestamp() for x in date_array], height=macd_hist_array, width=0.3, brush='r')
+
+        # Add the bar chart onto the graph widget itself with the addItem function
+        self.graphicsView.addItem(bar)
 
 
 class TimeAxisItem(pg.AxisItem):

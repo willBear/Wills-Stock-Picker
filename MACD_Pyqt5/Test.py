@@ -8,8 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from pyqtgraph import PlotWidget
-from pyqtgraph import AxisItem
+import pyqtgraph as pg
 import numpy
 import requests
 from datetime import datetime,timedelta
@@ -32,7 +31,8 @@ class Ui_MainWindow(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.splitter)
         self.pushButton_2.setObjectName("pushButton_2")
 
-        self.graphicsView = PlotWidget(self.centralwidget)
+        date_axis = TimeAxisItem(orientation='bottom')
+        self.graphicsView = pg.PlotWidget(self.centralwidget, axisItems={'bottom':date_axis})
 
         self.graphicsView.setGeometry(QtCore.QRect(10, 10, 781, 391))
         self.graphicsView.setObjectName("graphicsView")
@@ -99,24 +99,17 @@ class Ui_MainWindow(object):
                 index = index + 1
             else:
                 break
+
         date_array.reverse()
         macd_array.reverse()
         macd_signal_array.reverse()
         macd_hist_array.reverse()
 
-        self.graphicsView.
-
-        self.graphicsView.plot(x = date_array, y=numpy.random(100), symbol='o')
+        self.graphicsView.plot(x = [x.timestamp() for x in date_array],y = macd_array , symbol='o')
 
 class TimeAxisItem(pg.AxisItem):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.setLabel(text='Time', units=None)
-        self.enableAutoSIPrefix(False)
-
     def tickStrings(self, values, scale, spacing):
-        return [datetime.datetime.fromtimestamp(value).strftime("%H:%M") for value in values]
-
+        return [datetime.fromtimestamp(value) for value in values]
 
 if __name__ == "__main__":
     import sys

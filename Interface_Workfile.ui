@@ -1926,7 +1926,7 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow_Title">
+   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share_Title">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1942,13 +1942,13 @@
      </font>
     </property>
     <property name="text">
-     <string>Operating Cashflow:</string>
+     <string>Dividend per Share</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Revenue_Share_Title">
+   <widget class="QLabel" name="Stock_Growth_Free_Cashflow_Title">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1964,7 +1964,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Rev Growth (Share):</string>
+     <string>Free Cashflow :</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2411,7 +2411,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow1">
+   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share1">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -2433,7 +2433,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Revenue_Share1">
+   <widget class="QLabel" name="Stock_Growth_Free_Cashflow1">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -2631,7 +2631,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow2">
+   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share2">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -2653,7 +2653,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Revenue_Share2">
+   <widget class="QLabel" name="Stock_Growth_Free_Cashflow2">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -2851,7 +2851,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Operating_Cashflow1_2">
+   <widget class="QLabel" name="Stock_Growth_Dividend_Per_Share3">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -2873,7 +2873,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="Stock_Growth_Revenue_Share3">
+   <widget class="QLabel" name="Stock_Growth_Free_Cashflow3">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -3326,7 +3326,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="labelStock_Technical_R1_Title">
+   <widget class="QLabel" name="Stock_Technical_R1_Title">
     <property name="geometry">
      <rect>
       <x>765</x>
@@ -3546,13 +3546,13 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="MplCanvas" name="Stock_Technical_MACD" native="true">
+   <widget class="QGraphicsView" name="Stock_Technical_MACD">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>430</x>
       <y>370</y>
       <width>571</width>
-      <height>281</height>
+      <height>291</height>
      </rect>
     </property>
    </widget>
@@ -3652,8 +3652,8 @@
    <zorder>Stock_Growth_Operating_Income_Title</zorder>
    <zorder>Stock_Growth_Net_Income_Title</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share_Title</zorder>
-   <zorder>Stock_Growth_Operating_Cashflow_Title</zorder>
-   <zorder>Stock_Growth_Revenue_Share_Title</zorder>
+   <zorder>Stock_Growth_Dividend_Per_Share_Title</zorder>
+   <zorder>Stock_Growth_Free_Cashflow_Title</zorder>
    <zorder>Stock_Growth_Debt_Title</zorder>
    <zorder>Stock_Growth_RD_Expense_Title</zorder>
    <zorder>Stock_RSI</zorder>
@@ -3674,8 +3674,8 @@
    <zorder>Stock_Growth_Operating_Income1</zorder>
    <zorder>Stock_Growth_Net_Income1</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share1</zorder>
-   <zorder>Stock_Growth_Operating_Cashflow1</zorder>
-   <zorder>Stock_Growth_Revenue_Share1</zorder>
+   <zorder>Stock_Growth_Dividend_Per_Share1</zorder>
+   <zorder>Stock_Growth_Free_Cashflow1</zorder>
    <zorder>Stock_Growth_Debt1</zorder>
    <zorder>Stock_Growth_RD_Expense1</zorder>
    <zorder>Stock_Growth_SGA_Expense1</zorder>
@@ -3684,8 +3684,8 @@
    <zorder>Stock_Growth_Operating_Income2</zorder>
    <zorder>Stock_Growth_Net_Income2</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share2</zorder>
-   <zorder>Stock_Growth_Operating_Cashflow2</zorder>
-   <zorder>Stock_Growth_Revenue_Share2</zorder>
+   <zorder>Stock_Growth_Dividend_Per_Share2</zorder>
+   <zorder>Stock_Growth_Free_Cashflow2</zorder>
    <zorder>Stock_Growth_Debt2</zorder>
    <zorder>Stock_Growth_RD_Expense2</zorder>
    <zorder>Stock_Growth_SGA_Expense2</zorder>
@@ -3694,8 +3694,8 @@
    <zorder>Stock_Growth_Operating_Income3</zorder>
    <zorder>Stock_Growth_Net_Income3</zorder>
    <zorder>Stock_Growth_Earnings_Per_Share3</zorder>
-   <zorder>Stock_Growth_Operating_Cashflow1_2</zorder>
-   <zorder>Stock_Growth_Revenue_Share3</zorder>
+   <zorder>Stock_Growth_Dividend_Per_Share3</zorder>
+   <zorder>Stock_Growth_Free_Cashflow3</zorder>
    <zorder>Stock_Growth_Debt3</zorder>
    <zorder>Stock_Growth_RD_Expense3</zorder>
    <zorder>Stock_Growth_SGA_Expense3</zorder>
@@ -3718,7 +3718,7 @@
    <zorder>Stock_Technical_S2_Title</zorder>
    <zorder>Stock_Technical_S1_Title</zorder>
    <zorder>Stock_Technical_Pivot_Point_Title</zorder>
-   <zorder>labelStock_Technical_R1_Title</zorder>
+   <zorder>Stock_Technical_R1_Title</zorder>
    <zorder>Stock_Technical_R2_Title</zorder>
    <zorder>Stock_Technical_R3_Title</zorder>
    <zorder>Stock_Technical_S3</zorder>
@@ -3731,14 +3731,6 @@
    <zorder>Stock_Technical_MACD</zorder>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MplCanvas</class>
-   <extends>QWidget</extends>
-   <header>mplcanvas.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

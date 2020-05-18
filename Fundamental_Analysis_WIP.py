@@ -10,6 +10,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import requests, json, urllib, webbrowser
+from bs4 import BeautifulSoup
+import pyqtgraph as pg
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 
@@ -697,14 +699,14 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Dividend_Per_Share_Title.setFont(font)
         self.Stock_Growth_Dividend_Per_Share_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Dividend_Per_Share_Title.setObjectName("Stock_Growth_Dividend_Per_Share_Title")
-        self.Stock_Growth_Revenue_Share_Title = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Revenue_Share_Title.setGeometry(QtCore.QRect(10, 460, 135, 21))
+        self.Stock_Growth_Free_Cashflow_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow_Title.setGeometry(QtCore.QRect(10, 460, 135, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.Stock_Growth_Revenue_Share_Title.setFont(font)
-        self.Stock_Growth_Revenue_Share_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.Stock_Growth_Revenue_Share_Title.setObjectName("Stock_Growth_Revenue_Share_Title")
+        self.Stock_Growth_Free_Cashflow_Title.setFont(font)
+        self.Stock_Growth_Free_Cashflow_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Free_Cashflow_Title.setObjectName("Stock_Growth_Free_Cashflow_Title")
         self.Stock_Growth_Debt_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt_Title.setGeometry(QtCore.QRect(10, 480, 135, 21))
         font = QtGui.QFont()
@@ -874,14 +876,14 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Dividend_Per_Share1.setFont(font)
         self.Stock_Growth_Dividend_Per_Share1.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Growth_Dividend_Per_Share1.setObjectName("Stock_Growth_Dividend_Per_Share1")
-        self.Stock_Growth_Revenue_Share1 = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Revenue_Share1.setGeometry(QtCore.QRect(150, 460, 90, 20))
+        self.Stock_Growth_Free_Cashflow1 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow1.setGeometry(QtCore.QRect(150, 460, 90, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Stock_Growth_Revenue_Share1.setFont(font)
-        self.Stock_Growth_Revenue_Share1.setAlignment(QtCore.Qt.AlignCenter)
-        self.Stock_Growth_Revenue_Share1.setObjectName("Stock_Growth_Revenue_Share1")
+        self.Stock_Growth_Free_Cashflow1.setFont(font)
+        self.Stock_Growth_Free_Cashflow1.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Growth_Free_Cashflow1.setObjectName("Stock_Growth_Free_Cashflow1")
         self.Stock_Growth_Debt1 = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt1.setGeometry(QtCore.QRect(150, 480, 90, 20))
         font = QtGui.QFont()
@@ -954,14 +956,14 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Dividend_Per_Share2.setFont(font)
         self.Stock_Growth_Dividend_Per_Share2.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Growth_Dividend_Per_Share2.setObjectName("Stock_Growth_Dividend_Per_Share2")
-        self.Stock_Growth_Revenue_Share2 = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Revenue_Share2.setGeometry(QtCore.QRect(240, 460, 90, 20))
+        self.Stock_Growth_Free_Cashflow2 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow2.setGeometry(QtCore.QRect(240, 460, 90, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Stock_Growth_Revenue_Share2.setFont(font)
-        self.Stock_Growth_Revenue_Share2.setAlignment(QtCore.Qt.AlignCenter)
-        self.Stock_Growth_Revenue_Share2.setObjectName("Stock_Growth_Revenue_Share2")
+        self.Stock_Growth_Free_Cashflow2.setFont(font)
+        self.Stock_Growth_Free_Cashflow2.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Growth_Free_Cashflow2.setObjectName("Stock_Growth_Free_Cashflow2")
         self.Stock_Growth_Debt2 = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt2.setGeometry(QtCore.QRect(240, 480, 90, 20))
         font = QtGui.QFont()
@@ -1034,14 +1036,14 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Dividend_Per_Share3.setFont(font)
         self.Stock_Growth_Dividend_Per_Share3.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Growth_Dividend_Per_Share3.setObjectName("Stock_Growth_Dividend_Per_Share3")
-        self.Stock_Growth_Revenue_Share3 = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Revenue_Share3.setGeometry(QtCore.QRect(330, 460, 90, 20))
+        self.Stock_Growth_Free_Cashflow3 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow3.setGeometry(QtCore.QRect(330, 460, 90, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Stock_Growth_Revenue_Share3.setFont(font)
-        self.Stock_Growth_Revenue_Share3.setAlignment(QtCore.Qt.AlignCenter)
-        self.Stock_Growth_Revenue_Share3.setObjectName("Stock_Growth_Revenue_Share3")
+        self.Stock_Growth_Free_Cashflow3.setFont(font)
+        self.Stock_Growth_Free_Cashflow3.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Growth_Free_Cashflow3.setObjectName("Stock_Growth_Free_Cashflow3")
         self.Stock_Growth_Debt3 = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt3.setGeometry(QtCore.QRect(330, 480, 90, 20))
         font = QtGui.QFont()
@@ -1277,9 +1279,22 @@ class Ui_MainWindow(object):
         self.Stock_Technical_R3.setFont(font)
         self.Stock_Technical_R3.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Technical_R3.setObjectName("Stock_Technical_R3")
-        self.Stock_Technical_MACD = QtWidgets.QGraphicsView(self.centralwidget)
+        # -----------------------------------------------------------------------------------------------------
+        # We first initialize the x and y axis, x axis needs to be in date time
+        date_axis = TimeAxisItem(orientation='bottom')
+        y_axis = pg.AxisItem(orientation='left')
+
+        # Show grid with opacity = 255
+        y_axis.setGrid(255)
+        date_axis.setGrid(255)
+
+        self.Stock_Technical_MACD = pg.PlotWidget(self.centralwidget, axisItems={'bottom': date_axis, 'left': y_axis})
         self.Stock_Technical_MACD.setGeometry(QtCore.QRect(430, 370, 571, 291))
         self.Stock_Technical_MACD.setObjectName("Stock_Technical_MACD")
+        # Set the background colour to be white
+        self.Stock_Technical_MACD.setBackground('w')
+        # -----------------------------------------------------------------------------------------------------
+
         self.Sector_Performance_Title_2.raise_()
         self.TimeNow_Label.raise_()
         self.DateNow_Label.raise_()
@@ -1377,7 +1392,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income_Title.raise_()
         self.Stock_Growth_Earnings_Per_Share_Title.raise_()
         self.Stock_Growth_Dividend_Per_Share_Title.raise_()
-        self.Stock_Growth_Revenue_Share_Title.raise_()
+        self.Stock_Growth_Free_Cashflow_Title.raise_()
         self.Stock_Growth_Debt_Title.raise_()
         self.Stock_Growth_RD_Expense_Title.raise_()
         self.Stock_RSI.raise_()
@@ -1399,7 +1414,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income1.raise_()
         self.Stock_Growth_Earnings_Per_Share1.raise_()
         self.Stock_Growth_Dividend_Per_Share1.raise_()
-        self.Stock_Growth_Revenue_Share1.raise_()
+        self.Stock_Growth_Free_Cashflow1.raise_()
         self.Stock_Growth_Debt1.raise_()
         self.Stock_Growth_RD_Expense1.raise_()
         self.Stock_Growth_SGA_Expense1.raise_()
@@ -1409,7 +1424,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income2.raise_()
         self.Stock_Growth_Earnings_Per_Share2.raise_()
         self.Stock_Growth_Dividend_Per_Share2.raise_()
-        self.Stock_Growth_Revenue_Share2.raise_()
+        self.Stock_Growth_Free_Cashflow2.raise_()
         self.Stock_Growth_Debt2.raise_()
         self.Stock_Growth_RD_Expense2.raise_()
         self.Stock_Growth_SGA_Expense2.raise_()
@@ -1419,7 +1434,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income3.raise_()
         self.Stock_Growth_Earnings_Per_Share3.raise_()
         self.Stock_Growth_Dividend_Per_Share3.raise_()
-        self.Stock_Growth_Revenue_Share3.raise_()
+        self.Stock_Growth_Free_Cashflow3.raise_()
         self.Stock_Growth_Debt3.raise_()
         self.Stock_Growth_RD_Expense3.raise_()
         self.Stock_Growth_SGA_Expense3.raise_()
@@ -1473,7 +1488,7 @@ class Ui_MainWindow(object):
                               self.Stock_Growth_EBIT_Title,
                               self.Stock_Growth_Operating_Income_Title, self.Stock_Growth_Net_Income_Title,
                               self.Stock_Growth_Earnings_Per_Share_Title, self.Stock_Growth_Dividend_Per_Share_Title,
-                              self.Stock_Growth_Revenue_Share_Title, self.Stock_Growth_Debt_Title,
+                              self.Stock_Growth_Free_Cashflow_Title, self.Stock_Growth_Debt_Title,
                               self.Stock_Growth_RD_Expense_Title,
                               self.Stock_RSI, self.Stock_Growth_SGA_Expense_Title,
                               self.Stock_Growth_Longterm_Financial_Growth_Title,
@@ -1488,18 +1503,18 @@ class Ui_MainWindow(object):
                               self.Stock_Growth_EBIT1, self.Stock_Growth_Operating_Income1,
                               self.Stock_Growth_Net_Income1,
                               self.Stock_Growth_Earnings_Per_Share1, self.Stock_Growth_Dividend_Per_Share1,
-                              self.Stock_Growth_Revenue_Share1,
+                              self.Stock_Growth_Free_Cashflow1,
                               self.Stock_Growth_Debt1, self.Stock_Growth_RD_Expense1, self.Stock_Growth_SGA_Expense1,
                               self.Stock_Gross_Profit2,
                               self.Stock_Growth_EBIT2, self.Stock_Growth_Operating_Income2,
                               self.Stock_Growth_Net_Income2,
                               self.Stock_Growth_Earnings_Per_Share2, self.Stock_Growth_Dividend_Per_Share2,
-                              self.Stock_Growth_Revenue_Share2,
+                              self.Stock_Growth_Free_Cashflow2,
                               self.Stock_Growth_Debt2, self.Stock_Growth_RD_Expense2, self.Stock_Growth_SGA_Expense2,
                               self.Stock_Gross_Profit3,
                               self.Stock_Growth_EBIT3, self.Stock_Growth_Operating_Income3,
                               self.Stock_Growth_Net_Income3, self.Stock_Growth_Earnings_Per_Share3,
-                              self.Stock_Growth_Dividend_Per_Share3, self.Stock_Growth_Revenue_Share3,
+                              self.Stock_Growth_Dividend_Per_Share3, self.Stock_Growth_Free_Cashflow3,
                               self.Stock_Growth_Debt3,
                               self.Stock_Growth_RD_Expense3, self.Stock_Growth_SGA_Expense3,
                               self.Stock_Growth_Longterm_Revenue1,
@@ -1573,6 +1588,7 @@ class Ui_MainWindow(object):
         # Get rid of white spaces if there are any
         ticker_string = self.Search_Bar.text()
         ticker_string = ticker_string.strip()
+        self.search_symbol = ticker_string
 
         url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
         session = requests.session()
@@ -1654,8 +1670,8 @@ class Ui_MainWindow(object):
                                       self.Stock_Growth_Earnings_Per_Share3]
         dividend_per_share_widgets = [self.Stock_Growth_Dividend_Per_Share1, self.Stock_Growth_Dividend_Per_Share2,
                                       self.Stock_Growth_Dividend_Per_Share3]
-        free_cash_flow_widgets = [self.Stock_Growth_Revenue_Share1, self.Stock_Growth_Revenue_Share2,
-                                  self.Stock_Growth_Revenue_Share3]
+        free_cash_flow_widgets = [self.Stock_Growth_Free_Cashflow1, self.Stock_Growth_Free_Cashflow2,
+                                  self.Stock_Growth_Free_Cashflow3]
         debt_growth_widgets = [self.Stock_Growth_Debt1, self.Stock_Growth_Debt2, self.Stock_Growth_Debt3]
         rd_expense_widgets = [self.Stock_Growth_RD_Expense1, self.Stock_Growth_RD_Expense2,
                               self.Stock_Growth_RD_Expense3]
@@ -1734,11 +1750,81 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Longterm_Shareholder_Equity3.setText(
             self.Convert_to_Percentage_String(most_recent_report['10Y Shareholders Equity Growth (per Share)']))
 
+        self.Populate_MACD_Graph()
+
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
         # widgets that are changed to see labels be updated
         for widget in self.stock_widgets:
             widget.show()
             widget.repaint()
+
+    def Populate_MACD_Graph(self):
+        technical_url = 'https://www.alphavantage.co/query?function=MACD&symbol=' + self.search_symbol + \
+                        '&interval=daily&series_type=open&apikey=' + alpha_vantage_api_key
+
+        req_ob = requests.get(technical_url)
+
+        # result contains list of nested dictionaries
+        result = req_ob.json()
+
+        last_refresh_date = result['Meta Data']['3: Last Refreshed']
+        print("Last Refresh Date is:" + last_refresh_date)
+
+        interval = result['Meta Data']['4: Interval']
+        print("The interval of refresh is :" + last_refresh_date)
+
+        macd_data = result['Technical Analysis: MACD']
+
+        # Declare Four Variables that we need to plot into the graph
+        date_array = []
+        macd_array = []
+        macd_signal_array = []
+        macd_hist_array = []
+        # print('The type of data of macd_data is:' + str(type(macd_data)))
+
+        index = 0
+        # Go through this loop and store everything into an array later for plotting
+        for data in macd_data:
+            if index < 200:
+                # print('The type of data is: ' + str(type(date))+ ' and the value is:' + str(date))
+
+                # First convert the string to datetime function
+                date = datetime.strptime(data, '%Y-%m-%d')
+
+                # Store the respective variables into an array
+                date_array.append(date)
+                macd_array.append(float(macd_data[data]['MACD']))
+                macd_signal_array.append(float(macd_data[data]['MACD_Signal']))
+                macd_hist_array.append(float(macd_data[data]['MACD_Hist']))
+                index = index + 1
+            else:
+                break
+        # THIS IS NO LONGER NEEDED AS WE HAVE DATE TIME IN THE X AXIS
+        # date_array.reverse()
+        # macd_array.reverse()
+        # macd_signal_array.reverse()
+        # macd_hist_array.reverse()
+
+        # Seperately plot two lines into the pyqtgraph widget, one for MACD Signal and one for MACD
+        for i in range(2):
+            if i == 0:
+                # First plot the MACD values
+                y_data = macd_array
+                # line_symbol = 'o'
+            elif i == 1:
+                # Then we plot the MACD Signals
+                y_data = macd_signal_array
+                # line_symbol = 't'
+
+            # Now we plot our values onto the widget
+            # self.Stock_Technical_MACD.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i, 2), symbol=line_symbol)
+            self.Stock_Technical_MACD.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i, 2), width = 2)
+
+        # Initialize the bar chart
+        bar = pg.BarGraphItem(x=[x.timestamp() for x in date_array], height=macd_hist_array, width=0.3, brush='r')
+
+        # Add the bar chart onto the graph widget itself with the addItem function
+        self.Stock_Technical_MACD.addItem(bar)
 
     # -------------------------------------------------------------------
     # Function Name: Convert_to_Percentage_String
@@ -2077,7 +2163,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income_Title.setText(_translate("MainWindow", "Net Income:"))
         self.Stock_Growth_Earnings_Per_Share_Title.setText(_translate("MainWindow", "Earnings per Share:"))
         self.Stock_Growth_Dividend_Per_Share_Title.setText(_translate("MainWindow", "Dividend per Share"))
-        self.Stock_Growth_Revenue_Share_Title.setText(_translate("MainWindow", "Rev Growth (Share):"))
+        self.Stock_Growth_Free_Cashflow_Title.setText(_translate("MainWindow", "Free Cashflow :"))
         self.Stock_Growth_Debt_Title.setText(_translate("MainWindow", "Debt Growth:"))
         self.Stock_Growth_RD_Expense_Title.setText(_translate("MainWindow", "R & D Expense:"))
         self.Stock_RSI.setText(_translate("MainWindow", "RSI(14):"))
@@ -2099,7 +2185,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Earnings_Per_Share1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Dividend_Per_Share1.setText(_translate("MainWindow", "+00.00%"))
-        self.Stock_Growth_Revenue_Share1.setText(_translate("MainWindow", "+00.00%"))
+        self.Stock_Growth_Free_Cashflow1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Debt1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_RD_Expense1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_SGA_Expense1.setText(_translate("MainWindow", "+00.00%"))
@@ -2109,7 +2195,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Earnings_Per_Share2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Dividend_Per_Share2.setText(_translate("MainWindow", "+00.00%"))
-        self.Stock_Growth_Revenue_Share2.setText(_translate("MainWindow", "+00.00%"))
+        self.Stock_Growth_Free_Cashflow2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Debt2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_RD_Expense2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_SGA_Expense2.setText(_translate("MainWindow", "+00.00%"))
@@ -2119,7 +2205,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Earnings_Per_Share3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Dividend_Per_Share3.setText(_translate("MainWindow", "+00.00%"))
-        self.Stock_Growth_Revenue_Share3.setText(_translate("MainWindow", "+00.00%"))
+        self.Stock_Growth_Free_Cashflow3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Debt3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_RD_Expense3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_SGA_Expense3.setText(_translate("MainWindow", "+00.00%"))
@@ -2151,6 +2237,9 @@ class Ui_MainWindow(object):
         self.Stock_Technical_R2.setText(_translate("MainWindow", "132.32"))
         self.Stock_Technical_R3.setText(_translate("MainWindow", "132.32"))
 
+class TimeAxisItem(pg.AxisItem):
+    def tickStrings(self, values, scale, spacing):
+        return [datetime.fromtimestamp(value) for value in values]
 
 if __name__ == "__main__":
     import sys

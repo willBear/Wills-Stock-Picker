@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import requests, json, urllib, webbrowser
 from bs4 import BeautifulSoup
+import investpy
 import pyqtgraph as pg
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
@@ -1529,7 +1530,7 @@ class Ui_MainWindow(object):
                               self.Stock_Technical_Pivot_Point_Title, self.Stock_Technical_R1_Title, self.Stock_Technical_R2_Title,
                               self.Stock_Technical_R3_Title, self.Stock_Technical_S3, self.Stock_Technical_S2, self.Stock_Technical_S1,
                               self.Stock_Technical_Pivot_Point,self.Stock_Technical_R1,self.Stock_Technical_R2,self.Stock_Technical_R3,
-                              self.Stock_Technical_MACD}
+                              self.Stock_Technical_MACD,self.Stock_Growth_Switch_Button}
 
         for widget in self.stock_widgets:
             widget.setVisible(False)
@@ -1751,12 +1752,71 @@ class Ui_MainWindow(object):
             self.Convert_to_Percentage_String(most_recent_report['10Y Shareholders Equity Growth (per Share)']))
 
         self.Populate_MACD_Graph()
+        self.Populate_Pivot_Points()
 
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
         # widgets that are changed to see labels be updated
         for widget in self.stock_widgets:
             widget.show()
             widget.repaint()
+
+    def Populate_Pivot_Points(self):
+        # Using the investpy module, we would get investing.com website url for the company
+        # TODO:
+        # Add functionality for Canadian and Stocks that are from other parts of the world
+        company_profile = investpy.get_stock_company_profile(stock=self.search_symbol,
+                                                             country='United States')
+        # print(company_profile)
+
+        company_profile_url = company_profile['url']
+        technical_url = company_profile_url[:-15] + 'technical'
+
+        response = requests.get(technical_url, headers={'User-Agent': 'Mozilla/5.0'})
+
+        soup = BeautifulSoup(response.text, 'lxml')
+        # print(soup)
+        data_table = soup.find_all('div', {'id': 'techinalContent'})
+        # print(data_table)
+        cols = [td.text for td in data_table[0].select('td')]
+        # print(cols)
+
+        # We initializa a empty list
+        parsed_list = []
+
+        # Parse data that we receive from web scraping into array
+        for text in cols:
+            parsed_text = text.strip()
+            if '\t' or '\n' in text:
+                parsed_text = text.replace('\n', '')
+                parsed_text = parsed_text.replace('\t', '')
+            parsed_list.append(parsed_text)
+
+        print(parsed_list)
+
+        pivot_point_widgets = [self.Stock_Technical_S3,self.Stock_Technical_S2,self.Stock_Technical_S1,
+                               self.Stock_Technical_Pivot_Point,self.Stock_Technical_R1,self.Stock_Technical_R2,
+                               self.Stock_Technical_R3]
+        found_pivot = False
+        found_RSI = False
+        pivot_index = 0
+
+        for element in parsed_list:
+            if found_pivot and pivot_index < 6:
+                pivot_point_widgets[pivot_index].setText(element)
+                pivot_index = pivot_index + 1
+            elif found_RSI:
+                self.Stock_RSI.setText('RSI(14):' + element[0:4])
+                break
+
+            if element == 'Classic':
+                found_pivot = True
+            elif element == 'RSI(14)':
+                found_RSI = True
+
+
+
+
+
 
     def Populate_MACD_Graph(self):
         technical_url = 'https://www.alphavantage.co/query?function=MACD&symbol=' + self.search_symbol + \

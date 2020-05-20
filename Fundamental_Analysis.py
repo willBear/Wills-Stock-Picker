@@ -41,7 +41,6 @@ from bs4 import BeautifulSoup
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 financial_modelling_prep_api_key = 'a595a30dbf0ad8470cb8d0e350ccffa0'
 
-
 # *********************************************************************************************************
 # Class Name: Ui_MainWindow
 #
@@ -1611,7 +1610,8 @@ class Ui_MainWindow(object):
     # -------------------------------------------------------------------
     # Function Name: UpdateTime
     #
-    # Description: This function is run every 1 second to update the date
+    # Description:
+    # This function is run every 1 second to update the date
     # and time labels on the top left of the main window.This function is
     # called from the QT timer expiry at the bottom of the setupUI
     # function.
@@ -1629,7 +1629,8 @@ class Ui_MainWindow(object):
     # -------------------------------------------------------------------
     # Function Name: Search_Stocks
     #
-    # Description: This function is called whenever a ticker is searched
+    # Description:
+    # This function is called whenever a ticker is searched
     # and it relies on Alphavantage and FinancialModellingPrep JSON to
     # have data returned, labels are then generated and refreshed
     # -------------------------------------------------------------------
@@ -1710,7 +1711,10 @@ class Ui_MainWindow(object):
         self.Stock_Earnings.setText(quote_data[0]['earningsAnnouncement'][0:10])
         self.Stock_Exchange_Variable = quote_data[0]['exhange']
 
-        # After we have updated the information, we would now need to 
+        # After we have updated the information, we would now need change the colour
+        # of the widget based on the string
+        # TODO: Perhaps changing another way to detect negative for faster processing
+
         if (quote_data[0]['changesPercentage']) < 0:
             self.Stock_Price.setStyleSheet('Color:RED')
             self.Stock_Percentage_Change.setStyleSheet('Color:RED')
@@ -1721,7 +1725,8 @@ class Ui_MainWindow(object):
             self.Stock_Name.setStyleSheet('Background-Color:GREEN;Color:WHITE')
 
         # Now we manipulate data to fit our needs for growth of data
-        # We first make arrays for efficiency of putting it in later
+        # We first make arrays for efficiency of these information in
+        # later in a loop
         date_array_widgets = [self.Stock_Growth_Date1, self.Stock_Growth_Date2, self.Stock_Growth_Date3]
         gross_profit_widgets = [self.Stock_Gross_Profit1, self.Stock_Gross_Profit2, self.Stock_Gross_Profit3]
         ebit_widgets = [self.Stock_Growth_EBIT1, self.Stock_Growth_EBIT2, self.Stock_Growth_EBIT3]
@@ -1752,10 +1757,10 @@ class Ui_MainWindow(object):
         # print(len(growth_ratio['growth']))
         # print(growth_ratio['growth'][0])
 
-        growth_index = 0
-
         # We will now run a for loop that loops through the growth data set and take the most recent 3 earnings
         # report, parse the data and put it at it respective place after parsing through calling another function
+        growth_index = 0
+
         for growth_period in growth_ratio['growth']:
             date_array_widgets[growth_index].setText((growth_period['date']))
             gross_profit_widgets[growth_index].setText(
@@ -1779,6 +1784,7 @@ class Ui_MainWindow(object):
             # We only need the first 3 data sets that are given by the data, once we detect we reach the fourth
             # data set, we would break out of the for loop
             growth_index = growth_index + 1
+
             if (growth_index > 2):
                 break
         # All earnings data are loaded, we now parse and load data into long term financial data
@@ -1791,7 +1797,7 @@ class Ui_MainWindow(object):
             self.Convert_to_Percentage_String(most_recent_report['5Y Revenue Growth (per Share)']))
         self.Stock_Growth_Longterm_Revenue3.setText(
             self.Convert_to_Percentage_String(most_recent_report['10Y Revenue Growth (per Share)']))
-        # Then we parse and parse and add Operating Cash flow
+        # Then we parse and add Operating Cash flow
         self.Stock_Growth_Longterm_Operating_Cashflow1.setText(
             self.Convert_to_Percentage_String(most_recent_report['3Y Operating CF Growth (per Share)']))
         self.Stock_Growth_Longterm_Operating_Cashflow2.setText(
@@ -1813,7 +1819,10 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Longterm_Shareholder_Equity3.setText(
             self.Convert_to_Percentage_String(most_recent_report['10Y Shareholders Equity Growth (per Share)']))
 
+        # Call the Populate MACD Function to retrieve data from alpha vantage
         self.Populate_MACD_Graph()
+
+        # Call the Populate Pivot Point Function
         self.Populate_Pivot_Points()
 
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
@@ -1822,24 +1831,44 @@ class Ui_MainWindow(object):
             widget.show()
             widget.repaint()
 
+    # -------------------------------------------------------------------
+    # Function Name: Populate_Pivot_Points
+    #
+    # Description:
+    # This function is called from the Search_Stocks
+    # function.Using the investpy module, we would get investing.com
+    # url for the company. Then, we would use beautiful soup package
+    # to retrieve the technical pivot points of the equity. Lastly,
+    # we would update the labels in the technical section to its data
+    #
+    # TODO:
+    # Add functionality for stocks that aren't in the United States
+    # -------------------------------------------------------------------
     def Populate_Pivot_Points(self):
-        # Using the investpy module, we would get investing.com website url for the company
-        # TODO:
-        # Add functionality for Canadian and Stocks that are from other parts of the world
+
+        # Use the investpy package to retrieve investing.com information
         company_profile = investpy.get_stock_company_profile(stock=self.search_symbol,
                                                              country='United States')
+        # Debug statement
         # print(company_profile)
 
         company_profile_url = company_profile['url']
+
+        # Add string to the url for technical information
         technical_url = company_profile_url[:-15] + 'technical'
 
         response = requests.get(technical_url, headers={'User-Agent': 'Mozilla/5.0'})
 
+        # Retrieve the data from above and store it into lxml file
         soup = BeautifulSoup(response.text, 'lxml')
-        # print(soup)
+
+        # Find the header <div id = technicalContent>
         data_table = soup.find_all('div', {'id': 'techinalContent'})
         # print(data_table)
+
+        # We now have the technicalContent, perform further parsing and find all table elements
         cols = [td.text for td in data_table[0].select('td')]
+
         # print(cols)
 
         # We initializa a empty list
@@ -1853,33 +1882,243 @@ class Ui_MainWindow(object):
                 parsed_text = parsed_text.replace('\t', '')
             parsed_list.append(parsed_text)
 
-        print(parsed_list)
+        # print(parsed_list)
 
+        # Add all widgets that need their labels changed into an array for updating in for loop
         pivot_point_widgets = [self.Stock_Technical_S3,self.Stock_Technical_S2,self.Stock_Technical_S1,
                                self.Stock_Technical_Pivot_Point,self.Stock_Technical_R1,self.Stock_Technical_R2,
                                self.Stock_Technical_R3]
+
+        # Initiate for loop variables below for control
         found_pivot = False
         found_RSI = False
         pivot_index = 0
 
+        # We traverse through each element in the data, if we found the matching data, we would then
+        # update the corresponding labels
         for element in parsed_list:
+            # Traverse through each element and check for flags that are set, if true then update labels
             if found_pivot and pivot_index < 6:
                 pivot_point_widgets[pivot_index].setText(element)
                 pivot_index = pivot_index + 1
             elif found_RSI:
                 self.Stock_RSI.setText('RSI(14):' + element[0:4])
                 break
-
+            # If the element is what we need, then we would set the flag to be true and take data in
             if element == 'Classic':
                 found_pivot = True
             elif element == 'RSI(14)':
                 found_RSI = True
 
+    def Search_Stocks(self):
 
+        # Get rid of white spaces if there are any
+        ticker_string = self.Search_Bar.text()
+        ticker_string = ticker_string.strip()
 
+        # Assigns a variable that other functions can use
+        # TODO: Past ticker_string instead into other defs
+        self.search_symbol = ticker_string
 
+        # We set up the URL that we will need to use for the comppany profile
+        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string + \
+              '?apikey=' + financial_modelling_prep_api_key
+        session = requests.session()
+        request = session.get(url, timeout=5)
 
+        # Store the JSON data into variable for later processing
+        company_data = request.json()
 
+        # In addition to the company profile, we also obtain the latest quote information on
+        # the searched equity
+        quote_url = "https://financialmodelingprep.com/api/v3/quote/" + ticker_string + '?apikey=' + financial_modelling_prep_api_key
+        session = requests.session()
+        request = session.get(quote_url, timeout=5)
+        quote_data = request.json()
+
+        # Debug Messages
+        # print(type(company_profile['mktCap']))
+        # print(quote_data)
+
+        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
+        # pairs in the returned message, if it has less than 2 key-value pairs, something is wrong!
+        # print(company_data)
+        # print(quote_data)
+        if len(company_data) < 2:
+            return
+
+        # We do basic parsing of the company data and get rid of any data we do not need
+        company_profile = company_data['profile']
+        self.Stock_Name.setText('  ' + str(company_profile['companyName']))
+        self.Stock_Symbol.setText(company_data['symbol'])
+        self.Stock_Description.setText(company_profile['description'])
+
+        # Take the Image URL from information passed down from Financial Modelling Prep
+        image_url = company_profile['image']
+
+        # We would use the URL module and read the image file, convert it to byte
+        data = urllib.request.urlopen(image_url).read()
+        image = QtGui.QImage()
+        image.loadFromData(data)
+
+        # We set the company image to have the converted image
+        self.Stock_Image.setPixmap(QtGui.QPixmap(image))
+
+        # Update the label widgets with information we obtained from the API provider
+        self.Stock_Price.setText(str(company_profile['price']))
+
+        percentage_change = company_profile['changesPercentage']
+        percentage_change = percentage_change[1:-1]
+        self.Stock_Percentage_Change.setText(percentage_change)
+
+        self.Stock_Volume.setText('Vol: ' + company_profile['volAvg'])
+        self.Stock_Low.setText('L: ' + str(quote_data[0]['dayLow']))
+        self.Stock_High.setText('H: ' + str(quote_data[0]['dayHigh']))
+        self.Stock_Open.setText('O: ' + str(quote_data[0]['open']))
+
+        beta = company_profile['beta']
+        beta = beta[0:4]
+        self.Stock_Beta.setText('Beta: ' + beta)
+        self.Stock_Market_Capitalization.setText(company_profile['mktCap'])
+        self.Stock_Exchange.setText(quote_data[0]['exhange'])
+        self.Stock_Industry.setText(company_profile['industry'])
+        self.Stock_Avg_Price_200.setText(str(quote_data[0]['priceAvg200'])[0:7])
+        self.Stock_Average_Volume.setText(str(quote_data[0]['avgVolume']))
+        self.Stock_Earnings.setText(quote_data[0]['earningsAnnouncement'][0:10])
+        self.Stock_Exchange_Variable = quote_data[0]['exhange']
+
+        # After we have updated the information, we would now need change the colour
+        # of the widget based on the string
+        # TODO: Perhaps changing another way to detect negative for faster processing
+
+        if (quote_data[0]['changesPercentage']) < 0:
+            self.Stock_Price.setStyleSheet('Color:RED')
+            self.Stock_Percentage_Change.setStyleSheet('Color:RED')
+            self.Stock_Name.setStyleSheet('Background-Color:RED;Color:WHITE')
+        else:
+            self.Stock_Price.setStyleSheet('Color:GREEN')
+            self.Stock_Percentage_Change.setStyleSheet('Color:GREEN')
+            self.Stock_Name.setStyleSheet('Background-Color:GREEN;Color:WHITE')
+
+        # Now we manipulate data to fit our needs for growth of data
+        # We first make arrays for efficiency of these information in
+        # later in a loop
+        date_array_widgets = [self.Stock_Growth_Date1, self.Stock_Growth_Date2, self.Stock_Growth_Date3]
+        gross_profit_widgets = [self.Stock_Gross_Profit1, self.Stock_Gross_Profit2, self.Stock_Gross_Profit3]
+        ebit_widgets = [self.Stock_Growth_EBIT1, self.Stock_Growth_EBIT2, self.Stock_Growth_EBIT3]
+        operating_income_widgets = [self.Stock_Growth_Operating_Income1, self.Stock_Growth_Operating_Income2,
+                                    self.Stock_Growth_Operating_Income3]
+        net_income_widgets = [self.Stock_Growth_Net_Income1, self.Stock_Growth_Net_Income2,
+                              self.Stock_Growth_Net_Income3]
+        earnings_per_share_widgets = [self.Stock_Growth_Earnings_Per_Share1, self.Stock_Growth_Earnings_Per_Share2,
+                                      self.Stock_Growth_Earnings_Per_Share3]
+        dividend_per_share_widgets = [self.Stock_Growth_Dividend_Per_Share1, self.Stock_Growth_Dividend_Per_Share2,
+                                      self.Stock_Growth_Dividend_Per_Share3]
+        free_cash_flow_widgets = [self.Stock_Growth_Free_Cashflow1, self.Stock_Growth_Free_Cashflow2,
+                                  self.Stock_Growth_Free_Cashflow3]
+        debt_growth_widgets = [self.Stock_Growth_Debt1, self.Stock_Growth_Debt2, self.Stock_Growth_Debt3]
+        rd_expense_widgets = [self.Stock_Growth_RD_Expense1, self.Stock_Growth_RD_Expense2,
+                              self.Stock_Growth_RD_Expense3]
+        sga_widgets = [self.Stock_Growth_SGA_Expense1, self.Stock_Growth_SGA_Expense2, self.Stock_Growth_SGA_Expense3]
+
+        base_url = "https://financialmodelingprep.com/api/v3/financial-statement-growth/" + \
+                   ticker_string + "?period=annual" + '?apikey=' + financial_modelling_prep_api_key
+
+        session = requests.session()
+        request = session.get(base_url, timeout=5)
+        growth_ratio = request.json()
+
+        # Debug Statements
+        # print(growth_ratio)
+        # print(len(growth_ratio['growth']))
+        # print(growth_ratio['growth'][0])
+
+        # We will now run a for loop that loops through the growth data set and take the most recent 3 earnings
+        # report, parse the data and put it at it respective place after parsing through calling another function
+        growth_index = 0
+
+        for growth_period in growth_ratio['growth']:
+            date_array_widgets[growth_index].setText((growth_period['date']))
+            gross_profit_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Gross Profit Growth']))
+            ebit_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['EBIT Growth']))
+            operating_income_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Operating Income Growth']))
+            net_income_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Net Income Growth']))
+            earnings_per_share_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['EPS Growth']))
+            dividend_per_share_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Dividends per Share Growth']))
+            free_cash_flow_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['Free Cash Flow growth']))
+            debt_growth_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['Debt Growth']))
+            rd_expense_widgets[growth_index].setText(
+                self.Convert_to_Percentage_String(growth_period['R&D Expense Growth']))
+            sga_widgets[growth_index].setText(self.Convert_to_Percentage_String(growth_period['SG&A Expenses Growth']))
+
+            # We only need the first 3 data sets that are given by the data, once we detect we reach the fourth
+            # data set, we would break out of the for loop
+            growth_index = growth_index + 1
+
+            if (growth_index > 2):
+                break
+        # All earnings data are loaded, we now parse and load data into long term financial data
+        most_recent_report = growth_ratio['growth'][0]
+        print(most_recent_report)
+        # First we parse long term revenue growths
+        self.Stock_Growth_Longterm_Revenue1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Revenue Growth (per Share)']))
+        self.Stock_Growth_Longterm_Revenue2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Revenue Growth (per Share)']))
+        self.Stock_Growth_Longterm_Revenue3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Revenue Growth (per Share)']))
+        # Then we parse and add Operating Cash flow
+        self.Stock_Growth_Longterm_Operating_Cashflow1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Operating CF Growth (per Share)']))
+        self.Stock_Growth_Longterm_Operating_Cashflow2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Operating CF Growth (per Share)']))
+        self.Stock_Growth_Longterm_Operating_Cashflow3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Operating CF Growth (per Share)']))
+        # Then we parse and add Net Income
+        self.Stock_Growth_Longterm_Net_Income1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Net Income Growth (per Share)']))
+        self.Stock_Growth_Longterm_Net_Income2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Net Income Growth (per Share)']))
+        self.Stock_Growth_Longterm_Net_Income3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Net Income Growth (per Share)']))
+        # Then we parse and add Shareholder Equity
+        self.Stock_Growth_Longterm_Shareholder_Equity1.setText(
+            self.Convert_to_Percentage_String(most_recent_report['3Y Shareholders Equity Growth (per Share)']))
+        self.Stock_Growth_Longterm_Shareholder_Equity2.setText(
+            self.Convert_to_Percentage_String(most_recent_report['5Y Shareholders Equity Growth (per Share)']))
+        self.Stock_Growth_Longterm_Shareholder_Equity3.setText(
+            self.Convert_to_Percentage_String(most_recent_report['10Y Shareholders Equity Growth (per Share)']))
+
+        # Call the Populate MACD Function to retrieve data from alpha vantage
+        self.Populate_MACD_Graph()
+
+        # Call the Populate Pivot Point Function
+        self.Populate_Pivot_Points()
+
+        # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
+        # widgets that are changed to see labels be updated
+        for widget in self.stock_widgets:
+            widget.show()
+            widget.repaint()
+
+    # -------------------------------------------------------------------
+    # Function Name: Populate_MACD_Graph
+    #
+    # Description:
+    # This function is called from the Search_Stocks function, using the
+    # API call from alpha vantage, we would receive relevant data. Then
+    # we process the data and plots it into pyqtgraph
+    #
+    # TODO:
+    # Add colour scheme for bars, green for positive and red for negative
+    # Add current stock prices
+    # -------------------------------------------------------------------
     def Populate_MACD_Graph(self):
         technical_url = 'https://www.alphavantage.co/query?function=MACD&symbol=' + self.search_symbol + \
                         '&interval=daily&series_type=open&apikey=' + alpha_vantage_api_key
@@ -1921,25 +2160,17 @@ class Ui_MainWindow(object):
                 index = index + 1
             else:
                 break
-        # THIS IS NO LONGER NEEDED AS WE HAVE DATE TIME IN THE X AXIS
-        # date_array.reverse()
-        # macd_array.reverse()
-        # macd_signal_array.reverse()
-        # macd_hist_array.reverse()
 
         # Seperately plot two lines into the pyqtgraph widget, one for MACD Signal and one for MACD
         for i in range(2):
             if i == 0:
                 # First plot the MACD values
                 y_data = macd_array
-                # line_symbol = 'o'
             elif i == 1:
                 # Then we plot the MACD Signals
                 y_data = macd_signal_array
-                # line_symbol = 't'
 
             # Now we plot our values onto the widget
-            # self.Stock_Technical_MACD.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i, 2), symbol=line_symbol)
             self.Stock_Technical_MACD.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i, 2), width = 2)
 
         # Initialize the bar chart
@@ -2360,6 +2591,12 @@ class Ui_MainWindow(object):
         self.Stock_Technical_R2.setText(_translate("MainWindow", "132.32"))
         self.Stock_Technical_R3.setText(_translate("MainWindow", "132.32"))
 
+# *********************************************************************************************************
+# Class Name: TimeAxisItem
+#
+# Functionality:
+# This class is used solely for changing the x-axis for pyqtgraph from numeric values to datetime values 
+# *********************************************************************************************************
 class TimeAxisItem(pg.AxisItem):
     def tickStrings(self, values, scale, spacing):
         return [datetime.fromtimestamp(value) for value in values]

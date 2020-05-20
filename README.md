@@ -1,10 +1,10 @@
 # Wills Stock Picker
 A PyQT5 application that helps investors pick stocks, entry/exit points by providing fundamental and technical information
 
-## Getting Started
+### Getting Started
 This application is built using Python 3.8 interpreter. See installation section and packages for list of requirements that are needed
 
-### Demonstration
+#### Demonstration
 
 
 #### Prerequisites 

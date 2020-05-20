@@ -15,6 +15,7 @@ import investpy
 import pyqtgraph as pg
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
+financial_modelling_prep_api_key = 'a595a30dbf0ad8470cb8d0e350ccffa0'
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -1591,12 +1592,12 @@ class Ui_MainWindow(object):
         ticker_string = ticker_string.strip()
         self.search_symbol = ticker_string
 
-        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
+        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string + '?apikey=' + financial_modelling_prep_api_key
         session = requests.session()
         request = session.get(url, timeout=5)
         company_data = request.json()
 
-        quote_url = "https://financialmodelingprep.com/api/v3/quote/" + ticker_string
+        quote_url = "https://financialmodelingprep.com/api/v3/quote/" + ticker_string + '?apikey=' + financial_modelling_prep_api_key
         session = requests.session()
         request = session.get(quote_url, timeout=5)
         quote_data = request.json()
@@ -1641,6 +1642,7 @@ class Ui_MainWindow(object):
         self.Stock_Beta.setText('Beta: ' + beta)
 
         print(type(company_profile['mktCap']))
+        print(quote_data)
         self.Stock_Market_Capitalization.setText(company_profile['mktCap'])
         self.Stock_Exchange.setText(quote_data[0]['exhange'])
         self.Stock_Industry.setText(company_profile['industry'])
@@ -1679,7 +1681,7 @@ class Ui_MainWindow(object):
         sga_widgets = [self.Stock_Growth_SGA_Expense1, self.Stock_Growth_SGA_Expense2, self.Stock_Growth_SGA_Expense3]
 
         base_url = "https://financialmodelingprep.com/api/v3/financial-statement-growth/" + \
-                   ticker_string + "?period=annual"
+                   ticker_string + "?period=annual" + '?apikey=' + financial_modelling_prep_api_key
 
         session = requests.session()
         request = session.get(base_url, timeout=5)
@@ -1954,7 +1956,7 @@ class Ui_MainWindow(object):
 
         # The URL that we will concatenate with quote_string, makes the request
         # and stores the result into closing_price_data
-        url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string
+        url = "https://financialmodelingprep.com/api/v3/quote/" + quote_string + '?apikey=' + financial_modelling_prep_api_key
         session = requests.session()
         request = session.get(url, timeout=5)
         closing_price_data = request.json()
@@ -1964,6 +1966,7 @@ class Ui_MainWindow(object):
                                  self.Index_Percentage_3,
                                  self.Index_Percentage_4, self.Index_Percentage_5, self.Index_Percentage_6]
 
+        print(closing_price_data)
         # We would parse the data by looping through the nested dictionary and
         # insert the content of each dictionary into its rightful place
         for key in closing_price_data:
@@ -2105,7 +2108,7 @@ class Ui_MainWindow(object):
                 self.Sector_Name_9.setText(key)
                 self.Sector_Percentage_9.setText(parsed_dictionary[key])
 
-        status_url = "https://financialmodelingprep.com/api/v3/is-the-market-open"
+        status_url = "https://financialmodelingprep.com/api/v3/is-the-market-open"+ '?apikey=' + financial_modelling_prep_api_key
         session = requests.session()
         request = session.get(status_url, timeout=5)
         market_status = request.json()

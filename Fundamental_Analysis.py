@@ -1,23 +1,65 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'Interface_Workfile.ui'
+# ---------------------------------------------------------------------------------------------------------
+# Author: Will Bear
+# File Name: Fundamental_Analysis.py
+# Version: 0.1-alpha
 #
-# Created by: PyQt5 UI code generator 5.14.2
 #
-# WARNING! All changes made in this file will be lost!
+# Functionality:
+# This PyQT5 programme is used to provide an overview of the North American Stock Indexes during
+# and after trading hours. Additionally, this project allows its users to search up a stock using
+# its tickers (currently limited to North American Equities & ETFs) and see its relevant information
+# that may help an investor to decide whether or not he / she will purchase the stock.
+#
+# The information shown from the stock search functionality consist of fundamental information as
+# well as technical information. On the fundamental side, the said company's growth information is
+# displayed along with its percentages, all provided by Financial Modelling Prep Website.
+# Technical information that are shown are the hourly moving averages, its support / resistances
+# as well as pivot points. Furthermore, an Moving Average Convergence / Divergence graph is displayed
+# to further aide the future investments of an investor.
+#
+# Lastly, this programme offers its users sector performances of the broader market both live and
+# selected aggregated time to further aide its users to determine the section he/she may wish to
+# invest in
+# ---------------------------------------------------------------------------------------------------------
 
-
-from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
-import requests, json, urllib, webbrowser
-from bs4 import BeautifulSoup
+
 import investpy
 import pyqtgraph as pg
+import requests
+import urllib
+import webbrowser
+# Import statements for the programme
+from PyQt5 import QtCore, QtGui, QtWidgets
+from bs4 import BeautifulSoup
 
+# Two of the main API providers we use in this project are Alpha Vantage and Financial Modelling Prep
+# For further information on these providers please visit their websites at:
+#
+# Alpha Vantage: https://www.alphavantage.co
+# Financial Modelling Prep: https://financialmodelingprep.com/
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
 financial_modelling_prep_api_key = 'a595a30dbf0ad8470cb8d0e350ccffa0'
 
+
+# *********************************************************************************************************
+# Class Name: Ui_MainWindow
+#
+# Functionality:
+# This class is generated using the pyuic5 functionality that are within the PyQT5 package. UI file is
+# first completed using the drag and drop UI application of QT Designer. This class is used mainly to
+# serve as an application container for information that we are going to retrieve from the API providers
+# as well as any input from the user
+# *********************************************************************************************************
 class Ui_MainWindow(object):
+    # -------------------------------------------------------------------
+    # Function Name: setupUi
+    #
+    # Functionality:
+    # This function serves the purposes of setting up all widgets that
+    # are in the PyQT5 application, such as assignment names, font, size
+    # location etc.
+    # -------------------------------------------------------------------
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
@@ -1281,8 +1323,10 @@ class Ui_MainWindow(object):
         self.Stock_Technical_R3.setFont(font)
         self.Stock_Technical_R3.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Technical_R3.setObjectName("Stock_Technical_R3")
-        # -----------------------------------------------------------------------------------------------------
-        # We first initialize the x and y axis, x axis needs to be in date time
+
+        # We first initialize the x and y axis of the PyQTgraph , x-axis needs to be in date time
+        # and we need assign it to a separate class, for both axis, we show the grid to have better
+        # viewing experiences
         date_axis = TimeAxisItem(orientation='bottom')
         y_axis = pg.AxisItem(orientation='left')
 
@@ -1290,12 +1334,14 @@ class Ui_MainWindow(object):
         y_axis.setGrid(255)
         date_axis.setGrid(255)
 
+        # Instead of normally assigning as graphic view, we would assign this widget as a plot widget
+        # with axis assigned with variables above
         self.Stock_Technical_MACD = pg.PlotWidget(self.centralwidget, axisItems={'bottom': date_axis, 'left': y_axis})
         self.Stock_Technical_MACD.setGeometry(QtCore.QRect(430, 370, 571, 291))
         self.Stock_Technical_MACD.setObjectName("Stock_Technical_MACD")
+
         # Set the background colour to be white
         self.Stock_Technical_MACD.setBackground('w')
-        # -----------------------------------------------------------------------------------------------------
 
         self.Sector_Performance_Title_2.raise_()
         self.TimeNow_Label.raise_()
@@ -1472,7 +1518,7 @@ class Ui_MainWindow(object):
         self.Stock_Technical_MACD.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
-        # Set the visibility of the widgets to 0 when we initialize
+        # This list contains all the widgets that we need to hide/show when the user searches up a stock
         self.stock_widgets = {self.Stock_Symbol, self.Stock_Description_Header, self.Stock_Description,
                               self.Stock_Image,
                               self.Stock_Industry_Title, self.Stock_Exchange_Title, self.Stock_Industry,
@@ -1533,6 +1579,7 @@ class Ui_MainWindow(object):
                               self.Stock_Technical_Pivot_Point,self.Stock_Technical_R1,self.Stock_Technical_R2,self.Stock_Technical_R3,
                               self.Stock_Technical_MACD,self.Stock_Growth_Switch_Button}
 
+        # Run through every widget in the list and hide it
         for widget in self.stock_widgets:
             widget.setVisible(False)
 
@@ -1541,6 +1588,7 @@ class Ui_MainWindow(object):
 
         # Whenever the view chart button is pressed, we would call a function to open the web browser
         self.Stock_View_Chart.clicked.connect(self.OpenTradingView)
+
         # We have a timer that updates every second and updates the current time of the clock
         self.timer_painter = QtCore.QTimer()
         self.timer_painter.timeout.connect(self.UpdateTime)
@@ -1568,9 +1616,9 @@ class Ui_MainWindow(object):
     # called from the QT timer expiry at the bottom of the setupUI
     # function.
     # -------------------------------------------------------------------
-
     def UpdateTime(self):
         current_time = datetime.now()
+
         # To Debug the current time
         # print(current_time.strftime("%H:%M:%S"))
 
@@ -1590,26 +1638,39 @@ class Ui_MainWindow(object):
         # Get rid of white spaces if there are any
         ticker_string = self.Search_Bar.text()
         ticker_string = ticker_string.strip()
+
+        # Assigns a variable that other functions can use
+        # TODO: Past ticker_string instead into other defs
         self.search_symbol = ticker_string
 
-        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string + '?apikey=' + financial_modelling_prep_api_key
+        # We set up the URL that we will need to use for the comppany profile
+        url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string + \
+              '?apikey=' + financial_modelling_prep_api_key
         session = requests.session()
         request = session.get(url, timeout=5)
+
+        # Store the JSON data into variable for later processing
         company_data = request.json()
 
+        # In addition to the company profile, we also obtain the latest quote information on
+        # the searched equity
         quote_url = "https://financialmodelingprep.com/api/v3/quote/" + ticker_string + '?apikey=' + financial_modelling_prep_api_key
         session = requests.session()
         request = session.get(quote_url, timeout=5)
         quote_data = request.json()
-        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
-        # pairs in the returned message, if it has less than 2 key-value pairs, we would throw message
-        #print(company_data)
 
+        # Debug Messages
+        # print(type(company_profile['mktCap']))
+        # print(quote_data)
+
+        # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
+        # pairs in the returned message, if it has less than 2 key-value pairs, something is wrong!
+        #print(company_data)
         #print(quote_data)
         if len(company_data) < 2:
             return
 
-        # We do some parsing of the company data
+        # We do basic parsing of the company data and get rid of any data we do not need
         company_profile = company_data['profile']
         self.Stock_Name.setText('  ' + str(company_profile['companyName']))
         self.Stock_Symbol.setText(company_data['symbol'])
@@ -1626,6 +1687,7 @@ class Ui_MainWindow(object):
         # We set the company image to have the converted image
         self.Stock_Image.setPixmap(QtGui.QPixmap(image))
 
+        # Update the label widgets with information we obtained from the API provider
         self.Stock_Price.setText(str(company_profile['price']))
 
         percentage_change = company_profile['changesPercentage']
@@ -1640,9 +1702,6 @@ class Ui_MainWindow(object):
         beta = company_profile['beta']
         beta = beta[0:4]
         self.Stock_Beta.setText('Beta: ' + beta)
-
-        print(type(company_profile['mktCap']))
-        print(quote_data)
         self.Stock_Market_Capitalization.setText(company_profile['mktCap'])
         self.Stock_Exchange.setText(quote_data[0]['exhange'])
         self.Stock_Industry.setText(company_profile['industry'])
@@ -1651,6 +1710,7 @@ class Ui_MainWindow(object):
         self.Stock_Earnings.setText(quote_data[0]['earningsAnnouncement'][0:10])
         self.Stock_Exchange_Variable = quote_data[0]['exhange']
 
+        # After we have updated the information, we would now need to 
         if (quote_data[0]['changesPercentage']) < 0:
             self.Stock_Price.setStyleSheet('Color:RED')
             self.Stock_Percentage_Change.setStyleSheet('Color:RED')

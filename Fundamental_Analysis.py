@@ -10,9 +10,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import requests, json, urllib, webbrowser
+from bs4 import BeautifulSoup
+import investpy
+import pyqtgraph as pg
 
 alpha_vantage_api_key = "4NE2ALTFPGT83V3S"
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -43,9 +45,9 @@ class Ui_MainWindow(object):
         self.TimeNow_Label.setWordWrap(True)
         self.TimeNow_Label.setObjectName("TimeNow_Label")
         self.DateNow_Label = QtWidgets.QLabel(self.centralwidget)
-        self.DateNow_Label.setGeometry(QtCore.QRect(5, 10, 90, 21))
+        self.DateNow_Label.setGeometry(QtCore.QRect(4, 10, 91, 21))
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(13)
         font.setBold(True)
         font.setWeight(75)
         self.DateNow_Label.setFont(font)
@@ -389,7 +391,7 @@ class Ui_MainWindow(object):
         self.Sector_Percentage_8.setFont(font)
         self.Sector_Percentage_8.setObjectName("Sector_Percentage_8")
         self.Sector_Performance_Title = QtWidgets.QComboBox(self.centralwidget)
-        self.Sector_Performance_Title.setGeometry(QtCore.QRect(780, 685, 231, 25))
+        self.Sector_Performance_Title.setGeometry(QtCore.QRect(780, 680, 231, 25))
         self.Sector_Performance_Title.setObjectName("Sector_Performance_Title")
         self.Sector_Performance_Title.addItem("")
         self.Sector_Performance_Title.addItem("")
@@ -402,7 +404,7 @@ class Ui_MainWindow(object):
         self.Sector_Performance_Title.addItem("")
         self.Sector_Performance_Title.addItem("")
         self.Sector_Performance_Title_2 = QtWidgets.QLabel(self.centralwidget)
-        self.Sector_Performance_Title_2.setGeometry(QtCore.QRect(437, 685, 150, 25))
+        self.Sector_Performance_Title_2.setGeometry(QtCore.QRect(437, 680, 150, 25))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
@@ -415,7 +417,7 @@ class Ui_MainWindow(object):
         self.Marke_Open_Label.setAlignment(QtCore.Qt.AlignCenter)
         self.Marke_Open_Label.setObjectName("Marke_Open_Label")
         self.Search_Button = QtWidgets.QPushButton(self.centralwidget)
-        self.Search_Button.setGeometry(QtCore.QRect(105, 80, 25, 21))
+        self.Search_Button.setGeometry(QtCore.QRect(105, 82, 25, 21))
         self.Search_Button.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("Search_Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -423,10 +425,10 @@ class Ui_MainWindow(object):
         self.Search_Button.setIconSize(QtCore.QSize(21, 21))
         self.Search_Button.setObjectName("Search_Button")
         self.Search_Bar = QtWidgets.QLineEdit(self.centralwidget)
-        self.Search_Bar.setGeometry(QtCore.QRect(5, 80, 100, 20))
+        self.Search_Bar.setGeometry(QtCore.QRect(5, 82, 100, 20))
         self.Search_Bar.setObjectName("Search_Bar")
         self.Stock_Symbol = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Symbol.setGeometry(QtCore.QRect(150, 80, 50, 20))
+        self.Stock_Symbol.setGeometry(QtCore.QRect(150, 82, 50, 20))
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(True)
@@ -439,12 +441,11 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Description_Header.setFont(font)
-        self.Stock_Description_Header.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Description_Header.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Description_Header.setObjectName("Stock_Description_Header")
         self.Stock_Description = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Description.setGeometry(QtCore.QRect(150, 150, 371, 131))
-        self.Stock_Description.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        self.Stock_Description.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.Stock_Description.setWordWrap(True)
         self.Stock_Description.setObjectName("Stock_Description")
         self.Stock_Image = QtWidgets.QLabel(self.centralwidget)
@@ -458,7 +459,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Industry_Title.setFont(font)
-        self.Stock_Industry_Title.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Industry_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Industry_Title.setObjectName("Stock_Industry_Title")
         self.Stock_Exchange_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Exchange_Title.setGeometry(QtCore.QRect(540, 170, 100, 21))
@@ -466,7 +467,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Exchange_Title.setFont(font)
-        self.Stock_Exchange_Title.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Exchange_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Exchange_Title.setOpenExternalLinks(False)
         self.Stock_Exchange_Title.setObjectName("Stock_Exchange_Title")
         self.Stock_Industry = QtWidgets.QLabel(self.centralwidget)
@@ -475,7 +476,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Industry.setFont(font)
-        self.Stock_Industry.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Industry.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Industry.setObjectName("Stock_Industry")
         self.Stock_Exchange = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Exchange.setGeometry(QtCore.QRect(640, 170, 120, 20))
@@ -483,31 +484,31 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Exchange.setFont(font)
-        self.Stock_Exchange.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Exchange.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Exchange.setObjectName("Stock_Exchange")
         self.Stock_Price = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Price.setGeometry(QtCore.QRect(225, 80, 50, 20))
+        self.Stock_Price.setGeometry(QtCore.QRect(225, 82, 50, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Price.setFont(font)
-        self.Stock_Price.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Price.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Price.setObjectName("Stock_Price")
         self.Stock_Percentage_Change = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Percentage_Change.setGeometry(QtCore.QRect(285, 80, 50, 20))
+        self.Stock_Percentage_Change.setGeometry(QtCore.QRect(285, 82, 50, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Percentage_Change.setFont(font)
-        self.Stock_Percentage_Change.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Percentage_Change.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Percentage_Change.setObjectName("Stock_Percentage_Change")
         self.Stock_Volume = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Volume.setGeometry(QtCore.QRect(680, 80, 125, 20))
+        self.Stock_Volume.setGeometry(QtCore.QRect(680, 82, 125, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Volume.setFont(font)
-        self.Stock_Volume.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Volume.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Volume.setObjectName("Stock_Volume")
         self.Stock_Line_1 = QtWidgets.QFrame(self.centralwidget)
         self.Stock_Line_1.setGeometry(QtCore.QRect(0, 105, 1024, 5))
@@ -534,40 +535,39 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Market_Capitalization_Title.setFont(font)
-        self.Stock_Market_Capitalization_Title.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Market_Capitalization_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Market_Capitalization_Title.setObjectName("Stock_Market_Capitalization_Title")
         self.Stock_Beta = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Beta.setGeometry(QtCore.QRect(810, 80, 80, 20))
+        self.Stock_Beta.setGeometry(QtCore.QRect(810, 82, 80, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Beta.setFont(font)
-        self.Stock_Beta.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Beta.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Beta.setObjectName("Stock_Beta")
         self.Stock_Open = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Open.setGeometry(QtCore.QRect(350, 80, 100, 20))
+        self.Stock_Open.setGeometry(QtCore.QRect(350, 82, 100, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Open.setFont(font)
-        self.Stock_Open.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Open.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Open.setObjectName("Stock_Open")
         self.Stock_High = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_High.setGeometry(QtCore.QRect(450, 80, 100, 20))
+        self.Stock_High.setGeometry(QtCore.QRect(450, 82, 100, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_High.setFont(font)
-        self.Stock_High.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_High.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_High.setObjectName("Stock_High")
         self.Stock_Low = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Low.setGeometry(QtCore.QRect(550, 80, 100, 20))
+        self.Stock_Low.setGeometry(QtCore.QRect(550, 82, 100, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Low.setFont(font)
-        self.Stock_Low.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Low.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Low.setObjectName("Stock_Low")
         self.Stock_Earnings_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Earnings_Title.setGeometry(QtCore.QRect(775, 170, 81, 21))
@@ -575,7 +575,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Earnings_Title.setFont(font)
-        self.Stock_Earnings_Title.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Earnings_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Earnings_Title.setOpenExternalLinks(False)
         self.Stock_Earnings_Title.setObjectName("Stock_Earnings_Title")
         self.Stock_Market_Capitalization = QtWidgets.QLabel(self.centralwidget)
@@ -584,8 +584,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Market_Capitalization.setFont(font)
-        self.Stock_Market_Capitalization.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Market_Capitalization.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Market_Capitalization.setObjectName("Stock_Market_Capitalization")
         self.Stock_Earnings = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Earnings.setGeometry(QtCore.QRect(860, 170, 120, 20))
@@ -593,7 +592,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Earnings.setFont(font)
-        self.Stock_Earnings.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Earnings.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Earnings.setObjectName("Stock_Earnings")
         self.Stock_AverageVolume_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_AverageVolume_Title.setGeometry(QtCore.QRect(775, 190, 81, 21))
@@ -601,8 +600,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_AverageVolume_Title.setFont(font)
-        self.Stock_AverageVolume_Title.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_AverageVolume_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_AverageVolume_Title.setOpenExternalLinks(False)
         self.Stock_AverageVolume_Title.setObjectName("Stock_AverageVolume_Title")
         self.Stock_Average_Volume = QtWidgets.QLabel(self.centralwidget)
@@ -611,7 +609,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Average_Volume.setFont(font)
-        self.Stock_Average_Volume.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Average_Volume.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Average_Volume.setObjectName("Stock_Average_Volume")
         self.Stock_View_Chart = QtWidgets.QPushButton(self.centralwidget)
         self.Stock_View_Chart.setGeometry(QtCore.QRect(15, 250, 100, 31))
@@ -624,8 +622,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.Stock_Avg_Price_200_Title.setFont(font)
         self.Stock_Avg_Price_200_Title.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.Stock_Avg_Price_200_Title.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Avg_Price_200_Title.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Avg_Price_200_Title.setOpenExternalLinks(False)
         self.Stock_Avg_Price_200_Title.setObjectName("Stock_Avg_Price_200_Title")
         self.Stock_Avg_Price_200 = QtWidgets.QLabel(self.centralwidget)
@@ -634,7 +631,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.Stock_Avg_Price_200.setFont(font)
-        self.Stock_Avg_Price_200.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_Avg_Price_200.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_Avg_Price_200.setObjectName("Stock_Avg_Price_200")
         self.Stock_Line_3 = QtWidgets.QFrame(self.centralwidget)
         self.Stock_Line_3.setGeometry(QtCore.QRect(0, 290, 1024, 5))
@@ -647,7 +644,7 @@ class Ui_MainWindow(object):
         self.Stock_Line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.Stock_Line_4.setObjectName("Stock_Line_4")
         self.Stock_Growth_Financia_Title = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Financia_Title.setGeometry(QtCore.QRect(180, 300, 200, 21))
+        self.Stock_Growth_Financia_Title.setGeometry(QtCore.QRect(150, 300, 271, 21))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
@@ -661,8 +658,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Gross_Profit_Title.setFont(font)
-        self.Stock_Gross_Profit_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Gross_Profit_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Gross_Profit_Title.setObjectName("Stock_Gross_Profit_Title")
         self.Stock_Growth_EBIT_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_EBIT_Title.setGeometry(QtCore.QRect(10, 360, 135, 21))
@@ -670,8 +666,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_EBIT_Title.setFont(font)
-        self.Stock_Growth_EBIT_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_EBIT_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_EBIT_Title.setObjectName("Stock_Growth_EBIT_Title")
         self.Stock_Growth_Operating_Income_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Operating_Income_Title.setGeometry(QtCore.QRect(10, 380, 135, 21))
@@ -679,8 +674,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Operating_Income_Title.setFont(font)
-        self.Stock_Growth_Operating_Income_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Operating_Income_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Operating_Income_Title.setObjectName("Stock_Growth_Operating_Income_Title")
         self.Stock_Growth_Net_Income_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Net_Income_Title.setGeometry(QtCore.QRect(10, 400, 135, 21))
@@ -688,8 +682,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Net_Income_Title.setFont(font)
-        self.Stock_Growth_Net_Income_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Net_Income_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Net_Income_Title.setObjectName("Stock_Growth_Net_Income_Title")
         self.Stock_Growth_Earnings_Per_Share_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Earnings_Per_Share_Title.setGeometry(QtCore.QRect(10, 420, 135, 21))
@@ -697,8 +690,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Earnings_Per_Share_Title.setFont(font)
-        self.Stock_Growth_Earnings_Per_Share_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Earnings_Per_Share_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Earnings_Per_Share_Title.setObjectName("Stock_Growth_Earnings_Per_Share_Title")
         self.Stock_Growth_Dividend_Per_Share_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Dividend_Per_Share_Title.setGeometry(QtCore.QRect(10, 440, 135, 21))
@@ -706,26 +698,23 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Dividend_Per_Share_Title.setFont(font)
-        self.Stock_Growth_Dividend_Per_Share_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Dividend_Per_Share_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Dividend_Per_Share_Title.setObjectName("Stock_Growth_Dividend_Per_Share_Title")
-        self.Stock_Growth_Operating_Cashflow_Title = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Operating_Cashflow_Title.setGeometry(QtCore.QRect(10, 460, 135, 21))
+        self.Stock_Growth_Free_Cashflow_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow_Title.setGeometry(QtCore.QRect(10, 460, 135, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.Stock_Growth_Operating_Cashflow_Title.setFont(font)
-        self.Stock_Growth_Operating_Cashflow_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
-        self.Stock_Growth_Operating_Cashflow_Title.setObjectName("Stock_Growth_Operating_Cashflow_Title")
+        self.Stock_Growth_Free_Cashflow_Title.setFont(font)
+        self.Stock_Growth_Free_Cashflow_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Free_Cashflow_Title.setObjectName("Stock_Growth_Free_Cashflow_Title")
         self.Stock_Growth_Debt_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt_Title.setGeometry(QtCore.QRect(10, 480, 135, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Debt_Title.setFont(font)
-        self.Stock_Growth_Debt_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Debt_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Debt_Title.setObjectName("Stock_Growth_Debt_Title")
         self.Stock_Growth_RD_Expense_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_RD_Expense_Title.setGeometry(QtCore.QRect(10, 500, 135, 21))
@@ -733,16 +722,15 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_RD_Expense_Title.setFont(font)
-        self.Stock_Growth_RD_Expense_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_RD_Expense_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_RD_Expense_Title.setObjectName("Stock_Growth_RD_Expense_Title")
         self.Stock_RSI = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_RSI.setGeometry(QtCore.QRect(920, 80, 80, 20))
+        self.Stock_RSI.setGeometry(QtCore.QRect(919, 82, 81, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
         self.Stock_RSI.setFont(font)
-        self.Stock_RSI.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.Stock_RSI.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Stock_RSI.setObjectName("Stock_RSI")
         self.Stock_Growth_SGA_Expense_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_SGA_Expense_Title.setGeometry(QtCore.QRect(10, 520, 135, 21))
@@ -750,8 +738,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_SGA_Expense_Title.setFont(font)
-        self.Stock_Growth_SGA_Expense_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_SGA_Expense_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_SGA_Expense_Title.setObjectName("Stock_Growth_SGA_Expense_Title")
         self.Stock_Growth_Longterm_Financial_Growth_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Longterm_Financial_Growth_Title.setGeometry(QtCore.QRect(180, 540, 200, 21))
@@ -768,8 +755,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Longterm_Revenue_Title.setFont(font)
-        self.Stock_Growth_Longterm_Revenue_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Longterm_Revenue_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Longterm_Revenue_Title.setObjectName("Stock_Growth_Longterm_Revenue_Title")
         self.Stock_Growth_Longterm_Operating_Cashflow_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Longterm_Operating_Cashflow_Title.setGeometry(QtCore.QRect(10, 600, 135, 21))
@@ -777,18 +763,15 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Longterm_Operating_Cashflow_Title.setFont(font)
-        self.Stock_Growth_Longterm_Operating_Cashflow_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
-        self.Stock_Growth_Longterm_Operating_Cashflow_Title.setObjectName(
-            "Stock_Growth_Longterm_Operating_Cashflow_Title")
+        self.Stock_Growth_Longterm_Operating_Cashflow_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Longterm_Operating_Cashflow_Title.setObjectName("Stock_Growth_Longterm_Operating_Cashflow_Title")
         self.Stock_Growth_Longterm_Net_Income_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Longterm_Net_Income_Title.setGeometry(QtCore.QRect(10, 620, 135, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Longterm_Net_Income_Title.setFont(font)
-        self.Stock_Growth_Longterm_Net_Income_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Longterm_Net_Income_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Stock_Growth_Longterm_Net_Income_Title.setObjectName("Stock_Growth_Longterm_Net_Income_Title")
         self.Stock_Growth_Longterm_Shareholder_Equity_Title = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Longterm_Shareholder_Equity_Title.setGeometry(QtCore.QRect(10, 640, 135, 21))
@@ -796,10 +779,8 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Stock_Growth_Longterm_Shareholder_Equity_Title.setFont(font)
-        self.Stock_Growth_Longterm_Shareholder_Equity_Title.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
-        self.Stock_Growth_Longterm_Shareholder_Equity_Title.setObjectName(
-            "Stock_Growth_Longterm_Shareholder_Equity_Title")
+        self.Stock_Growth_Longterm_Shareholder_Equity_Title.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.Stock_Growth_Longterm_Shareholder_Equity_Title.setObjectName("Stock_Growth_Longterm_Shareholder_Equity_Title")
         self.Stock_Growth_Date1 = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Date1.setGeometry(QtCore.QRect(150, 320, 90, 20))
         font = QtGui.QFont()
@@ -896,14 +877,14 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Dividend_Per_Share1.setFont(font)
         self.Stock_Growth_Dividend_Per_Share1.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Growth_Dividend_Per_Share1.setObjectName("Stock_Growth_Dividend_Per_Share1")
-        self.Stock_Growth_Operating_Cashflow1 = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Operating_Cashflow1.setGeometry(QtCore.QRect(150, 460, 90, 20))
+        self.Stock_Growth_Free_Cashflow1 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow1.setGeometry(QtCore.QRect(150, 460, 90, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Stock_Growth_Operating_Cashflow1.setFont(font)
-        self.Stock_Growth_Operating_Cashflow1.setAlignment(QtCore.Qt.AlignCenter)
-        self.Stock_Growth_Operating_Cashflow1.setObjectName("Stock_Growth_Operating_Cashflow1")
+        self.Stock_Growth_Free_Cashflow1.setFont(font)
+        self.Stock_Growth_Free_Cashflow1.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Growth_Free_Cashflow1.setObjectName("Stock_Growth_Free_Cashflow1")
         self.Stock_Growth_Debt1 = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt1.setGeometry(QtCore.QRect(150, 480, 90, 20))
         font = QtGui.QFont()
@@ -976,14 +957,14 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Dividend_Per_Share2.setFont(font)
         self.Stock_Growth_Dividend_Per_Share2.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Growth_Dividend_Per_Share2.setObjectName("Stock_Growth_Dividend_Per_Share2")
-        self.Stock_Growth_Operating_Cashflow2 = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Operating_Cashflow2.setGeometry(QtCore.QRect(240, 460, 90, 20))
+        self.Stock_Growth_Free_Cashflow2 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow2.setGeometry(QtCore.QRect(240, 460, 90, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Stock_Growth_Operating_Cashflow2.setFont(font)
-        self.Stock_Growth_Operating_Cashflow2.setAlignment(QtCore.Qt.AlignCenter)
-        self.Stock_Growth_Operating_Cashflow2.setObjectName("Stock_Growth_Operating_Cashflow2")
+        self.Stock_Growth_Free_Cashflow2.setFont(font)
+        self.Stock_Growth_Free_Cashflow2.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Growth_Free_Cashflow2.setObjectName("Stock_Growth_Free_Cashflow2")
         self.Stock_Growth_Debt2 = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt2.setGeometry(QtCore.QRect(240, 480, 90, 20))
         font = QtGui.QFont()
@@ -1056,14 +1037,14 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Dividend_Per_Share3.setFont(font)
         self.Stock_Growth_Dividend_Per_Share3.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Growth_Dividend_Per_Share3.setObjectName("Stock_Growth_Dividend_Per_Share3")
-        self.Stock_Growth_Operating_Cashflow3 = QtWidgets.QLabel(self.centralwidget)
-        self.Stock_Growth_Operating_Cashflow3.setGeometry(QtCore.QRect(330, 460, 90, 20))
+        self.Stock_Growth_Free_Cashflow3 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Growth_Free_Cashflow3.setGeometry(QtCore.QRect(330, 460, 90, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.Stock_Growth_Operating_Cashflow3.setFont(font)
-        self.Stock_Growth_Operating_Cashflow3.setAlignment(QtCore.Qt.AlignCenter)
-        self.Stock_Growth_Operating_Cashflow3.setObjectName("Stock_Growth_Operating_Cashflow3")
+        self.Stock_Growth_Free_Cashflow3.setFont(font)
+        self.Stock_Growth_Free_Cashflow3.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Growth_Free_Cashflow3.setObjectName("Stock_Growth_Free_Cashflow3")
         self.Stock_Growth_Debt3 = QtWidgets.QLabel(self.centralwidget)
         self.Stock_Growth_Debt3.setGeometry(QtCore.QRect(330, 480, 90, 20))
         font = QtGui.QFont()
@@ -1184,6 +1165,137 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Longterm_Shareholder_Equity3.setFont(font)
         self.Stock_Growth_Longterm_Shareholder_Equity3.setAlignment(QtCore.Qt.AlignCenter)
         self.Stock_Growth_Longterm_Shareholder_Equity3.setObjectName("Stock_Growth_Longterm_Shareholder_Equity3")
+        self.Stock_Growth_Switch_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.Stock_Growth_Switch_Button.setGeometry(QtCore.QRect(10, 300, 113, 32))
+        self.Stock_Growth_Switch_Button.setObjectName("Stock_Growth_Switch_Button")
+        self.Stock_Technical_S3_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_S3_Title.setGeometry(QtCore.QRect(530, 320, 45, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Technical_S3_Title.setFont(font)
+        self.Stock_Technical_S3_Title.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_S3_Title.setObjectName("Stock_Technical_S3_Title")
+        self.Stock_Technical_S2_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_S2_Title.setGeometry(QtCore.QRect(580, 320, 45, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Technical_S2_Title.setFont(font)
+        self.Stock_Technical_S2_Title.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_S2_Title.setObjectName("Stock_Technical_S2_Title")
+        self.Stock_Technical_S1_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_S1_Title.setGeometry(QtCore.QRect(630, 320, 45, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Technical_S1_Title.setFont(font)
+        self.Stock_Technical_S1_Title.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_S1_Title.setObjectName("Stock_Technical_S1_Title")
+        self.Stock_Technical_Pivot_Point_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_Pivot_Point_Title.setGeometry(QtCore.QRect(685, 320, 70, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Technical_Pivot_Point_Title.setFont(font)
+        self.Stock_Technical_Pivot_Point_Title.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_Pivot_Point_Title.setObjectName("Stock_Technical_Pivot_Point_Title")
+        self.Stock_Technical_R1_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_R1_Title.setGeometry(QtCore.QRect(765, 320, 45, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Technical_R1_Title.setFont(font)
+        self.Stock_Technical_R1_Title.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_R1_Title.setObjectName("Stock_Technical_R1_Title")
+        self.Stock_Technical_R2_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_R2_Title.setGeometry(QtCore.QRect(815, 320, 45, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Technical_R2_Title.setFont(font)
+        self.Stock_Technical_R2_Title.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_R2_Title.setObjectName("Stock_Technical_R2_Title")
+        self.Stock_Technical_R3_Title = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_R3_Title.setGeometry(QtCore.QRect(865, 320, 45, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.Stock_Technical_R3_Title.setFont(font)
+        self.Stock_Technical_R3_Title.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_R3_Title.setObjectName("Stock_Technical_R3_Title")
+        self.Stock_Technical_S3 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_S3.setGeometry(QtCore.QRect(530, 340, 45, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Technical_S3.setFont(font)
+        self.Stock_Technical_S3.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_S3.setObjectName("Stock_Technical_S3")
+        self.Stock_Technical_S2 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_S2.setGeometry(QtCore.QRect(580, 340, 45, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Technical_S2.setFont(font)
+        self.Stock_Technical_S2.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_S2.setObjectName("Stock_Technical_S2")
+        self.Stock_Technical_S1 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_S1.setGeometry(QtCore.QRect(630, 340, 45, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Technical_S1.setFont(font)
+        self.Stock_Technical_S1.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_S1.setObjectName("Stock_Technical_S1")
+        self.Stock_Technical_Pivot_Point = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_Pivot_Point.setGeometry(QtCore.QRect(685, 340, 70, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Technical_Pivot_Point.setFont(font)
+        self.Stock_Technical_Pivot_Point.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_Pivot_Point.setObjectName("Stock_Technical_Pivot_Point")
+        self.Stock_Technical_R1 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_R1.setGeometry(QtCore.QRect(765, 340, 45, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Technical_R1.setFont(font)
+        self.Stock_Technical_R1.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_R1.setObjectName("Stock_Technical_R1")
+        self.Stock_Technical_R2 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_R2.setGeometry(QtCore.QRect(815, 340, 45, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Technical_R2.setFont(font)
+        self.Stock_Technical_R2.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_R2.setObjectName("Stock_Technical_R2")
+        self.Stock_Technical_R3 = QtWidgets.QLabel(self.centralwidget)
+        self.Stock_Technical_R3.setGeometry(QtCore.QRect(865, 340, 45, 20))
+        font = QtGui.QFont()
+        font.setBold(False)
+        font.setWeight(50)
+        self.Stock_Technical_R3.setFont(font)
+        self.Stock_Technical_R3.setAlignment(QtCore.Qt.AlignCenter)
+        self.Stock_Technical_R3.setObjectName("Stock_Technical_R3")
+        # -----------------------------------------------------------------------------------------------------
+        # We first initialize the x and y axis, x axis needs to be in date time
+        date_axis = TimeAxisItem(orientation='bottom')
+        y_axis = pg.AxisItem(orientation='left')
+
+        # Show grid with opacity = 255
+        y_axis.setGrid(255)
+        date_axis.setGrid(255)
+
+        self.Stock_Technical_MACD = pg.PlotWidget(self.centralwidget, axisItems={'bottom': date_axis, 'left': y_axis})
+        self.Stock_Technical_MACD.setGeometry(QtCore.QRect(430, 370, 571, 291))
+        self.Stock_Technical_MACD.setObjectName("Stock_Technical_MACD")
+        # Set the background colour to be white
+        self.Stock_Technical_MACD.setBackground('w')
+        # -----------------------------------------------------------------------------------------------------
+
         self.Sector_Performance_Title_2.raise_()
         self.TimeNow_Label.raise_()
         self.DateNow_Label.raise_()
@@ -1249,7 +1361,6 @@ class Ui_MainWindow(object):
         self.Search_Bar.raise_()
         self.Stock_Symbol.raise_()
         self.Stock_Description_Header.raise_()
-        self.Stock_Description.raise_()
         self.Stock_Image.raise_()
         self.Stock_Industry_Title.raise_()
         self.Stock_Exchange_Title.raise_()
@@ -1273,7 +1384,6 @@ class Ui_MainWindow(object):
         self.Stock_Average_Volume.raise_()
         self.Stock_View_Chart.raise_()
         self.Stock_Avg_Price_200_Title.raise_()
-        self.Stock_Avg_Price_200.raise_()
         self.Stock_Line_3.raise_()
         self.Stock_Line_4.raise_()
         self.Stock_Growth_Financia_Title.raise_()
@@ -1283,7 +1393,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income_Title.raise_()
         self.Stock_Growth_Earnings_Per_Share_Title.raise_()
         self.Stock_Growth_Dividend_Per_Share_Title.raise_()
-        self.Stock_Growth_Operating_Cashflow_Title.raise_()
+        self.Stock_Growth_Free_Cashflow_Title.raise_()
         self.Stock_Growth_Debt_Title.raise_()
         self.Stock_Growth_RD_Expense_Title.raise_()
         self.Stock_RSI.raise_()
@@ -1305,7 +1415,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income1.raise_()
         self.Stock_Growth_Earnings_Per_Share1.raise_()
         self.Stock_Growth_Dividend_Per_Share1.raise_()
-        self.Stock_Growth_Operating_Cashflow1.raise_()
+        self.Stock_Growth_Free_Cashflow1.raise_()
         self.Stock_Growth_Debt1.raise_()
         self.Stock_Growth_RD_Expense1.raise_()
         self.Stock_Growth_SGA_Expense1.raise_()
@@ -1315,7 +1425,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income2.raise_()
         self.Stock_Growth_Earnings_Per_Share2.raise_()
         self.Stock_Growth_Dividend_Per_Share2.raise_()
-        self.Stock_Growth_Operating_Cashflow2.raise_()
+        self.Stock_Growth_Free_Cashflow2.raise_()
         self.Stock_Growth_Debt2.raise_()
         self.Stock_Growth_RD_Expense2.raise_()
         self.Stock_Growth_SGA_Expense2.raise_()
@@ -1325,7 +1435,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income3.raise_()
         self.Stock_Growth_Earnings_Per_Share3.raise_()
         self.Stock_Growth_Dividend_Per_Share3.raise_()
-        self.Stock_Growth_Operating_Cashflow3.raise_()
+        self.Stock_Growth_Free_Cashflow3.raise_()
         self.Stock_Growth_Debt3.raise_()
         self.Stock_Growth_RD_Expense3.raise_()
         self.Stock_Growth_SGA_Expense3.raise_()
@@ -1341,6 +1451,24 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Longterm_Shareholder_Equity2.raise_()
         self.Stock_Growth_Longterm_Net_Income3.raise_()
         self.Stock_Growth_Longterm_Shareholder_Equity3.raise_()
+        self.Stock_Description.raise_()
+        self.Stock_Growth_Switch_Button.raise_()
+        self.Stock_Avg_Price_200.raise_()
+        self.Stock_Technical_S3_Title.raise_()
+        self.Stock_Technical_S2_Title.raise_()
+        self.Stock_Technical_S1_Title.raise_()
+        self.Stock_Technical_Pivot_Point_Title.raise_()
+        self.Stock_Technical_R1_Title.raise_()
+        self.Stock_Technical_R2_Title.raise_()
+        self.Stock_Technical_R3_Title.raise_()
+        self.Stock_Technical_S3.raise_()
+        self.Stock_Technical_S2.raise_()
+        self.Stock_Technical_S1.raise_()
+        self.Stock_Technical_Pivot_Point.raise_()
+        self.Stock_Technical_R1.raise_()
+        self.Stock_Technical_R2.raise_()
+        self.Stock_Technical_R3.raise_()
+        self.Stock_Technical_MACD.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         # Set the visibility of the widgets to 0 when we initialize
@@ -1361,7 +1489,7 @@ class Ui_MainWindow(object):
                               self.Stock_Growth_EBIT_Title,
                               self.Stock_Growth_Operating_Income_Title, self.Stock_Growth_Net_Income_Title,
                               self.Stock_Growth_Earnings_Per_Share_Title, self.Stock_Growth_Dividend_Per_Share_Title,
-                              self.Stock_Growth_Operating_Cashflow_Title, self.Stock_Growth_Debt_Title,
+                              self.Stock_Growth_Free_Cashflow_Title, self.Stock_Growth_Debt_Title,
                               self.Stock_Growth_RD_Expense_Title,
                               self.Stock_RSI, self.Stock_Growth_SGA_Expense_Title,
                               self.Stock_Growth_Longterm_Financial_Growth_Title,
@@ -1376,18 +1504,18 @@ class Ui_MainWindow(object):
                               self.Stock_Growth_EBIT1, self.Stock_Growth_Operating_Income1,
                               self.Stock_Growth_Net_Income1,
                               self.Stock_Growth_Earnings_Per_Share1, self.Stock_Growth_Dividend_Per_Share1,
-                              self.Stock_Growth_Operating_Cashflow1,
+                              self.Stock_Growth_Free_Cashflow1,
                               self.Stock_Growth_Debt1, self.Stock_Growth_RD_Expense1, self.Stock_Growth_SGA_Expense1,
                               self.Stock_Gross_Profit2,
                               self.Stock_Growth_EBIT2, self.Stock_Growth_Operating_Income2,
                               self.Stock_Growth_Net_Income2,
                               self.Stock_Growth_Earnings_Per_Share2, self.Stock_Growth_Dividend_Per_Share2,
-                              self.Stock_Growth_Operating_Cashflow2,
+                              self.Stock_Growth_Free_Cashflow2,
                               self.Stock_Growth_Debt2, self.Stock_Growth_RD_Expense2, self.Stock_Growth_SGA_Expense2,
                               self.Stock_Gross_Profit3,
                               self.Stock_Growth_EBIT3, self.Stock_Growth_Operating_Income3,
                               self.Stock_Growth_Net_Income3, self.Stock_Growth_Earnings_Per_Share3,
-                              self.Stock_Growth_Dividend_Per_Share3, self.Stock_Growth_Operating_Cashflow3,
+                              self.Stock_Growth_Dividend_Per_Share3, self.Stock_Growth_Free_Cashflow3,
                               self.Stock_Growth_Debt3,
                               self.Stock_Growth_RD_Expense3, self.Stock_Growth_SGA_Expense3,
                               self.Stock_Growth_Longterm_Revenue1,
@@ -1397,7 +1525,12 @@ class Ui_MainWindow(object):
                               self.Stock_Growth_Longterm_Operating_Cashflow3,
                               self.Stock_Growth_Longterm_Net_Income1, self.Stock_Growth_Longterm_Shareholder_Equity1,
                               self.Stock_Growth_Longterm_Net_Income2, self.Stock_Growth_Longterm_Shareholder_Equity2,
-                              self.Stock_Growth_Longterm_Net_Income3, self.Stock_Growth_Longterm_Shareholder_Equity3}
+                              self.Stock_Growth_Longterm_Net_Income3, self.Stock_Growth_Longterm_Shareholder_Equity3,
+                              self.Stock_Technical_S3_Title, self.Stock_Technical_S2_Title, self.Stock_Technical_S1_Title,
+                              self.Stock_Technical_Pivot_Point_Title, self.Stock_Technical_R1_Title, self.Stock_Technical_R2_Title,
+                              self.Stock_Technical_R3_Title, self.Stock_Technical_S3, self.Stock_Technical_S2, self.Stock_Technical_S1,
+                              self.Stock_Technical_Pivot_Point,self.Stock_Technical_R1,self.Stock_Technical_R2,self.Stock_Technical_R3,
+                              self.Stock_Technical_MACD,self.Stock_Growth_Switch_Button}
 
         for widget in self.stock_widgets:
             widget.setVisible(False)
@@ -1424,7 +1557,6 @@ class Ui_MainWindow(object):
         # Whenever the index of the performance title is changed, we would run populate Sector Performances Function
         self.Sector_Performance_Title.currentIndexChanged.connect(self.PopulateSectorPerformances)
         self.retranslateUi(MainWindow)
-
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     # -------------------------------------------------------------------
@@ -1457,6 +1589,7 @@ class Ui_MainWindow(object):
         # Get rid of white spaces if there are any
         ticker_string = self.Search_Bar.text()
         ticker_string = ticker_string.strip()
+        self.search_symbol = ticker_string
 
         url = "https://financialmodelingprep.com/api/v3/company/profile/" + ticker_string
         session = requests.session()
@@ -1469,9 +1602,9 @@ class Ui_MainWindow(object):
         quote_data = request.json()
         # We now need to test the integrity of the data that we have received. We check for the amount of dictionary
         # pairs in the returned message, if it has less than 2 key-value pairs, we would throw message
-        print(company_data)
+        #print(company_data)
 
-        print(quote_data)
+        #print(quote_data)
         if len(company_data) < 2:
             return
 
@@ -1538,8 +1671,8 @@ class Ui_MainWindow(object):
                                       self.Stock_Growth_Earnings_Per_Share3]
         dividend_per_share_widgets = [self.Stock_Growth_Dividend_Per_Share1, self.Stock_Growth_Dividend_Per_Share2,
                                       self.Stock_Growth_Dividend_Per_Share3]
-        free_cash_flow_widgets = [self.Stock_Growth_Operating_Cashflow1, self.Stock_Growth_Operating_Cashflow2,
-                                  self.Stock_Growth_Operating_Cashflow3]
+        free_cash_flow_widgets = [self.Stock_Growth_Free_Cashflow1, self.Stock_Growth_Free_Cashflow2,
+                                  self.Stock_Growth_Free_Cashflow3]
         debt_growth_widgets = [self.Stock_Growth_Debt1, self.Stock_Growth_Debt2, self.Stock_Growth_Debt3]
         rd_expense_widgets = [self.Stock_Growth_RD_Expense1, self.Stock_Growth_RD_Expense2,
                               self.Stock_Growth_RD_Expense3]
@@ -1618,11 +1751,140 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Longterm_Shareholder_Equity3.setText(
             self.Convert_to_Percentage_String(most_recent_report['10Y Shareholders Equity Growth (per Share)']))
 
+        self.Populate_MACD_Graph()
+        self.Populate_Pivot_Points()
+
         # Now since all the data has been loaded, we would set the visibility of all widgets to be visible and refresh
         # widgets that are changed to see labels be updated
         for widget in self.stock_widgets:
             widget.show()
             widget.repaint()
+
+    def Populate_Pivot_Points(self):
+        # Using the investpy module, we would get investing.com website url for the company
+        # TODO:
+        # Add functionality for Canadian and Stocks that are from other parts of the world
+        company_profile = investpy.get_stock_company_profile(stock=self.search_symbol,
+                                                             country='United States')
+        # print(company_profile)
+
+        company_profile_url = company_profile['url']
+        technical_url = company_profile_url[:-15] + 'technical'
+
+        response = requests.get(technical_url, headers={'User-Agent': 'Mozilla/5.0'})
+
+        soup = BeautifulSoup(response.text, 'lxml')
+        # print(soup)
+        data_table = soup.find_all('div', {'id': 'techinalContent'})
+        # print(data_table)
+        cols = [td.text for td in data_table[0].select('td')]
+        # print(cols)
+
+        # We initializa a empty list
+        parsed_list = []
+
+        # Parse data that we receive from web scraping into array
+        for text in cols:
+            parsed_text = text.strip()
+            if '\t' or '\n' in text:
+                parsed_text = text.replace('\n', '')
+                parsed_text = parsed_text.replace('\t', '')
+            parsed_list.append(parsed_text)
+
+        print(parsed_list)
+
+        pivot_point_widgets = [self.Stock_Technical_S3,self.Stock_Technical_S2,self.Stock_Technical_S1,
+                               self.Stock_Technical_Pivot_Point,self.Stock_Technical_R1,self.Stock_Technical_R2,
+                               self.Stock_Technical_R3]
+        found_pivot = False
+        found_RSI = False
+        pivot_index = 0
+
+        for element in parsed_list:
+            if found_pivot and pivot_index < 6:
+                pivot_point_widgets[pivot_index].setText(element)
+                pivot_index = pivot_index + 1
+            elif found_RSI:
+                self.Stock_RSI.setText('RSI(14):' + element[0:4])
+                break
+
+            if element == 'Classic':
+                found_pivot = True
+            elif element == 'RSI(14)':
+                found_RSI = True
+
+
+
+
+
+
+    def Populate_MACD_Graph(self):
+        technical_url = 'https://www.alphavantage.co/query?function=MACD&symbol=' + self.search_symbol + \
+                        '&interval=daily&series_type=open&apikey=' + alpha_vantage_api_key
+
+        req_ob = requests.get(technical_url)
+
+        # result contains list of nested dictionaries
+        result = req_ob.json()
+
+        last_refresh_date = result['Meta Data']['3: Last Refreshed']
+        print("Last Refresh Date is:" + last_refresh_date)
+
+        interval = result['Meta Data']['4: Interval']
+        print("The interval of refresh is :" + last_refresh_date)
+
+        macd_data = result['Technical Analysis: MACD']
+
+        # Declare Four Variables that we need to plot into the graph
+        date_array = []
+        macd_array = []
+        macd_signal_array = []
+        macd_hist_array = []
+        # print('The type of data of macd_data is:' + str(type(macd_data)))
+
+        index = 0
+        # Go through this loop and store everything into an array later for plotting
+        for data in macd_data:
+            if index < 200:
+                # print('The type of data is: ' + str(type(date))+ ' and the value is:' + str(date))
+
+                # First convert the string to datetime function
+                date = datetime.strptime(data, '%Y-%m-%d')
+
+                # Store the respective variables into an array
+                date_array.append(date)
+                macd_array.append(float(macd_data[data]['MACD']))
+                macd_signal_array.append(float(macd_data[data]['MACD_Signal']))
+                macd_hist_array.append(float(macd_data[data]['MACD_Hist']))
+                index = index + 1
+            else:
+                break
+        # THIS IS NO LONGER NEEDED AS WE HAVE DATE TIME IN THE X AXIS
+        # date_array.reverse()
+        # macd_array.reverse()
+        # macd_signal_array.reverse()
+        # macd_hist_array.reverse()
+
+        # Seperately plot two lines into the pyqtgraph widget, one for MACD Signal and one for MACD
+        for i in range(2):
+            if i == 0:
+                # First plot the MACD values
+                y_data = macd_array
+                # line_symbol = 'o'
+            elif i == 1:
+                # Then we plot the MACD Signals
+                y_data = macd_signal_array
+                # line_symbol = 't'
+
+            # Now we plot our values onto the widget
+            # self.Stock_Technical_MACD.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i, 2), symbol=line_symbol)
+            self.Stock_Technical_MACD.plot(x=[x.timestamp() for x in date_array], y=y_data, pen=(i, 2), width = 2)
+
+        # Initialize the bar chart
+        bar = pg.BarGraphItem(x=[x.timestamp() for x in date_array], height=macd_hist_array, width=0.3, brush='r')
+
+        # Add the bar chart onto the graph widget itself with the addItem function
+        self.Stock_Technical_MACD.addItem(bar)
 
     # -------------------------------------------------------------------
     # Function Name: Convert_to_Percentage_String
@@ -1931,8 +2193,7 @@ class Ui_MainWindow(object):
         self.Search_Bar.setPlaceholderText(_translate("MainWindow", "Tickers..."))
         self.Stock_Symbol.setText(_translate("MainWindow", "AAPL"))
         self.Stock_Description_Header.setText(_translate("MainWindow", "Description:"))
-        self.Stock_Description.setText(_translate("MainWindow",
-                                                  "Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications."))
+        self.Stock_Description.setText(_translate("MainWindow", "Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications."))
         self.Stock_Image.setText(_translate("MainWindow", "[img]"))
         self.Stock_Industry_Title.setText(_translate("MainWindow", "Industry:"))
         self.Stock_Exchange_Title.setText(_translate("MainWindow", "Exchange:"))
@@ -1961,14 +2222,13 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Operating_Income_Title.setText(_translate("MainWindow", "Operating income:"))
         self.Stock_Growth_Net_Income_Title.setText(_translate("MainWindow", "Net Income:"))
         self.Stock_Growth_Earnings_Per_Share_Title.setText(_translate("MainWindow", "Earnings per Share:"))
-        self.Stock_Growth_Dividend_Per_Share_Title.setText(_translate("MainWindow", "Dividend per Share:"))
-        self.Stock_Growth_Operating_Cashflow_Title.setText(_translate("MainWindow", "Rev Growth (Share):"))
+        self.Stock_Growth_Dividend_Per_Share_Title.setText(_translate("MainWindow", "Dividend per Share"))
+        self.Stock_Growth_Free_Cashflow_Title.setText(_translate("MainWindow", "Free Cashflow :"))
         self.Stock_Growth_Debt_Title.setText(_translate("MainWindow", "Debt Growth:"))
         self.Stock_Growth_RD_Expense_Title.setText(_translate("MainWindow", "R & D Expense:"))
-        self.Stock_RSI.setText(_translate("MainWindow", "RSI:"))
+        self.Stock_RSI.setText(_translate("MainWindow", "RSI(14):"))
         self.Stock_Growth_SGA_Expense_Title.setText(_translate("MainWindow", "SG&A:"))
-        self.Stock_Growth_Longterm_Financial_Growth_Title.setText(
-            _translate("MainWindow", "Long-Term Financial Growth"))
+        self.Stock_Growth_Longterm_Financial_Growth_Title.setText(_translate("MainWindow", "Long-Term Financial Growth"))
         self.Stock_Growth_Longterm_Revenue_Title.setText(_translate("MainWindow", "Revenue:"))
         self.Stock_Growth_Longterm_Operating_Cashflow_Title.setText(_translate("MainWindow", "Operating Cashflow:"))
         self.Stock_Growth_Longterm_Net_Income_Title.setText(_translate("MainWindow", "Net Income:"))
@@ -1985,7 +2245,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Earnings_Per_Share1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Dividend_Per_Share1.setText(_translate("MainWindow", "+00.00%"))
-        self.Stock_Growth_Operating_Cashflow1.setText(_translate("MainWindow", "+00.00%"))
+        self.Stock_Growth_Free_Cashflow1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Debt1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_RD_Expense1.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_SGA_Expense1.setText(_translate("MainWindow", "+00.00%"))
@@ -1995,7 +2255,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Earnings_Per_Share2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Dividend_Per_Share2.setText(_translate("MainWindow", "+00.00%"))
-        self.Stock_Growth_Operating_Cashflow2.setText(_translate("MainWindow", "+00.00%"))
+        self.Stock_Growth_Free_Cashflow2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Debt2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_RD_Expense2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_SGA_Expense2.setText(_translate("MainWindow", "+00.00%"))
@@ -2005,7 +2265,7 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Net_Income3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Earnings_Per_Share3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Dividend_Per_Share3.setText(_translate("MainWindow", "+00.00%"))
-        self.Stock_Growth_Operating_Cashflow3.setText(_translate("MainWindow", "+00.00%"))
+        self.Stock_Growth_Free_Cashflow3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Debt3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_RD_Expense3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_SGA_Expense3.setText(_translate("MainWindow", "+00.00%"))
@@ -2021,11 +2281,28 @@ class Ui_MainWindow(object):
         self.Stock_Growth_Longterm_Shareholder_Equity2.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Longterm_Net_Income3.setText(_translate("MainWindow", "+00.00%"))
         self.Stock_Growth_Longterm_Shareholder_Equity3.setText(_translate("MainWindow", "+00.00%"))
+        self.Stock_Growth_Switch_Button.setText(_translate("MainWindow", "Quarterly"))
+        self.Stock_Technical_S3_Title.setText(_translate("MainWindow", "S3"))
+        self.Stock_Technical_S2_Title.setText(_translate("MainWindow", "S2"))
+        self.Stock_Technical_S1_Title.setText(_translate("MainWindow", "S1"))
+        self.Stock_Technical_Pivot_Point_Title.setText(_translate("MainWindow", "Pivot Point"))
+        self.Stock_Technical_R1_Title.setText(_translate("MainWindow", "R1"))
+        self.Stock_Technical_R2_Title.setText(_translate("MainWindow", "R2"))
+        self.Stock_Technical_R3_Title.setText(_translate("MainWindow", "R3"))
+        self.Stock_Technical_S3.setText(_translate("MainWindow", "132.32"))
+        self.Stock_Technical_S2.setText(_translate("MainWindow", "132.32"))
+        self.Stock_Technical_S1.setText(_translate("MainWindow", "132.32"))
+        self.Stock_Technical_Pivot_Point.setText(_translate("MainWindow", "132.32"))
+        self.Stock_Technical_R1.setText(_translate("MainWindow", "132.32"))
+        self.Stock_Technical_R2.setText(_translate("MainWindow", "132.32"))
+        self.Stock_Technical_R3.setText(_translate("MainWindow", "132.32"))
 
+class TimeAxisItem(pg.AxisItem):
+    def tickStrings(self, values, scale, spacing):
+        return [datetime.fromtimestamp(value) for value in values]
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

@@ -4,10 +4,9 @@ A PyQT5 application that helps investors pick stocks, entry/exit points by provi
 ### Getting Started
 This application is built using Python 3.8 interpreter. See installation section and packages for list of requirements that are needed
 
-#### Demonstration
+![Example Image](https://github.com/willBear/Wills-Stock-Picker/blob/master/Demonstration.png)
 
-
-#### Prerequisites 
+### Prerequisites 
 The following packages are required for running this application
   - PyQt5
   - investpy
@@ -24,7 +23,7 @@ pip install PyQt5
 ```
 You also need to obtain an API key from financial modelling prep and alpha vantage. This can be done by visiting their website and obtaining a FREE API key. 
 
-###### Deployment
+### Deployment
 To deploy this application, simply clone this repository and install packages that are contained in the pre-requisite section and run the .py file! 
 
 ## License
